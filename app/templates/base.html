@@ -28,12 +28,21 @@
       </ul>
     </div>
     <ul class="navbar-nav navbar-right">
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.register') }}"><span class="glyphicon glyphicon-user"></span> 注册</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
-      </li>
+        {% if current_user.is_anonymous %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.register') }}"><span class="glyphicon glyphicon-user"></span> 注册</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="#"><span class="glyphicon glyphicon-user"></span> {{ current_user.username }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.logout') }}"><span class="glyphicon glyphicon-log-in"></span> 登出</a>
+        </li>
+        {% endif %}
     </ul>
   </div>
 </nav>
