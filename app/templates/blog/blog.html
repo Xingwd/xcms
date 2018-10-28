@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}博客 | 邢为栋{% endblock %}
+
+{% block header %}
+<div class="container">
+    <p class="header">养兵千日，用在一时</p>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-8 blog-main">
+      {% block blogmain %}
+      <h3 class="pb-3 mb-4 font-italic border-bottom">
+        轨迹
+      </h3>
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">博客标题</h4>
+          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
+          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <a href="{{ url_for('blog.detail') }}" class="card-link">详情</a>
+        </div>
+      </div>
+      <hr>
+      <div class="card" >
+        <div class="card-body">
+          <h4 class="card-title">博客标题</h4>
+          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
+          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <a href="#" class="card-link">详情</a>
+        </div>
+      </div>
+      <hr>
+      <div class="card" >
+        <div class="card-body">
+          <h4 class="card-title">博客标题</h4>
+          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
+          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <a href="#" class="card-link">详情</a>
+        </div>
+      </div>
+      <hr>
+      <div class="card" >
+        <div class="card-body">
+          <h4 class="card-title">博客标题</h4>
+          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
+          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <a href="#" class="card-link">详情</a>
+        </div>
+      </div>
+      <hr>
+      <div class="card" >
+        <div class="card-body">
+          <h4 class="card-title">博客标题</h4>
+          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
+          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <a href="#" class="card-link">详情</a>
+        </div>
+      </div>
+      <hr>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+      {% endblock %}
+    </div><!-- /.blog-main -->
+
+    <aside class="col-md-4 blog-sidebar">
+      <form class="mb-3 form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
+      <div class="p-3 mb-3 bg-light rounded">
+        <h4 class="font-italic">About</h4>
+        <p class="mb-0">欢迎来到我的博客，内容主要涉及Python开发，Hadoop生态，算法，Web开发，Linux基础，网络安全，游戏开发，...</p>
+      </div>
+
+      <div class="p-3">
+        <h4 class="font-italic">TagCloud</h4>
+        <div id="tag-cloud"></div>
+      </div>
+
+      <div class="p-3">
+        <h4 class="font-italic">Find Me</h4>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">GitHub</a></li>
+          <li><a class="text-muted" href="#">领英</a></li>
+        </ul>
+      </div>
+
+      <div class="p-3">
+        <h4 class="font-italic">Contact Me</h4>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Email</a></li>
+          <li><a class="text-muted" href="#">微信</a></li>
+        </ul>
+      </div>
+
+    </aside><!-- /.blog-sidebar -->
+  </div>
+</div>
+
+
+<script>
+  $( document ).ready( function() {
+    var entries = [
+        { label: 'Python', url: 'http://www.jqueryscript.net/tags.php?/Back%20to%20top/', target: '_top' },
+        { label: 'Flask', url: 'http://www.jqueryscript.net/tags.php?/Bootstrap/', target: '_top' },
+        { label: 'Hadoop', url: 'https://goo.gl/', target: '_top' },
+        { label: 'Hive', url: 'https://jquery.com/', target: '_top' },
+        { label: 'spark', url: 'https://jquery.com/', target: '_top' },
+        { label: 'hbase', url: 'https://jquery.com/', target: '_top' },
+        { label: 'phoenix', url: 'https://jquery.com/', target: '_top' },
+        { label: 'linux', url: 'https://jquery.com/', target: '_top' },
+        { label: 'django', url: 'https://jquery.com/', target: '_top' },
+        { label: 'Web开发', url: 'http://www.jqueryscript.net/tags.php?/Notification/', target: '_top' },
+        { label: '爬虫', url: 'http://www.jqueryscript.net/tags.php?/parallax/', target: '_top' }
+
+    ];
+
+    var settings = {
+        entries: entries,
+        width: 300,
+        height: 300,
+        radius: '70%',
+        radiusMin: 75,
+        bgDraw: true,
+        bgColor: '#fff',
+        opacityOver: 1.00,
+        opacityOut: 0.05,
+        opacitySpeed: 6,
+        fov: 800,
+        speed: 0.2,
+        fontFamily: 'Oswald, Arial, sans-serif',
+        fontSize: '15',
+        fontColor: '#000',
+        fontWeight: 'normal',//bold
+        fontStyle: 'normal',//italic
+        fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+        fontToUpperCase: false
+
+    };
+
+    //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
+    $( '#tag-cloud' ).svg3DTagCloud( settings );
+
+  } );
+
+</script>
+{% endblock %}

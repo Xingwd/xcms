@@ -4,9 +4,15 @@ from flask import (
 
 
 
-bp = Blueprint('blog', __name__)
+bp = Blueprint('blog', __name__, url_prefix='/blog')
 
 
 @bp.route('/')
-def index():
-    return render_template('blog/index.html')
+def blog():
+    return render_template('blog/blog.html')
+
+@bp.route('/detail')
+def detail():
+    return render_template('blog/detail.html')
+
+

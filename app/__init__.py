@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -22,6 +22,9 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
     from app.blog import blog
     app.register_blueprint(blog.bp)

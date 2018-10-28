@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}邢为栋 | Python开发者与爱好者{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+    <div class="container">
+      <h1 class="display-1">Hello!</h1>
+      <h4>我是邢为栋，Python开发者与爱好者</h4>
+      <h4>热爱读书，喜欢旅行</h4>
+      <p><a class="btn btn-light btn-lg" href="#" role="button">关于我 »</a></p>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+        <div class="card-body d-flex flex-column align-items-start">
+          <strong class="d-inline-block mb-2 text-info">Blog</strong>
+          <h3 class="mb-0">
+            <a class="text-dark" href="#">技术博客</a>
+          </h3>
+          <div class="mb-1 text-muted">探索</div>
+          <div style="height: 100px">
+            <p class="card-text mb-auto">Python开发，Hadoop生态，算法，Web开发，Linux基础，网络安全，游戏开发，...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+        <div class="card-body d-flex flex-column align-items-start">
+          <strong class="d-inline-block mb-2 text-info">Reading</strong>
+          <h3 class="mb-0">
+            <a class="text-dark" href="#">书海淘金</a>
+          </h3>
+          <div class="mb-1 text-muted">思考</div>
+          <div style="height: 100px">
+            <p class="card-text mb-auto">哲学，心理学，金融，科幻，悬疑，...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-5">
+      <div class="row">
+        <div class="col-6 col-md text-center">
+          <h5>Find Me</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">GitHub</a></li>
+            <li><a class="text-muted" href="#">领英</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md text-center">
+          <h5>Contact Me</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Email</a></li>
+            <li><a class="text-muted" href="#">微信</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md text-center">
+          <h5>Others</h5>
+          <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">版权声明</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
