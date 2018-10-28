@@ -14,17 +14,21 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-md-8 blog-main">
+    <div class="col-md-8">
       {% block blogmain %}
-      <h3 class="pb-3 mb-4 font-italic border-bottom">
-        轨迹
-      </h3>
+      <div class="pb-0 mb-4 font-italic border-bottom">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-1">
+            <h3 class="text-muted">轨迹</h3>
+          </div>
+        </div>
+      </div>
 
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">博客标题</h4>
           <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <p class="card-text text-truncate">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
           <a href="{{ url_for('blog.detail') }}" class="card-link">详情</a>
         </div>
       </div>
@@ -33,7 +37,7 @@
         <div class="card-body">
           <h4 class="card-title">博客标题</h4>
           <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <p class="card-text text-truncate">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
           <a href="#" class="card-link">详情</a>
         </div>
       </div>
@@ -42,29 +46,12 @@
         <div class="card-body">
           <h4 class="card-title">博客标题</h4>
           <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+          <p class="card-text text-truncate">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
           <a href="#" class="card-link">详情</a>
         </div>
       </div>
       <hr>
-      <div class="card" >
-        <div class="card-body">
-          <h4 class="card-title">博客标题</h4>
-          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
-          <a href="#" class="card-link">详情</a>
-        </div>
-      </div>
-      <hr>
-      <div class="card" >
-        <div class="card-body">
-          <h4 class="card-title">博客标题</h4>
-          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
-          <a href="#" class="card-link">详情</a>
-        </div>
-      </div>
-      <hr>
+
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item disabled">
@@ -88,28 +75,28 @@
       </form>
 
       <div class="p-3 mb-3 bg-light rounded">
-        <h4 class="font-italic">About</h4>
+        <h4 class="font-italic text-muted">About</h4>
         <p class="mb-0">欢迎来到我的博客，内容主要涉及Python开发，Hadoop生态，算法，Web开发，Linux基础，网络安全，游戏开发，...</p>
       </div>
 
       <div class="p-3">
-        <h4 class="font-italic">TagCloud</h4>
+        <h4 class="font-italic text-muted">TagCloud</h4>
         <div id="tag-cloud"></div>
       </div>
 
       <div class="p-3">
-        <h4 class="font-italic">Find Me</h4>
+        <h4 class="font-italic text-muted">Find Me</h4>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">GitHub</a></li>
-          <li><a class="text-muted" href="#">领英</a></li>
+          <li><a class="text-dark" href="#">GitHub</a></li>
+          <li><a class="text-dark" href="#">领英</a></li>
         </ul>
       </div>
 
       <div class="p-3">
-        <h4 class="font-italic">Contact Me</h4>
+        <h4 class="font-italic text-muted">Contact Me</h4>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Email</a></li>
-          <li><a class="text-muted" href="#">微信</a></li>
+          <li><a class="text-dark" href="#">Email</a></li>
+          <li><a class="text-dark" href="#">微信</a></li>
         </ul>
       </div>
 

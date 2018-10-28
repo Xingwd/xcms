@@ -2,6 +2,9 @@
 我的内容管理系统，个人网站
 
 
+pip国内源：-i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
 启动：
 ```
 export FLASK_APP=xcms.py
