@@ -22,9 +22,19 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
+
+    # Create user loader function
+    @login_manager.user_loader
+    def load_user(user_id):
+        return db.session.query(User).get(user_id)
+
+
     @app.route('/')
     def index():
         return render_template('index.html')
+
+    from app.admin import admin
+    app.register_blueprint(admin.bp)
 
     from app.blog import blog
     app.register_blueprint(blog.bp)
@@ -33,3 +43,7 @@ def create_app(config_class=Config):
     app.register_blueprint(auth.bp)
 
     return app
+
+
+# 解决循环导入问题
+from app.models import User

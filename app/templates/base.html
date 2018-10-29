@@ -10,7 +10,6 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -22,8 +21,10 @@
     <script src="{{ url_for('static', filename='js/jquery.svg3dtagcloud.min.js') }}"></script>
 
     <title>{% block title %}邢为栋 | Python开发者与爱好者{% endblock %}</title>
+    {% block head %}{% endblock %}
 </head>
 <body>
+    {% block body %}
     <div class="jumbotron text-center p-3 p-md-5 text-white rounded bg-dark" style="margin-bottom:0">
         {% block header %}
         <div class="container">
@@ -32,7 +33,6 @@
         {% endblock %}
     </div>
 
-    {% block nav %}
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light" role="navigation" style="margin-bottom:45px">
       <div class="container d-flex">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,6 @@
         </div>
       </div>
     </nav>
-    {% endblock %}
 
     {% block content %}
     {% endblock %}
@@ -69,5 +68,6 @@
             <span>© 2018 邢为栋</span>
         </div>
     </footer>
+    {% endblock %}
 </body>
 </html>

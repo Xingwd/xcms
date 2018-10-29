@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
+{% endblock %}
+
 {% block title %}登录{% endblock %}
 
-{% block nav %}{% endblock %}
-{% block content %}
-
-<div class="text-center">
-    <form class="form-signin">
-      <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+{% block body %}
+    <form class="form-signin text-center">
+      <img class="mb-4" src="{{ url_for('static', filename='images/bootstrap-solid.svg') }}" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
       <div class="checkbox mb-3">
         <label>
-          <input type="checkbox" value="remember-me"> 记住我
+          <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">© 2018 邢为栋</p>
     </form>
-</div>
 {% endblock %}
