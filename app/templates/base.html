@@ -20,6 +20,10 @@
     <!-- TagCloud JS -->
     <script src="{{ url_for('static', filename='js/jquery.svg3dtagcloud.min.js') }}"></script>
 
+    <!-- Editor.md -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='editormd/css/editormd.css') }}"/>
+    <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
+
     <title>{% block title %}邢为栋 | Python开发者与爱好者{% endblock %}</title>
     {% block head %}{% endblock %}
 </head>

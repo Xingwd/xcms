@@ -12,4 +12,11 @@ def admin():
 
 @bp.route('/admin_blog')
 def admin_blog():
+
+
     return render_template('admin/admin_blog.html')
+
+
+@bp.route('/new_blog')
+def admin_new_blog():
+    return render_template('admin/admin_new_blog.html')

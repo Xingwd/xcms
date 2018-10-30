@@ -42,9 +42,9 @@ class Post(db.Model):
     title = db.Column(db.String(128), index=True, unique=True)
     slug = db.Column(db.String(200), unique=True)
     content = db.Column(db.Text, index=True)
-    pub_date = db.Column(db.Date, index=True, )
+    pub_date = db.Column(db.Date, index=True)
     update_time = db.Column(db.Date, index=True)
-    pv = db.Column(db.BigInteger, index=True, unique=True)
+    pv = db.Column(db.BigInteger, index=True)
     tags = db.relationship('Tag', secondary=post_tag, backref=db.backref('posts', lazy='dynamic'))
 
     def __repr__(self):
