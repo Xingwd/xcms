@@ -2,11 +2,7 @@
 
 {% block title %}博客 | 邢为栋{% endblock %}
 
-{% block header %}
-<div class="container">
-    <p class="header">养兵千日，用在一时</p>
-</div>
-{% endblock %}
+{% block header %}纸上得来终觉浅，绝知此事要躬行{% endblock %}
 
 
 {% block content %}
@@ -15,15 +11,14 @@
 
   <div class="row">
     <div class="col-md-8">
-      {% block blogmain %}
       <div class="pb-0 mb-4 font-italic border-bottom">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-4 pt-1">
-            <h3 class="text-muted">轨迹</h3>
+            <h3 class="text-muted">{% block blogheader %}轨迹{% endblock %}</h3>
           </div>
         </div>
       </div>
-
+      {% block blogmain %}
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">博客标题</h4>
@@ -76,7 +71,8 @@
 
       <div class="p-3 mb-3 bg-light rounded">
         <h4 class="font-italic text-muted">About</h4>
-        <p class="mb-0">欢迎来到我的博客，内容主要涉及Python开发，Hadoop生态，算法，Web开发，Linux基础，网络安全，游戏开发，...</p>
+        <p class="mb-0">欢迎来到我的博客，内容均为原创，转载请注明出处。</p>
+        <p class="mb-0">内容涉及到的技术领域请看下面的标签云。</p>
       </div>
 
       <div class="p-3">

@@ -26,11 +26,9 @@
 <body>
     {% block body %}
     <div class="jumbotron text-center p-3 p-md-5 text-white rounded bg-dark" style="margin-bottom:0">
-        {% block header %}
         <div class="container">
-            <p class="header">责人之心责己，恕己之心恕人</p>
+            <p class="header">{% block header %}{% endblock %}</p>
         </div>
-        {% endblock %}
     </div>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light" role="navigation" style="margin-bottom:45px">
@@ -50,7 +48,10 @@
                   <a class="nav-link" href="#">读书</a>
               </li>
               <li class="nav-item p-2">
-                  <a class="nav-link" href="#">在路上</a>
+                  <a class="nav-link" href="#">旅行</a>
+              </li>
+              <li class="nav-item p-2">
+                  <a class="nav-link" href="#">摄影</a>
               </li>
               <li class="nav-item p-2">
                   <a class="nav-link" href="#">我</a>
