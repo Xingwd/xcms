@@ -33,7 +33,7 @@ class Tag(db.Model):
     name = db.Column(db.String(100), unique=True)
 
     def __repr__(self):
-        return '<Tag {}>'.format(self.username)
+        return '<Tag {}>'.format(self.name)
 
 
 class Post(db.Model):
@@ -43,9 +43,8 @@ class Post(db.Model):
     slug = db.Column(db.String(200), unique=True)
     content = db.Column(db.Text, index=True)
     pub_date = db.Column(db.Date, index=True)
-    update_time = db.Column(db.Date, index=True)
     pv = db.Column(db.BigInteger, index=True)
     tags = db.relationship('Tag', secondary=post_tag, backref=db.backref('posts', lazy='dynamic'))
 
     def __repr__(self):
-        return '<Post {}>'.format(self.username)
+        return '<Post {}>'.format(self.title)
