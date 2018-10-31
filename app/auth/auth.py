@@ -2,7 +2,7 @@ from flask import (
     Blueprint, render_template, request, redirect, url_for, flash
 )
 from werkzeug.urls import url_parse
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 from app.auth.forms import LoginForm
 from app.models import User
@@ -31,6 +31,7 @@ def login():
 
 
 @bp.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
