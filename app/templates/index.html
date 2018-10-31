@@ -2,7 +2,7 @@
 
 {% block title %}邢为栋 | Python开发者与爱好者{% endblock %}
 
-{% block header %}淡然之心，得见万物{% endblock %}
+{% block header %}责人之心责己，恕己之心恕人{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -11,7 +11,7 @@
       <h1 class="display-4" >邢为栋</h1>
       <h4>Python开发者与爱好者</h4>
       <h4>喜欢读书，旅行和摄影</h4>
-      <p><a class="btn btn-light btn-lg" href="#" role="button">关于我 »</a></p>
+      <p><a class="btn btn-light btn-lg" href="{{ url_for('about_me') }}" role="button">关于我 »</a></p>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
         <div class="card-body d-flex flex-column align-items-start">
           <i class="d-inline-block mb-2 text-info" data-feather="feather"></i>
           <h3 class="mb-0">
-            <a class="text-dark" href="#">技术博客</a>
+            <a class="text-dark" href="{{ url_for('blog.blog') }}">技术博客</a>
           </h3>
           <div class="mb-1 text-muted">探索</div>
           <div style="height: 100px">
@@ -35,7 +35,7 @@
         <div class="card-body d-flex flex-column align-items-start">
           <i class="d-inline-block mb-2 text-info" data-feather="book-open"></i>
           <h3 class="mb-0">
-            <a class="text-dark" href="#">书海淘金</a>
+            <a class="text-dark" href="{{ url_for('reading.reading') }}">书海淘金</a>
           </h3>
           <div class="mb-1 text-muted">思考</div>
           <div style="height: 100px">

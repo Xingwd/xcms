@@ -33,6 +33,10 @@ def create_app(config_class=Config):
     def index():
         return render_template('index.html')
 
+    @app.route('/about')
+    def about_me():
+        return render_template('about_me.html')
+
     from app.admin import admin
     app.register_blueprint(admin.bp)
 
@@ -41,6 +45,15 @@ def create_app(config_class=Config):
 
     from app.auth import auth
     app.register_blueprint(auth.bp)
+
+    from app.reading import reading
+    app.register_blueprint(reading.bp)
+
+    from app.travel import travel
+    app.register_blueprint(travel.bp)
+
+    from app.photography import photography
+    app.register_blueprint(photography.bp)
 
     return app
 
