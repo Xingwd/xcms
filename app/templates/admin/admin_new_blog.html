@@ -2,35 +2,47 @@
 
 {% block adminmain %}
 <div style="padding-top: 50px;">
-    <form>
+    <form method="POST">
+        {{ blog_form.hidden_tag() }}
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Title">
+                        {{ blog_form.title.label }}
+                        {{ blog_form.title(class_="form-control", placeholder="Title") }}
+                        {% for error in blog_form.title.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="slug">Slug</label>
-                        <input type="text" class="form-control" id="slug" placeholder="Slug">
+                        {{ blog_form.slug.label }}
+                        {{ blog_form.slug(class_="form-control", placeholder="Slug") }}
+                        {% for error in blog_form.slug.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <div class="form-group">
-                        <label for="tags">Tags</label>
-                        <select multiple class="form-control" id="tags">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                        </select>
+                        {{ blog_form.tags.label }}
+                        {{ blog_form.tags(class_="form-control js-select2-basic-multiple") }}
+                        {% for error in blog_form.tags.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="col-md-2" style="padding: 50px">
-                    <button type="submit" class="btn btn-info btn-lg">发布</button>
+                <div class="col-md-3 btn-toolbar justify-content-between" style="padding-top: 38px">
+                    <div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newTagModal">New Tag</button>
+                    </div>
+                    <div>
+                        {{ blog_form.publish(class_="btn btn-info") }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,8 +50,39 @@
             <div id="test-editormd"></div>
         </div>
     </form>
+    <!-- Modal -->
+    <div class="modal fade" id="newTagModal" tabindex="-1" role="dialog" aria-labelledby="newTagModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newTagModalLabel">New Tag</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        {{ tag_form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ tag_form.name.label }}
+                            {{ tag_form.name(class_="form-control", placeholder="Tag name") }}
+                            {% for error in tag_form.name.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    {{ tag_form.save(class_="btn btn-info") }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<!-- editor.md -->
 <script type="text/javascript">
     var testEditor;
 
@@ -52,5 +95,13 @@
         });
     });
 </script>
+
+<!-- select2 -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.js-select2-basic-multiple').select2();
+    });
+</script>
+
 {% endblock %}
 
