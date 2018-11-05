@@ -36,36 +36,30 @@
       </div>
       <hr>
       {% endfor %}
-      <div class="card" >
-        <div class="card-body">
-          <h4 class="card-title">博客标题</h4>
-          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text text-truncate">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
-          <a href="#" class="card-link">详情</a>
-        </div>
-      </div>
-      <hr>
-      <div class="card" >
-        <div class="card-body">
-          <h4 class="card-title">博客标题</h4>
-          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text text-truncate">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
-          <a href="#" class="card-link">详情</a>
-        </div>
-      </div>
-      <hr>
 
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          {% if prev_url %}
           <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+            <a class="page-link" href="{{ prev_url }}" tabindex="-1">上一页</a>
           </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">上一页</a>
+          </li>
+          {% endif %}
+          <!--<li class="page-item"><a class="page-link" href="#">1</a></li>-->
+          <!--<li class="page-item"><a class="page-link" href="#">2</a></li>-->
+          <!--<li class="page-item"><a class="page-link" href="#">3</a></li>-->
+          {% if next_url %}
+          <li class="page-item">
+            <a class="page-link" href="{{ next_url }}">下一页</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">下一页</a>
+          </li>
+          {% endif %}
         </ul>
       </nav>
       {% endblock %}
