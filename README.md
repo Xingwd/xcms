@@ -19,3 +19,9 @@ flask db init
 flask db migrate
 flask db upgrade
 ```
+
+自定义命令：
+```
+flask createadmin --help
+flask createadmin --name admin --password admin
+```

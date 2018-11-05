@@ -2,7 +2,7 @@
 
 {% block adminmain %}
 <div style="padding-top: 50px;">
-    <form method="POST">
+    <form method="post">
         {{ post_form.hidden_tag() }}
         <div style="margin: 0 84px 0 84px">
             <div class="row">
@@ -43,15 +43,24 @@
                         </button>
                     </div>
                     <div>
-                        {{ post_form.publish(class_="btn btn-info") }}
+                        {{ post_form.post_submit(class_="btn btn-info") }}
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <div id="test-editormd"></div>
+            <div style="margin: 0 84px 0 84px">
+                <!--{{ post_form.content.label }}-->
+                {% for error in post_form.content.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div id="test-editormd">
+                {{ post_form.content(style="display:none;") }}
+            </div>
         </div>
     </form>
+
     <!-- Modal -->
     <div class="modal fade" id="newTagModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newTagModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -63,18 +72,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ url_for('admin.new_blog_tag') }}">
+                    <form id="newTagForm" method="post">
                         {{ tag_form.hidden_tag() }}
                         <div class="form-group">
-                            {{ tag_form.name.label }}
-                            {{ tag_form.name(class_="form-control") }}
-                            {% for error in tag_form.name.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                            {% endfor %}
+                            {{ tag_form.tag_name.label }}
+                            {{ tag_form.tag_name(class_="form-control") }}
+                            <span id="tagNameError" style="color: red;"></span>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-info" data-dismiss="modal">Save</button>
+                            {{ tag_form.tag_submit(class_="btn btn-info") }}
                         </div>
                     </form>
                 </div>
@@ -91,11 +98,13 @@
     $(function () {
         testEditor = editormd("test-editormd", {
             width: "90%",
-            height: 740,
+            height: 640,
             syncScrolling: "single",
             path: "{{ url_for('static',filename='editormd/lib/') }}"
         });
     });
+
+    testEditor.getMarkdown();
 </script>
 
 <!-- select2 -->
@@ -103,6 +112,34 @@
     $(document).ready(function() {
         $('.js-select2-basic-multiple').select2();
     });
+</script>
+
+<!-- New tag -->
+<script type="text/javascript">
+function addSubmit(ev) {
+  ev.preventDefault();
+  $.ajax({
+    method: 'POST',
+    url: {{ url_for('admin.new_blog_tag')|tojson }},
+    data: {
+        tag_name: $('#tag_name').val()
+      }
+  }).done(addShow);
+}
+function addShow(result) {
+  if (result.b) {
+      document.getElementById("tagNameError").innerHTML="[Tag already exists]";
+  }
+  else {
+      var newOption = new Option(result.newtag, result.newtag, false, true);
+      $('.js-select2-basic-multiple').append(newOption).trigger('change');
+      $('#newTagModal').modal('hide');
+      $("input#tag_name").val('');
+      document.getElementById("tagNameError").innerHTML="";
+  }
+}
+$('#tag_submit').click(addSubmit);
+
 </script>
 
 {% endblock %}

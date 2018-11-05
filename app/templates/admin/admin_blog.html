@@ -2,34 +2,41 @@
 
 {% block adminmain %}
 <div class="container" style="padding-top: 50px;">
-<table class="table">
+  <div class="row justify-content-end" style="margin: 0 5px 10px 5px">
+      <a class="text-info" href="{{ url_for('admin.new_blog') }}">
+        <button type="button" class="btn btn-info">New Post</button>
+      </a>
+  </div>
+  <table class="table table-striped table-bordered table-active">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Title</th>
+      <th scope="col">Pub Date</th>
+      <th scope="col">Tags</th>
+      <th scope="col">PV</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Del</th>
     </tr>
   </thead>
   <tbody>
+    {% for post in posts %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row">{{ post.id }}</th>
+      <td>{{ post.title }}</td>
+      <td>{{ post.pub_date }}</td>
+      <td>
+        <div class="btn-group-sm" role="group">
+          {% for tag in post.tags %}
+          <button type="button" class="btn btn-warning" style="padding: 0 5px 0 5px">{{ tag.name }}</button>
+          {% endfor %}
+        </div>
+      </td>
+      <td>{{ post.pv }}</td>
+      <td><a href="{{ url_for('admin.edit_blog', id=post.id) }}"><i class="text-success" width="28" height="28" data-feather="edit-2"></i></a></td>
+      <td><a href="{{ url_for('admin.del_blog', id=post.id) }}"><i class="text-danger" width="28" height="28" data-feather="x-circle"></i></a></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    {% endfor %}
   </tbody>
 </table>
 

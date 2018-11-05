@@ -2,7 +2,7 @@
 
 {% block title %}博客 | 邢为栋{% endblock %}
 
-{% block header %}记录经验，助人助己{% endblock %}
+{% block header %}千里之行，始于足下{% endblock %}
 
 
 {% block content %}
@@ -19,15 +19,23 @@
         </div>
       </div>
       {% block blogmain %}
-      <div class="card">
+      {% for post in posts %}
+      <div class="card bg-light">
+        <h4 class="card-header">{{ post.title }}</h4>
         <div class="card-body">
-          <h4 class="card-title">博客标题</h4>
-          <h6 class="card-subtitle mb-2 text-muted">January 1, 2014</h6>
-          <p class="card-text text-truncate">博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介,博客内容简介.</p>
+
+          <h6 class="card-subtitle mb-2 text-muted">{{ post.pub_date }}</h6>
+          <div class="btn-group-sm" role="group">
+            {% for tag in post.tags %}
+            <button type="button" class="btn btn-info" style="padding: 0 5px 0 5px">{{ tag.name }}</button>
+            {% endfor %}
+          </div>
+          <div class="card-text text-truncate" style="margin: 5px 0 5px 0">{{ post.content }}</div>
           <a href="{{ url_for('blog.detail') }}" class="card-link">详情</a>
         </div>
       </div>
       <hr>
+      {% endfor %}
       <div class="card" >
         <div class="card-body">
           <h4 class="card-title">博客标题</h4>
@@ -72,7 +80,6 @@
       <div class="p-3 mb-3 bg-light rounded">
         <h4 class="font-italic text-muted">About</h4>
         <p class="mb-0">欢迎来到我的博客，内容均为原创，转载请注明出处。</p>
-        <p class="mb-0">内容涉及到的技术领域请看下面的标签云。</p>
       </div>
 
       <div class="p-3">
