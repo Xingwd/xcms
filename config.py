@@ -8,3 +8,5 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 5
+
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')

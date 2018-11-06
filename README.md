@@ -25,3 +25,12 @@ flask db upgrade
 flask createadmin --help
 flask createadmin --name admin --password admin
 ```
+
+
+安装 Elasticsearch：
+```
+docker pull docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+
+```
+运行 Elasticsearch，参考：
+https://www.elastic.co/guide/en/elasticsearch/reference/6.4/docker.html

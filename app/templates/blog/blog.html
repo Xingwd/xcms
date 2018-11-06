@@ -65,8 +65,8 @@
     </div><!-- /.blog-main -->
 
     <aside class="col-md-4 blog-sidebar">
-      <form class="mb-3 form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="mb-3 form-inline" method="get" action="{{ url_for('blog.search') }}">
+        {{ g.search_form.q(class_='form-control mr-sm-2', placeholder=g.search_form.q.label.text) }}
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
 
