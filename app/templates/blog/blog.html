@@ -27,11 +27,13 @@
           <h6 class="card-subtitle mb-2 text-muted">{{ post.pub_date }}</h6>
           <div class="btn-group-sm" role="group">
             {% for tag in post.tags %}
-            <button type="button" class="btn btn-info" style="padding: 0 5px 0 5px">{{ tag.name }}</button>
+            <a href="{{ url_for('blog.tag_filter', name=tag.name) }}">
+              <button type="button" class="btn btn-info" style="padding: 0 5px 0 5px">{{ tag.name }}</button>
+            </a>
             {% endfor %}
           </div>
           <div class="card-text text-truncate" style="margin: 5px 0 5px 0">{{ post.content }}</div>
-          <a href="{{ url_for('blog.detail') }}" class="card-link">详情</a>
+          <a href="{{ url_for('blog.detail', slug=post.slug) }}" class="card-link">详情</a>
         </div>
       </div>
       <hr>
@@ -108,20 +110,10 @@
 
 <script>
   $( document ).ready( function() {
-    var entries = [
-        { label: 'Python', url: 'http://www.jqueryscript.net/tags.php?/Back%20to%20top/', target: '_top' },
-        { label: 'Flask', url: 'http://www.jqueryscript.net/tags.php?/Bootstrap/', target: '_top' },
-        { label: 'Hadoop', url: 'https://goo.gl/', target: '_top' },
-        { label: 'Hive', url: 'https://jquery.com/', target: '_top' },
-        { label: 'spark', url: 'https://jquery.com/', target: '_top' },
-        { label: 'hbase', url: 'https://jquery.com/', target: '_top' },
-        { label: 'phoenix', url: 'https://jquery.com/', target: '_top' },
-        { label: 'linux', url: 'https://jquery.com/', target: '_top' },
-        { label: 'django', url: 'https://jquery.com/', target: '_top' },
-        { label: 'Web开发', url: 'http://www.jqueryscript.net/tags.php?/Notification/', target: '_top' },
-        { label: '爬虫', url: 'http://www.jqueryscript.net/tags.php?/parallax/', target: '_top' }
-
-    ];
+    var entries = []
+    {% for tag in tags %}
+    entries.push({ label: '{{ tag.name }}', url: '{{ url_for('blog.tag_filter', name=tag.name) }}', target: '_top' })
+    {% endfor %}
 
     var settings = {
         entries: entries,
@@ -146,7 +138,7 @@
 
     };
 
-    //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder'  ), settings );
+    //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder' ), settings );
     $( '#tag-cloud' ).svg3DTagCloud( settings );
 
   } );
