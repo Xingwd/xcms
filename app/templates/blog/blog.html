@@ -65,10 +65,12 @@
     </div><!-- /.blog-main -->
 
     <aside class="col-md-4 blog-sidebar">
+      {% if g.search_form %}
       <form class="mb-3 form-inline" method="get" action="{{ url_for('blog.search') }}">
         {{ g.search_form.q(class_='form-control mr-sm-2', placeholder=g.search_form.q.label.text) }}
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
+      {% endif %}
 
       <div class="p-3 mb-3 bg-light rounded">
         <h4 class="font-italic text-muted">About</h4>
