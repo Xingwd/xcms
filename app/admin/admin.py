@@ -30,7 +30,10 @@ def new_blog():
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
     tag_form = NewTagForm()
     if post_form.validate_on_submit():
-        post = Post(title=post_form.title.data, slug=post_form.slug.data, outline=post_form.outline.data, content=post_form.content.data, pub_date=time.strftime("%Y-%m-%d", time.localtime()))
+        post = Post(title=post_form.title.data, slug=post_form.slug.data,
+                    outline=post_form.outline.data,
+                    content=post_form.content.data,
+                    pub_date=time.strftime("%Y-%m-%d", time.localtime()))
         for tag in post_form.tags.data:
             post.add_tag(Tag.query.filter_by(name=tag).first())
         db.session.add(post)

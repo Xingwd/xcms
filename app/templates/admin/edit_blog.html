@@ -66,7 +66,7 @@
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </div>
-            <div id="test-editormd">
+            <div id="md-editormd">
                 {{ post_form.content(style="display:none;") }}
             </div>
         </div>
@@ -104,10 +104,10 @@
 
 <!-- editor.md -->
 <script type="text/javascript">
-    var testEditor;
+    var mdEditor;
 
     $(function () {
-        testEditor = editormd("test-editormd", {
+        mdEditor = editormd("md-editormd", {
             width: "90%",
             height: 640,
             syncScrolling: "single",
@@ -115,7 +115,8 @@
         });
     });
 
-    testEditor.getMarkdown();
+    // mdEditor.getMarkdown();
+    // mdEditor.getHTML();
 </script>
 
 <!-- select2 -->
