@@ -2,13 +2,42 @@
 
 {% block title %}关于我 | 邢为栋{% endblock %}
 
-{% block header %}自强不息，厚德载物{% endblock %}
+{% block header %}己所不欲，勿施于人{% endblock %}
 
 
 {% block content %}
 
-<div class="container">
-  <h1>老邢还没添加内容</h1>
+<div class="container" style="margin-bottom: 60px;">
+  <h1>邢为栋</h1>
+  <p class="text-muted">Python开发者与爱好者。</p>
+  <hr>
+  <h5>涉及领域：</h5>
+  <ul>
+    <li>大数据，Hadoop生态</li>
+    <li>Flask Web开发</li>
+  </ul>
+  <h5>正在探索：</h5>
+  <ul>
+    <li>AI，机器学习</li>
+  </ul>
+  <hr>
+  <h5>公开项目：</h5>
+  <ul>
+    <li><a href="https://github.com/Xingwd/xcms">本站源码</a></li>
+    <li><a href="https://github.com/Xingwd/ambari-services">ambari-services</a></li>
+    <li><a href="https://github.com/Xingwd/python-spider/tree/scrapy-3">Scrapy爬虫初探</a></li>
+    <li>......</li>
+  </ul>
+  <hr>
+  <h5>其他：</h5>
+  <ul>
+    <li>Ambari Stack开发，Hadoop平台开发</li>
+    <li>开发Hadoop支持多CPU架构</li>
+    <li>流数据处理</li>
+    <li>......</li>
+  </ul>
 </div>
+
+{% include '_info.html' %}
 
 {% endblock %}

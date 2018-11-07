@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}版权声明 | 邢为栋{% endblock %}
+
+{% block header %}己所不欲，勿施于人{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2>版权声明</h2>
+  <hr>
+  <p>本网站主要用来记录我的学习总结和读书思考，非商业性使用。</p>
+  <p>本站所有内容除非特别说明，否则均为原创，非商业转载请署名（邢为栋）并注明文章出处，商业转载请联系我。</p>
+</div>
+
+{% endblock %}

@@ -40,6 +40,11 @@ def create_app(config_class=Config):
     def about_me():
         return render_template('about_me.html')
 
+    @app.route('/copyright')
+    def copyright():
+        return render_template('copyright.html')
+
+
     from app.admin import admin
     app.register_blueprint(admin.bp)
 
