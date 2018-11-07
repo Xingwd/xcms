@@ -9,6 +9,7 @@ class NewPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     slug = StringField('Slug', validators=[DataRequired()])
     tags = SelectMultipleField('Tags', validators=[DataRequired()], choices=[])
+    outline = TextAreaField('Outline', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
     post_submit = SubmitField('发布')
 

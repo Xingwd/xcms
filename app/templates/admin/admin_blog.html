@@ -33,7 +33,7 @@
         </div>
       </td>
       <td>{{ post.pv }}</td>
-      <td><a href="{{ url_for('admin.edit_blog', id=post.id) }}"><i class="text-success" width="28" height="28" data-feather="edit-2"></i></a></td>
+      <td><a href="{{ url_for('admin.edit_blog', id=post.id) }}"><i class="text-success" width="28" height="28" data-feather="edit"></i></a></td>
       <td><a href="{{ url_for('admin.del_blog', id=post.id) }}"><i class="text-danger" width="28" height="28" data-feather="x-circle"></i></a></td>
     </tr>
     {% endfor %}

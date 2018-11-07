@@ -79,6 +79,7 @@ class Post(SearchableMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), index=True)
     slug = db.Column(db.String(200))
+    outline = db.Column(db.Text)
     content = db.Column(db.Text)
     pub_date = db.Column(db.String(80), index=True)
     pv = db.Column(db.BigInteger, index=True, default=0)

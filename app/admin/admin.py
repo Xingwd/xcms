@@ -30,7 +30,7 @@ def new_blog():
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
     tag_form = NewTagForm()
     if post_form.validate_on_submit():
-        post = Post(title=post_form.title.data, slug=post_form.slug.data, content=post_form.content.data, pub_date=time.strftime("%Y-%m-%d", time.localtime()))
+        post = Post(title=post_form.title.data, slug=post_form.slug.data, outline=post_form.outline.data, content=post_form.content.data, pub_date=time.strftime("%Y-%m-%d", time.localtime()))
         for tag in post_form.tags.data:
             post.add_tag(Tag.query.filter_by(name=tag).first())
         db.session.add(post)
@@ -65,11 +65,13 @@ def edit_blog(id):
     post_form.slug.data = post.slug
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
     post_form.tags.data = tags
+    post_form.outline.data = post.outline
     post_form.content.data = post.content
 
     if post_form.validate_on_submit():
         post.title = request.form.get('title')
         post.slug = request.form.get('slug')
+        post.outline = request.form.get('outline')
         post.content = request.form.get('content')
         request_tags = request.form.getlist('tags')
 
