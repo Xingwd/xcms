@@ -34,11 +34,39 @@
       </td>
       <td>{{ post.pv }}</td>
       <td><a href="{{ url_for('admin.edit_blog', id=post.id) }}"><i class="text-success" width="28" height="28" data-feather="edit"></i></a></td>
-      <td><a href="{{ url_for('admin.del_blog', id=post.id) }}"><i class="text-danger" width="28" height="28" data-feather="x-circle"></i></a></td>
+      <!--<td><a href="{{ url_for('admin.del_blog', id=post.id) }}"><i class="text-danger" width="28" height="28" data-feather="x-circle"></i></a></td>-->
+      <td>
+        <button type="button" class="btn btn-link" style="padding:0" data-toggle="modal" data-target="#deletePostModal">
+          <i class="text-danger" width="28" height="28" data-feather="x-circle"></i>
+        </button>
+      </td>
     </tr>
+    <!-- Modal -->
+    <div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deletePostModalLabel">删除文章</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            确认删除文章《<span class="text-info">{{ post.title }}</span>》 ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <a href="{{ url_for('admin.del_blog', id=post.id) }}">
+              <button type="button" class="btn btn-danger">确认删除</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     {% endfor %}
   </tbody>
 </table>
+
 
 </div>
 {% endblock %}
