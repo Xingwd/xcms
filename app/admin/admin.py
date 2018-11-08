@@ -13,25 +13,25 @@ bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 @bp.route('/')
-#@login_required
+@login_required
 def admin():
     return render_template('admin/admin.html')
 
 @bp.route('/admin_blog')
-#@login_required
+@login_required
 def admin_blog():
     posts = Post.query.order_by(Post.id.desc()).all()
     return render_template('admin/blog/admin_blog.html', posts=posts)
 
 @bp.route('/admin_blog_tag')
-#@login_required
+@login_required
 def admin_blog_tag():
     tags = Tag.query.order_by(Tag.id.desc()).all()
     tag_form = NewTagForm()
     return render_template('admin/blog/admin_blog_tag.html', tags=tags, tag_form=tag_form)
 
 @bp.route('/new_blog', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def new_blog():
     post_form = NewPostForm()
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
@@ -50,6 +50,7 @@ def new_blog():
     return render_template('admin/blog/edit_blog.html', post_form=post_form, tag_form=tag_form)
 
 @bp.route('/new_blog_tag', methods=['GET', 'POST'])
+@login_required
 def new_blog_tag():
     new_tag = request.form.get('tag_name')
     if Tag.query.filter_by(name=new_tag).first() is not None:
@@ -61,7 +62,7 @@ def new_blog_tag():
         return jsonify(newtag=new_tag, b=False)
 
 @bp.route('/edit_blog/<id>', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def edit_blog(id):
     g.post_id = id
     post = Post.query.filter_by(id=id).first_or_404()
@@ -99,7 +100,7 @@ def edit_blog(id):
     return render_template('admin/blog/edit_blog.html', post_form=post_form, tag_form=tag_form)
 
 @bp.route('/edit_blog_tag/<id>', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def edit_blog_tag(id):
     g.tag_id = id
     tag = Tag.query.filter_by(id=id).first_or_404()
@@ -113,7 +114,7 @@ def edit_blog_tag(id):
 
 
 @bp.route('/del_blog/<id>', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def del_blog(id):
     post = Post.query.filter_by(id=id).first_or_404()
     db.session.delete(post)
@@ -121,7 +122,7 @@ def del_blog(id):
     return redirect(url_for('admin.admin_blog'))
 
 @bp.route('/del_blog_tag/<id>', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def del_blog_tag(id):
     tag = Tag.query.filter_by(id=id).first_or_404()
     db.session.delete(tag)
