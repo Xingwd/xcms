@@ -14,11 +14,25 @@
 
     <div class="collapse navbar-collapse" id="navbars">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item p-2">
-          <a class="nav-link" href="{{ url_for('admin.admin_blog') }}">博客</a>
+        <li class="nav-item p-2 dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="blogDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            博客
+          </a>
+          <div class="dropdown-menu" aria-labelledby="blogDropdown">
+            <a class="dropdown-item" href="{{ url_for('admin.admin_blog_tag') }}">Tags</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('admin.admin_blog') }}">Posts</a>
+        </div>
         </li>
-        <li class="nav-item p-2">
-          <a class="nav-link" href="{{ url_for('admin.admin_reading') }}">读书</a>
+        <li class="nav-item p-2 dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="readingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            读书
+          </a>
+          <div class="dropdown-menu" aria-labelledby="readingDropdown">
+            <a class="dropdown-item" href="#">Tags</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('admin.admin_reading') }}">Notes</a>
+        </div>
         </li>
         <li class="nav-item p-2">
           <a class="nav-link" href="{{ url_for('admin.admin_travel') }}">旅行</a>

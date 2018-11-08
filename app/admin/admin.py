@@ -21,7 +21,14 @@ def admin():
 #@login_required
 def admin_blog():
     posts = Post.query.order_by(Post.id.desc()).all()
-    return render_template('admin/admin_blog.html', posts=posts)
+    return render_template('admin/blog/admin_blog.html', posts=posts)
+
+@bp.route('/admin_blog_tag')
+#@login_required
+def admin_blog_tag():
+    tags = Tag.query.order_by(Tag.id.desc()).all()
+    tag_form = NewTagForm()
+    return render_template('admin/blog/admin_blog_tag.html', tags=tags, tag_form=tag_form)
 
 @bp.route('/new_blog', methods=['GET', 'POST'])
 #@login_required
@@ -38,11 +45,9 @@ def new_blog():
             post.add_tag(Tag.query.filter_by(name=tag).first())
         db.session.add(post)
         db.session.commit()
-        flash('新文章发布成功!')
         return redirect(url_for('admin.admin_blog'))
 
-    return render_template('admin/edit_blog.html', post_form=post_form, tag_form=tag_form)
-
+    return render_template('admin/blog/edit_blog.html', post_form=post_form, tag_form=tag_form)
 
 @bp.route('/new_blog_tag', methods=['GET', 'POST'])
 def new_blog_tag():
@@ -89,10 +94,23 @@ def edit_blog(id):
                     post.remove_tag(Tag.query.filter_by(name=tag).first())
 
         db.session.commit()
-        flash('文章更新成功!')
         return redirect(url_for('admin.admin_blog'))
 
-    return render_template('admin/edit_blog.html', post_form=post_form, tag_form=tag_form)
+    return render_template('admin/blog/edit_blog.html', post_form=post_form, tag_form=tag_form)
+
+@bp.route('/edit_blog_tag/<id>', methods=['GET', 'POST'])
+#@login_required
+def edit_blog_tag(id):
+    g.tag_id = id
+    tag = Tag.query.filter_by(id=id).first_or_404()
+    tag_form = NewTagForm()
+    if tag_form.validate_on_submit():
+        tag.name = tag_form.tag_name.data
+        db.session.commit()
+        return redirect(url_for('admin.admin_blog_tag'))
+
+    return render_template('admin/blog/edit_blog_tag.html', tag=tag, tag_form=tag_form)
+
 
 @bp.route('/del_blog/<id>', methods=['GET', 'POST'])
 #@login_required
@@ -102,34 +120,42 @@ def del_blog(id):
     db.session.commit()
     return redirect(url_for('admin.admin_blog'))
 
+@bp.route('/del_blog_tag/<id>', methods=['GET', 'POST'])
+#@login_required
+def del_blog_tag(id):
+    tag = Tag.query.filter_by(id=id).first_or_404()
+    db.session.delete(tag)
+    db.session.commit()
+    return redirect(url_for('admin.admin_blog_tag'))
+
 
 
 @bp.route('/admin_reading')
 @login_required
 def admin_reading():
-    return render_template('admin/admin_reading.html')
+    return render_template('admin/reading/admin_reading.html')
 
 @bp.route('/new_reading', methods=['GET', 'POST'])
 @login_required
 def new_reading():
-    return render_template('admin/admin_new_reading.html')
+    return render_template('admin/reading/new_reading.html')
 
 @bp.route('/admin_travel')
 @login_required
 def admin_travel():
-    return render_template('admin/admin_travel.html')
+    return render_template('admin/travel/admin_travel.html')
 
 @bp.route('/new_travel', methods=['GET', 'POST'])
 @login_required
 def new_travel():
-    return render_template('admin/admin_new_travel.html')
+    return render_template('admin/travel/new_travel.html')
 
 @bp.route('/admin_photography')
 @login_required
 def admin_photography():
-    return render_template('admin/admin_photography.html')
+    return render_template('admin/photography/admin_photography.html')
 
 @bp.route('/new_photography', methods=['GET', 'POST'])
 @login_required
 def new_photography():
-    return render_template('admin/admin_new_photography.html')
+    return render_template('admin/photography/new_photography.html')

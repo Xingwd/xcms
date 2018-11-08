@@ -34,19 +34,18 @@
       </td>
       <td>{{ post.pv }}</td>
       <td><a href="{{ url_for('admin.edit_blog', id=post.id) }}"><i class="text-success" width="28" height="28" data-feather="edit"></i></a></td>
-      <!--<td><a href="{{ url_for('admin.del_blog', id=post.id) }}"><i class="text-danger" width="28" height="28" data-feather="x-circle"></i></a></td>-->
       <td>
-        <button type="button" class="btn btn-link" style="padding:0" data-toggle="modal" data-target="#deletePostModal">
+        <button type="button" class="btn btn-link" style="padding:0" data-toggle="modal" data-target="#deletePostModal{{ post.id }}">
           <i class="text-danger" width="28" height="28" data-feather="x-circle"></i>
         </button>
       </td>
     </tr>
     <!-- Modal -->
-    <div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deletePostModal{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="deletePostModalLabel{{ post.id }}" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deletePostModalLabel">删除文章</h5>
+            <h5 class="modal-title" id="deletePostModalLabel{{ post.id }}">删除文章</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
