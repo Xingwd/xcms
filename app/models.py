@@ -77,8 +77,8 @@ class Post(SearchableMixin, db.Model):
     __tablename__ = 'post'
     __searchable__ = ['title', 'content']
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(128), index=True)
-    slug = db.Column(db.String(200))
+    title = db.Column(db.String(128), index=True, unique=True)
+    slug = db.Column(db.String(200), unique=True)
     outline = db.Column(db.Text)
     content = db.Column(db.Text)
     pub_date = db.Column(db.String(80), index=True)
