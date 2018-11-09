@@ -5,6 +5,15 @@
 pip国内源：-i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
+测试：
+```
+coverage run -m pytest
+```
+
+> 直接使用pytest，会出现 ModuleNotFoundError 的错误
+
+
+
 启动：
 ```
 export FLASK_APP=xcms.py
