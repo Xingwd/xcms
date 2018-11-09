@@ -73,15 +73,14 @@
       </div>
       <div class="modal-body">
         <form id="newTagForm" method="post">
-          {{ tag_form.hidden_tag() }}
           <div class="form-group">
-            {{ tag_form.tag_name.label }}
-            {{ tag_form.tag_name(class_="form-control") }}
+            <label for="tagName">Tag Name</label>
+            <input type="text" class="form-control" id="tagName">
             <span id="tagNameError" style="color: red;"></span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-            {{ tag_form.tag_submit(class_="btn btn-info") }}
+            <input class="btn btn-info" id="tagSubmit" name="tagSubmit" type="submit" value="Add">
           </div>
         </form>
       </div>
@@ -98,7 +97,7 @@ function addSubmit(ev) {
     method: 'POST',
     url: {{ url_for('admin.new_blog_tag')|tojson }},
     data: {
-        tag_name: $('#tag_name').val()
+        tag_name: $('#tagName').val()
       }
   }).done(addShow);
 }
@@ -113,7 +112,7 @@ function addShow(result) {
       location.reload();
   }
 }
-$('#tag_submit').click(addSubmit);
+$('#tagSubmit').click(addSubmit);
 
 </script>
 {% endblock %}

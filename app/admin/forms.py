@@ -34,7 +34,7 @@ class NewPostForm(FlaskForm):
 
 class NewTagForm(FlaskForm):
     tag_name = StringField('Tag Name', validators=[DataRequired()])
-    tag_submit = SubmitField('Add')
+    tag_submit = SubmitField('Confirm')
 
     def validate_tag_name(self, tag_name):
         tag = Tag.query.filter_by(name=tag_name.data).first()

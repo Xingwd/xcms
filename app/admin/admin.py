@@ -27,8 +27,7 @@ def admin_blog():
 @login_required
 def admin_blog_tag():
     tags = Tag.query.order_by(Tag.id.desc()).all()
-    tag_form = NewTagForm()
-    return render_template('admin/blog/admin_blog_tag.html', tags=tags, tag_form=tag_form)
+    return render_template('admin/blog/admin_blog_tag.html', tags=tags)
 
 @bp.route('/new_blog', methods=['GET', 'POST'])
 @login_required
@@ -36,7 +35,6 @@ def new_blog():
     g.post_id = None
     post_form = NewPostForm()
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
-    tag_form = NewTagForm()
     if post_form.validate_on_submit():
         post = Post(title=post_form.title.data, slug=post_form.slug.data,
                     outline=post_form.outline.data,
@@ -48,7 +46,7 @@ def new_blog():
         db.session.commit()
         return redirect(url_for('admin.admin_blog'))
 
-    return render_template('admin/blog/edit_blog.html', post_form=post_form, tag_form=tag_form)
+    return render_template('admin/blog/edit_blog.html', post_form=post_form)
 
 @bp.route('/new_blog_tag', methods=['GET', 'POST'])
 @login_required
