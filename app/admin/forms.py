@@ -16,7 +16,7 @@ class NewPostForm(FlaskForm):
     def validate_title(self, title):
         post = Post.query.filter_by(title=title.data).first()
         if post is not None:
-            if g.post_id:
+            if g.post_id is not None:
                 if post.id != int(g.post_id):
                     raise ValidationError('Title already exists.')
             else:

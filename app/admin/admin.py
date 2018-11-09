@@ -33,6 +33,7 @@ def admin_blog_tag():
 @bp.route('/new_blog', methods=['GET', 'POST'])
 @login_required
 def new_blog():
+    g.post_id = None
     post_form = NewPostForm()
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
     tag_form = NewTagForm()
@@ -61,32 +62,30 @@ def new_blog_tag():
         db.session.commit()
         return jsonify(newtag=new_tag, b=False)
 
+
 @bp.route('/edit_blog/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_blog(id):
     g.post_id = id
     post = Post.query.filter_by(id=id).first_or_404()
     tags = [tag.name for tag in post.tags]
-    post_form = NewPostForm()
-    tag_form = NewTagForm()
 
-    post_form.title.data = post.title
-    post_form.slug.data = post.slug
+    post_form = NewPostForm()
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
     post_form.tags.data = tags
-    post_form.outline.data = post.outline
-    post_form.content.data = post.content
+
+    tag_form = NewTagForm()
 
     if post_form.validate_on_submit():
-        post.title = request.form.get('title')
-        post.slug = request.form.get('slug')
-        post.outline = request.form.get('outline')
-        post.content = request.form.get('content')
-        request_tags = request.form.getlist('tags')
+        post.title = post_form.title.data
+        post.slug = post_form.slug.data
+        post.outline = post_form.outline.data
+        post.content = post_form.content.data
+        new_tags = request.form.getlist('tags')
 
-        add_list = list(set(request_tags).difference(set(tags)))
-        remove_list = list(set(tags).difference(set(request_tags)))
-        if request_tags != tags:
+        add_list = list(set(new_tags).difference(set(tags)))
+        remove_list = list(set(tags).difference(set(new_tags)))
+        if new_tags != tags:
             if len(add_list):
                 for tag in add_list:
                     post.add_tag(Tag.query.filter_by(name=tag).first())
@@ -97,7 +96,9 @@ def edit_blog(id):
         db.session.commit()
         return redirect(url_for('admin.admin_blog'))
 
-    return render_template('admin/blog/edit_blog.html', post_form=post_form, tag_form=tag_form)
+    return render_template('admin/blog/edit_blog.html',
+                           post_form=post_form, tag_form=tag_form, post=post)
+
 
 @bp.route('/edit_blog_tag/<id>', methods=['GET', 'POST'])
 @login_required
