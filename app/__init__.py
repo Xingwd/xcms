@@ -48,6 +48,9 @@ def create_app(config_class=Config):
     from app.admin import admin
     app.register_blueprint(admin.bp)
 
+    from app.errors import handlers
+    app.register_blueprint(handlers.bp)
+
     from app.blog import blog
     app.register_blueprint(blog.bp)
 
