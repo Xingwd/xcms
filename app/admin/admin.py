@@ -71,14 +71,16 @@ def edit_blog(id):
     post_form = NewPostForm()
     post_form.tags.choices = [(tag.name, tag.name) for tag in Tag.query.all()]
     post_form.tags.data = tags
+    post_form.outline.data = post.outline
+    post_form.content.data = post.content
 
     tag_form = NewTagForm()
 
     if post_form.validate_on_submit():
         post.title = post_form.title.data
         post.slug = post_form.slug.data
-        post.outline = post_form.outline.data
-        post.content = post_form.content.data
+        post.outline = request.form.get('outline')
+        post.content = request.form.get('content')
         new_tags = request.form.getlist('tags')
 
         add_list = list(set(new_tags).difference(set(tags)))

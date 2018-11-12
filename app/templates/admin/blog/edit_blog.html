@@ -161,15 +161,5 @@ $('#tagSubmit').click(addSubmit);
 
 </script>
 
-<!-- Init value for amdin.edit_blog -->
-<script type="text/javascript">
-    {% if post %}
-    $(document).ready(function() {
-        $('#outline').val("{{ post.outline }}");
-        $('#content').val("{{ post.content }}");
-    });
-    {% endif %}
-</script>
-
 {% endblock %}
 

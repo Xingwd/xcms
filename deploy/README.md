@@ -1,7 +1,7 @@
 # 安装基础依赖
 ```
 sudo apt-get -y update
-sudo apt-get -y install python3 python3-venv python3-dev
+sudo apt-get -y install python3.6 python3.6-venv python3.6-dev
 sudo apt-get -y install mysql-server supervisor nginx git
 ```
 
