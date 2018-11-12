@@ -115,14 +115,36 @@ sudo supervisorctl reload
 
 # 设置Nginx
 ## 创建SSL证书
+使用 [Let's Encrypt](https://letsencrypt.org/getting-started/) 免费SSL证书
+
+### 安装[Certbot](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx)
 ```
-cd /var/www/
-mkdir certs
-openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-  -keyout certs/key.pem -out certs/cert.pem
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx
 ```
 
-## 创建服务文件
+### 生成证书
+```
+sudo certbot --nginx certonly
+```
+> 使用certonly子命令，可以手动编辑Nginx配置，否则Certbot也将自动生成Nginx配置
+
+完成后，输入信息提示，证书和key文件保存路径：
+```
+/etc/letsencrypt/live/xingweidong.com/fullchain.pem
+/etc/letsencrypt/live/xingweidong.com/privkey.pem
+```
+
+### 自动续延
+```
+sudo certbot renew --dry-run
+```
+
+
+## 创建nginx配置文件
 编辑`/etc/nginx/sites-enabled/xcms`文件：
 ```
 server {
@@ -140,8 +162,8 @@ server {
     server_name xingweidong.com www.xingweidong.com;
 
     # location of the self-signed SSL certificate
-    ssl_certificate /var/www/certs/cert.pem;
-    ssl_certificate_key /var/www/certs/key.pem;
+    ssl_certificate /etc/letsencrypt/live/xingweidong.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/xingweidong.com/privkey.pem;
 
     # write access and error logs to /var/log
     access_log /var/log/xcms_access.log;
