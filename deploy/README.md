@@ -11,7 +11,7 @@ sudo apt-get -y install mysql-server supervisor nginx git
 > Elasticsearch生产模式要求机器内存不低于2G。
 ```
 docker pull docker.elastic.co/elasticsearch/elasticsearch:6.4.3
-docker run -d -n es -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+docker run -d --name es -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.4.3
 ```
 停止和启动es
 ```
