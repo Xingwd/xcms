@@ -64,6 +64,7 @@ source /etc/profile
 cd /var/www/xcms
 python3 -m venv venv
 source venv/bin/activate
+(venv) $ pip install --upgrade pip
 (venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 (venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gunicorn pymysql
 ```
