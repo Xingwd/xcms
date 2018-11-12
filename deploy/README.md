@@ -24,7 +24,7 @@ docker start es
 cd /var/www/
 git clone https://github.com/Xingwd/xcms.git
 cd xcms
-git checkout v0.1.0
+git checkout v0.2.0
 ```
 
 # 设置Mysql
