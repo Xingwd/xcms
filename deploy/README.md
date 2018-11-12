@@ -2,7 +2,7 @@
 ```
 sudo apt-get -y update
 sudo apt-get -y install python3 python3-venv python3-dev
-sudo apt-get -y install mysql-server supervisor nginx git
+sudo apt-get -y install mysql-server libmysqlclient-dev supervisor nginx git
 ```
 
 # 部署Elasticsearch(开发模式)
@@ -66,7 +66,7 @@ python3 -m venv venv
 source venv/bin/activate
 (venv) $ pip install --upgrade pip
 (venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
-(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gunicorn pymysql
+(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gunicorn
 ```
 
 # 初始化数据库
@@ -98,6 +98,15 @@ sudo supervisorctl reload
 ```
 
 # 设置Nginx
+## 创建SSL证书
+```
+cd /var/www/
+mkdir certs
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+  -keyout certs/key.pem -out certs/cert.pem
+```
+
+## 创建服务文件
 编辑`/etc/nginx/sites-enabled/xcms`文件：
 ```
 server {
@@ -112,7 +121,7 @@ server {
 server {
     # listen on port 443 (https)
     listen 443 ssl;
-    server_name _;
+    server_name .xingweidong.com;
 
     # location of the self-signed SSL certificate
     ssl_certificate /var/www/certs/cert.pem;
