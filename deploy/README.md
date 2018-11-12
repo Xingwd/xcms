@@ -1,7 +1,7 @@
 # 安装基础依赖
 ```
 sudo apt-get -y update
-sudo apt-get -y install python3.6 python3.6-venv python3.6-dev
+sudo apt-get -y install python3 python3-venv python3-dev
 sudo apt-get -y install mysql-server supervisor nginx git
 ```
 
@@ -21,39 +21,10 @@ docker start es
 
 # 安装应用
 ```
+cd /var/www/
 git clone https://github.com/Xingwd/xcms.git
 cd xcms
 git checkout v0.1.0
-```
-
-# 设置环境变量
-为SECRET_KEY生成一个随机字符串：
-```
-python3 -c "import uuid; print(uuid.uuid4().hex)
-```
-
-编辑`~/.profile`文件，追加内容(替换相应内容)：
-```
-# xcms env
-export SECRET_KEY="random string"
-export DATABASE_URL="mysql://<db-user>:<db-password>@localhost/xcms"
-export ELASTICSEARCH_URL="http://localhost:9200"
-export FLASK_APP=xcms.py
-```
-
-重载环境变量
-```
-source ~/.profile
-```
-
-
-# 创建Python虚拟环境
-(pip国内源：https://pypi.tuna.tsinghua.edu.cn/simple)
-```
-python3 -m venv venv
-source venv/bin/activate
-(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
-(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gunicorn mysql-client
 ```
 
 # 设置Mysql
@@ -66,11 +37,41 @@ flush privileges;
 quit;
 ```
 
-## 初始化数据库
+# 设置环境变量
+为SECRET_KEY生成一个随机字符串：
+```
+python3 -c "import uuid; print(uuid.uuid4().hex)"
+```
+
+创建`/etc/profile.d/xcms.sh`文件，添加内容(替换相应信息)：
+```
+# xcms env
+export SECRET_KEY="random string"
+export DATABASE_URL="mysql://<db-user>:<db-password>@localhost/xcms"
+export ELASTICSEARCH_URL="http://localhost:9200"
+export FLASK_APP=/var/www/xcms/xcms.py
+```
+
+重载环境变量
+```
+source /etc/profile
+```
+
+
+# 创建Python虚拟环境
+(pip国内源：https://pypi.tuna.tsinghua.edu.cn/simple)
+```
+cd /var/www/xcms
+python3 -m venv venv
+source venv/bin/activate
+(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gunicorn pymysql
+```
+
+# 初始化数据库
 ```
 flask db upgrade
 ```
-
 
 # 创建管理员账户
 ```
@@ -81,9 +82,9 @@ flask createadmin --name <admin-user> --password <admin-password>
 编辑`/etc/supervisor/conf.d/xcms.conf`文件：
 ```
 [program:xcms]
-command=/home/ubuntu/xcms/venv/bin/gunicorn -b localhost:8000 -w 4 xcms:app
-directory=/home/ubuntu/xcms
-user=ubuntu
+command=/var/www/xcms/venv/bin/gunicorn -b localhost:8000 -w 4 xcms:app
+directory=/var/www/xcms
+user=root
 autostart=true
 autorestart=true
 stopasgroup=true
@@ -113,8 +114,8 @@ server {
     server_name _;
 
     # location of the self-signed SSL certificate
-    ssl_certificate /home/ubuntu/certs/cert.pem;
-    ssl_certificate_key /home/ubuntu/certs/key.pem;
+    ssl_certificate /var/www/certs/cert.pem;
+    ssl_certificate_key /var/www/certs/key.pem;
 
     # write access and error logs to /var/log
     access_log /var/log/xcms_access.log;
@@ -131,7 +132,7 @@ server {
 
     location /static {
         # handle static files directly, without forwarding to the application
-        alias /home/ubuntu/xcms/static;
+        alias /var/www/xcms/static;
         expires 30d;
     }
 }
@@ -144,8 +145,8 @@ sudo service nginx reload
 
 # 应用更新
 ```
-(venv) $ git pull                              # download the new version
-(venv) $ sudo supervisorctl stop xcms          # stop the current server
-(venv) $ flask db upgrade                      # upgrade the database
-(venv) $ sudo supervisorctl start xcms         # start a new server
+(venv) $ git pull                           # download the new version
+(venv) $ sudo supervisorctl stop xcms       # stop the current server
+(venv) $ flask db upgrade                   # upgrade the database
+(venv) $ sudo supervisorctl start xcms      # start a new server
 ```
