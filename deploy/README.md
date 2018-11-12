@@ -1,3 +1,13 @@
+# 安全配置
+```
+sudo apt-get install -y ufw
+sudo ufw allow http
+sudo ufw allow 443/tcp
+sudo ufw --force enable
+sudo ufw status
+```
+
+
 # 安装基础依赖
 ```
 sudo apt-get -y update
@@ -27,6 +37,7 @@ cd xcms
 git checkout v0.2.0
 ```
 
+
 # 设置Mysql
 ## 创建数据库
 ```
@@ -43,12 +54,17 @@ quit;
 python3 -c "import uuid; print(uuid.uuid4().hex)"
 ```
 
-创建`/etc/profile.d/xcms.sh`文件，添加内容(替换相应信息)：
+创建`/var/www/xcms/.env`文件，添加内容(替换相应信息)：
+```
+SECRET_KEY=random string
+DATABASE_URL=mysql://<db-user>:<db-password>@localhost/xcms
+ELASTICSEARCH_URL=http://localhost:9200
+```
+
+
+创建`/etc/profile.d/xcms.sh`文件，添加内容：
 ```
 # xcms env
-export SECRET_KEY="random string"
-export DATABASE_URL="mysql://<db-user>:<db-password>@localhost/xcms"
-export ELASTICSEARCH_URL="http://localhost:9200"
 export FLASK_APP=/var/www/xcms/xcms.py
 ```
 
@@ -112,7 +128,7 @@ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
 server {
     # listen on port 80 (http)
     listen 80;
-    server_name _;
+    server_name xingweidong.com www.xingweidong.com;
     location / {
         # redirect any requests to the same URL but on https
         return 301 https://$host$request_uri;
@@ -121,7 +137,7 @@ server {
 server {
     # listen on port 443 (https)
     listen 443 ssl;
-    server_name .xingweidong.com;
+    server_name xingweidong.com www.xingweidong.com;
 
     # location of the self-signed SSL certificate
     ssl_certificate /var/www/certs/cert.pem;
@@ -142,7 +158,7 @@ server {
 
     location /static {
         # handle static files directly, without forwarding to the application
-        alias /var/www/xcms/static;
+        alias /var/www/xcms/app/static;
         expires 30d;
     }
 }
