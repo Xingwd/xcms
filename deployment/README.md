@@ -188,7 +188,7 @@ sudo certbot --nginx certonly
 ```
 > 使用certonly子命令，可以手动编辑Nginx配置，否则Certbot也将自动生成Nginx配置
 
-完成后，输入信息提示，证书和key文件保存路径：
+完成后，输出信息提示，证书和key文件保存路径：
 ```
 /etc/letsencrypt/live/xingweidong.com/fullchain.pem
 /etc/letsencrypt/live/xingweidong.com/privkey.pem
