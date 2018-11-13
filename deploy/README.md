@@ -20,6 +20,8 @@ sudo apt-get -y install mysql-server libmysqlclient-dev supervisor nginx git
 
 该小节提供Elasticsearch开发模式的启动说明，本应用可使用Elasticsearch作为全文搜索引擎，如果不想使用Elasticsearch，可跳过这一步。
 
+如果要使用Elasticsearch引擎，请务必在一开始使用，不要在应用运行中途使用，因为Elasticsearch索引信息需要和数据库信息保持同步。
+
 > Elasticsearch生产模式要求机器内存不低于2G。
 ```
 docker pull docker.elastic.co/elasticsearch/elasticsearch:6.4.3
