@@ -81,7 +81,7 @@ class Post(SearchableMixin, db.Model):
     slug = db.Column(db.String(200), unique=True)
     outline = db.Column(db.Text)
     content = db.Column(db.Text)
-    pub_date = db.Column(db.String(80), index=True)
+    pub_date = db.Column(db.DateTime)
     pv = db.Column(db.BigInteger, index=True, default=0)
 
     tags = db.relationship('Tag', secondary=posts_tags, backref=db.backref('posts', lazy='dynamic'))

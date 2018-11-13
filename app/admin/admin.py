@@ -39,7 +39,7 @@ def new_blog():
         post = Post(title=post_form.title.data, slug=post_form.slug.data,
                     outline=post_form.outline.data,
                     content=post_form.content.data,
-                    pub_date=time.strftime("%Y-%m-%d", time.localtime()))
+                    pub_date=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         for tag in post_form.tags.data:
             post.add_tag(Tag.query.filter_by(name=tag).first())
         db.session.add(post)
