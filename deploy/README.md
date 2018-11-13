@@ -1,13 +1,3 @@
-# 安全配置
-```
-sudo apt-get install -y ufw
-sudo ufw allow http
-sudo ufw allow 443/tcp
-sudo ufw --force enable
-sudo ufw status
-```
-
-
 # 安装基础依赖
 ```
 sudo apt-get -y update
