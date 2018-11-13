@@ -15,8 +15,10 @@ sudo apt-get -y install python3 python3-venv python3-dev
 sudo apt-get -y install mysql-server libmysqlclient-dev supervisor nginx git
 ```
 
-# 部署Elasticsearch(开发模式)
+# (可选)部署Elasticsearch
 参考：[Install Elasticsearch with Docker](https://www.elastic.co/guide/en/elasticsearch/reference/6.4/docker.html)
+
+该小节提供Elasticsearch开发模式的启动说明，本应用可使用Elasticsearch作为全文搜索引擎，如果不想使用Elasticsearch，可跳过这一步。
 
 > Elasticsearch生产模式要求机器内存不低于2G。
 ```
@@ -58,6 +60,10 @@ python3 -c "import uuid; print(uuid.uuid4().hex)"
 ```
 SECRET_KEY=random string
 DATABASE_URL=mysql://<db-user>:<db-password>@localhost/xcms
+```
+
+(可选)激活Elasticsearch，向`.env`文件添加如下配置：
+```
 ELASTICSEARCH_URL=http://localhost:9200
 ```
 
@@ -75,14 +81,14 @@ source /etc/profile
 
 
 # 创建Python虚拟环境
-(pip国内源：https://pypi.tuna.tsinghua.edu.cn/simple)
+(pip清华源：https://pypi.tuna.tsinghua.edu.cn/simple)
 ```
 cd /var/www/xcms
 python3 -m venv venv
 source venv/bin/activate
 (venv) $ pip install --upgrade pip
-(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
-(venv) $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gunicorn
+(venv) $ pip install -r requirements.txt
+(venv) $ pip install gunicorn
 ```
 
 # 初始化数据库
@@ -114,7 +120,65 @@ sudo supervisorctl reload
 ```
 
 # 设置Nginx
-## 创建SSL证书
+## 设置自签名SSL证书
+使用自签名SSL证书，网站将会被标记为不可信，自签名SSL证书用于测试，生产环境请使用第三方机构SSL证书，在下面的环节将会介绍免费的第三方SSL证书如何使用。
+```
+cd /var/www/
+mkdir certs
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+  -keyout certs/key.pem -out certs/cert.pem
+```
+该命令将要求你提供关于应用程序和你自己的一些信息。这些信息将包含在SSL证书中，如果用户请求查看它，Web浏览器则会向用户显示它们。上述命令的结果将是名为key.pem和cert.pem的两个文件，存放在certs目录下。
+
+## 创建nginx配置文件
+编辑`/etc/nginx/sites-enabled/xcms`文件：
+```
+server {
+    # listen on port 80 (http)
+    listen 80;
+    server_name xingweidong.com www.xingweidong.com;
+    location / {
+        # redirect any requests to the same URL but on https
+        return 301 https://$host$request_uri;
+    }
+}
+server {
+    # listen on port 443 (https)
+    listen 443 ssl;
+    server_name xingweidong.com www.xingweidong.com;
+
+    # location of the self-signed SSL certificate
+    ssl_certificate /var/www/certs/cert.pem;
+    ssl_certificate_key /var/www/certs/key.pem;
+
+    # write access and error logs to /var/log
+    access_log /var/log/xcms_access.log;
+    error_log /var/log/xcms_error.log;
+
+    location / {
+        # forward application requests to the gunicorn server
+        proxy_pass http://localhost:8000;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /static {
+        # handle static files directly, without forwarding to the application
+        alias /var/www/xcms/app/static;
+        expires 30d;
+    }
+}
+```
+
+重载配置
+```
+sudo service nginx reload
+```
+
+
+## 使用第三方SSL证书
 使用 [Let's Encrypt](https://letsencrypt.org/getting-started/) 免费SSL证书
 
 ### 安装[Certbot](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx)
@@ -143,8 +207,7 @@ sudo certbot --nginx certonly
 sudo certbot renew --dry-run
 ```
 
-
-## 创建nginx配置文件
+### 更新nginx配置文件
 编辑`/etc/nginx/sites-enabled/xcms`文件：
 ```
 server {
