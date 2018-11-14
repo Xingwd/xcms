@@ -7,15 +7,15 @@
     <div class="position-fixed">
       {% if prev_url %}
       <a href="{{ prev_url }}">
-        <i width="100" height="100" class="text-warning" data-feather="chevron-left"></i>
+        <i width="150" height="150" class="text-warning" data-feather="chevron-left"></i>
       </a>
       {% else %}
-      <i width="100" height="100" class="text-muted" data-feather="chevron-left"></i>
+      <i width="150" height="150" class="text-muted" data-feather="chevron-left"></i>
       {% endif %}
       </div>
     </nav>
   </div>
-  <div class="col-8">
+  <div class="col-8 shadow-lg p-3 rounded">
     <h2>{{ post.title }}</h2>
     <ul class="list-inline text-muted">
       <li class="list-inline-item mr-3">{{ post.pub_date.date() }}</li>
@@ -36,15 +36,22 @@
   <div class="col-2">
     <nav class="nav justify-content-center">
       <div class="position-fixed">
-      {% if next_url %}
-      <a href="{{ next_url }}">
-        <i width="100" height="100" class="text-warning" data-feather="chevron-right"></i>
-      </a>
-      {% else %}
-      <i width="100" height="100" class="text-muted" data-feather="chevron-right"></i>
-      {% endif %}
-        </div>
+        {% if next_url %}
+        <a href="{{ next_url }}">
+          <i width="150" height="150" class="text-warning" data-feather="chevron-right"></i>
+        </a>
+        {% else %}
+        <i width="150" height="150" class="text-muted" data-feather="chevron-right"></i>
+        {% endif %}
+      </div>
     </nav>
+    <div style="margin-top: 450px">
+      <div class="position-fixed">
+        <button id="back_top" type="button" class="btn btn-link" style="display: none">
+          <img src="{{ url_for('static', filename='images/top-alignment.png') }}">
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 <hr>
@@ -69,5 +76,28 @@
       flowChart       : true,  // 默认不解析
       sequenceDiagram : true,  // 默认不解析
   });
+</script>
+
+
+<!-- back top -->
+<script type="text/javascript">
+$(function () {
+    // 获取要大于的高度
+    var headheight = $('.header').height();
+    window.onscroll=function () {
+        //获取浏览器滚轴滚动的距离
+        var scrollTop = $(window).scrollTop();
+        //当浏览器滚轴滚动的距离 大于 设定的高度时 显示“点击返回顶部”按钮，否则隐藏
+        if(scrollTop > headheight) {
+            $('#back_top').show()
+        } else {
+            $('#back_top').hide()
+        }
+    };
+    //点击返回顶部500ms的滑动效果
+    $('#back_top').on('click',function () {
+        $('html,body').animate({scrollTop:0},500);
+    })
+})
 </script>
 {% endblock %}
