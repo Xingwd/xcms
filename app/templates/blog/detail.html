@@ -32,6 +32,31 @@
     <div id="md2html" >
       <textarea style="display:none;">{{ post.content }}</textarea>
     </div>
+
+    <!-- zanzhu -->
+    <div class="text-center mt-5">
+      <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#zanzhu">
+        小额赞助，鼓励老邢写出更多更好的文章 <i class="fas fa-feather-alt"></i>
+      </button>
+
+      <div id="zanzhu" class="collapse mt-3">
+          <ul class="list-inline">
+              <li class="list-inline-item">
+                  <figure class="figure">
+                      <img src="{{ url_for('static', filename='images/zanzhu/weixinpay.png') }}" class="figure-img img-fluid rounded" style="width: 250px">
+                      <figcaption class="figure-caption text-center" style="color: green">微信</figcaption>
+                  </figure>
+              </li>
+              <li class="list-inline-item"> </li>
+              <li class="list-inline-item">
+                  <figure class="figure">
+                      <img src="{{ url_for('static', filename='images/zanzhu/zhifubaopay.png') }}" class="figure-img img-fluid rounded" style="width: 250px">
+                      <figcaption class="figure-caption text-center" style="color: deepskyblue">支付宝</figcaption>
+                  </figure>
+              </li>
+          </ul>
+      </div>
+    </div>
   </div>
   <div class="col-2">
     <nav class="nav justify-content-center">
