@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, render_template, request, current_app, url_for, g, redirect
 )
+from app import db
 from app.models import Post, Tag
 from app.forms import SearchForm
 from sqlalchemy import or_
@@ -45,6 +46,11 @@ def tag_filter(name):
 @bp.route('/detail/<slug>')
 def detail(slug):
     current_post = Post.query.filter_by(slug=slug).first_or_404()
+
+    # 每次访问都更新PV
+    current_post.pv += 1
+    db.session.commit()
+
     current_page = Post.query.filter(Post.id >= current_post.id).count()
     posts = Post.query.order_by(Post.pub_date.desc()).paginate(
         current_page, 1, False)
