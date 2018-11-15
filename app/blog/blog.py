@@ -94,8 +94,8 @@ def search():
                                prev_url=prev_url, tags=tags)
 
     else:
-        posts = Post.query.filter(or_(Post.title.contains(g.search_form.q.data),
-                                             Post.content.contains(g.search_form.q.data))).order_by(
+        posts = Post.query.filter(or_(Post.title.ilike("%{}%".format(g.search_form.q.data)),
+                                             Post.content.ilike("%{}%".format(g.search_form.q.data)))).order_by(
                                              Post.pub_date.desc()).paginate(
                                              page, current_app.config['POSTS_PER_PAGE'], False)
 
