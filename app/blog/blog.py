@@ -25,8 +25,13 @@ def blog():
         if posts.has_prev else None
 
     tags = Tag.query.all()
+    post_all = Post.query.all()
+    pv_count = 0
+    for post in post_all:
+        pv_count += post.pv
+
     return render_template('blog/blog.html', posts=posts.items, next_url=next_url,
-                           prev_url=prev_url, tags=tags)
+                           prev_url=prev_url, tags=tags, post_all=post_all, pv_count=pv_count)
 
 @bp.route('/tag/<name>')
 def tag_filter(name):
