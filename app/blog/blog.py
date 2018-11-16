@@ -14,6 +14,16 @@ def before_request():
     g.search_form = SearchForm()
 
 
+def count():
+    post_all = Post.query.all()
+    post_count = len(post_all)
+    pv_count = 0
+    for post in post_all:
+        pv_count += post.pv
+
+    return post_count, pv_count
+
+
 @bp.route('/', methods=['GET', 'POST'])
 def blog():
     page = request.args.get('page', 1, type=int)
@@ -25,13 +35,10 @@ def blog():
         if posts.has_prev else None
 
     tags = Tag.query.all()
-    post_all = Post.query.all()
-    pv_count = 0
-    for post in post_all:
-        pv_count += post.pv
+    post_count, pv_count = count()
 
     return render_template('blog/blog.html', posts=posts.items, next_url=next_url,
-                           prev_url=prev_url, tags=tags, post_all=post_all, pv_count=pv_count)
+                           prev_url=prev_url, tags=tags, post_count=post_count, pv_count=pv_count)
 
 @bp.route('/tag/<name>')
 def tag_filter(name):
@@ -44,8 +51,10 @@ def tag_filter(name):
         if posts.has_prev else None
 
     tags = Tag.query.all()
+    post_count, pv_count = count()
+
     return render_template('blog/tag_filter.html', posts=posts.items, next_url=next_url,
-                           prev_url=prev_url, tags=tags)
+                           prev_url=prev_url, tags=tags, post_count=post_count, pv_count=pv_count)
 
 
 @bp.route('/detail/<slug>')
@@ -81,6 +90,7 @@ def search():
         return redirect(url_for('blog.blog'))
     page = request.args.get('page', 1, type=int)
     tags = Tag.query.all()
+    post_count, pv_count = count()
 
     if current_app.elasticsearch:
         posts, total = Post.search(g.search_form.q.data, page,
@@ -91,7 +101,8 @@ def search():
             if page > 1 else None
 
         return render_template('blog/search.html', posts=posts, next_url=next_url,
-                               prev_url=prev_url, tags=tags)
+                               prev_url=prev_url, tags=tags,
+                               post_count=post_count, pv_count=pv_count)
 
     else:
         posts = Post.query.filter(or_(Post.title.ilike("%{}%".format(g.search_form.q.data)),
@@ -105,4 +116,5 @@ def search():
             if posts.has_prev else None
 
         return render_template('blog/search.html', posts=posts.items, next_url=next_url,
-                               prev_url=prev_url, tags=tags)
+                               prev_url=prev_url, tags=tags,
+                               post_count=post_count, pv_count=pv_count)
