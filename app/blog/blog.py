@@ -105,10 +105,11 @@ def search():
                                post_count=post_count, pv_count=pv_count)
 
     else:
-        posts = Post.query.filter(or_(Post.title.ilike("%{}%".format(g.search_form.q.data)),
-                                             Post.content.ilike("%{}%".format(g.search_form.q.data)))).order_by(
-                                             Post.pub_date.desc()).paginate(
-                                             page, current_app.config['POSTS_PER_PAGE'], False)
+        posts = Post.query.filter(
+            or_(Post.title.ilike("%{}%".format(g.search_form.q.data)),
+                Post.content.ilike("%{}%".format(g.search_form.q.data)))).order_by(
+            Post.pub_date.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
 
         next_url = url_for('blog.search', q=g.search_form.q.data, page=posts.next_num) \
             if posts.has_next else None

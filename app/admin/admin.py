@@ -1,15 +1,21 @@
 import time
 from flask import (
-    Blueprint, render_template, flash, redirect, url_for, jsonify, request, g
+    Blueprint, render_template, redirect, url_for, jsonify, request, g
 )
 from flask_login import login_required
+from sqlalchemy import or_
 
 from app import db
-from app.admin.forms import NewPostForm, NewTagForm
+from app.admin.forms import NewPostForm, NewTagForm, AdminSearchForm
 from app.models import Tag, Post
 
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
+
+
+@bp.before_app_request
+def before_request():
+    g.admin_search_form = AdminSearchForm()
 
 
 @bp.route('/')
@@ -20,8 +26,39 @@ def admin():
 @bp.route('/admin_blog')
 @login_required
 def admin_blog():
-    posts = Post.query.order_by(Post.id.desc()).all()
-    return render_template('admin/blog/admin_blog.html', posts=posts)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.pub_date.desc()).paginate(
+        page, 10, False)
+    next_url = url_for('admin.admin_blog', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('admin.admin_blog', page=posts.prev_num) \
+        if posts.has_prev else None
+
+    return render_template('admin/blog/admin_blog.html', admin_search_form=g.admin_search_form,
+                           posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+@bp.route('/search_blog')
+@login_required
+def search_blog():
+    if not g.admin_search_form.validate():
+        return redirect(url_for('admin.admin_blog'))
+
+    page = request.args.get('page', 1, type=int)
+
+    posts = Post.query.filter(
+        or_(Post.title.ilike("%{}%".format(g.admin_search_form.q.data)),
+            Post.content.ilike("%{}%".format(g.admin_search_form.q.data)))).order_by(
+        Post.pub_date.desc()).paginate(
+        page, 10, False)
+
+    next_url = url_for('admin.search_blog', q=g.admin_search_form.q.data, page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('admin.search_blog', q=g.admin_search_form.q.data, page=posts.prev_num) \
+        if posts.has_prev else None
+
+    return render_template('admin/blog/search_blog.html', posts=posts.items,
+                           next_url=next_url, prev_url=prev_url)
+
 
 @bp.route('/admin_blog_tag')
 @login_required
