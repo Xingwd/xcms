@@ -40,53 +40,53 @@
     {% block head %}{% endblock %}
 </head>
 <body>
-    {% block body %}
-    <div id="botAgregar"></div>
-    <div class="jumbotron text-center p-3 p-md-5 text-white rounded bg-dark" style="margin-bottom:0">
-        <div class="container">
-            <p class="header">{% block header %}{% endblock %}</p>
-        </div>
+{% block body %}
+<div id="botAgregar"></div>
+<div class="jumbotron text-center p-3 p-md-5 text-white rounded bg-dark" style="margin-bottom:0">
+  <div class="container">
+    <p class="header">{% block header %}{% endblock %}</p>
+  </div>
+</div>
+
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light" role="navigation" style="margin-bottom:45px">
+  <div class="container d-flex">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item p-2">
+          <a class="nav-link" href="{{ url_for('index') }}">主页</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link" href="{{ url_for('blog.blog') }}">博客</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link" href="{{ url_for('reading.reading') }}">读书</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link" href="{{ url_for('travel.travel') }}">旅行</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link" href="{{ url_for('photography.photography') }}">摄影</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link" href="{{ url_for('about_me') }}">我</a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light" role="navigation" style="margin-bottom:45px">
-      <div class="container d-flex">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarSupportedContent">
-          <ul class="navbar-nav">
-              <li class="nav-item p-2">
-                  <a class="nav-link" href="{{ url_for('index') }}">主页</a>
-              </li>
-              <li class="nav-item p-2">
-                  <a class="nav-link" href="{{ url_for('blog.blog') }}">博客</a>
-              </li>
-              <li class="nav-item p-2">
-                  <a class="nav-link" href="{{ url_for('reading.reading') }}">读书</a>
-              </li>
-              <li class="nav-item p-2">
-                  <a class="nav-link" href="{{ url_for('travel.travel') }}">旅行</a>
-              </li>
-              <li class="nav-item p-2">
-                  <a class="nav-link" href="{{ url_for('photography.photography') }}">摄影</a>
-              </li>
-              <li class="nav-item p-2">
-                  <a class="nav-link" href="{{ url_for('about_me') }}">我</a>
-              </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+{% block content %}
+{% endblock %}
 
-    {% block content %}
-    {% endblock %}
-    
-    <footer class="footer text-center text-white rounded bg-dark">
-        <div class="container">
-            <span>© 2018 邢为栋</span>
-        </div>
-    </footer>
-    {% endblock %}
+<footer class="footer text-center text-white rounded bg-dark">
+  <div class="container">
+    <span>© 2018 邢为栋</span>
+  </div>
+</footer>
+{% endblock %}
 
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
