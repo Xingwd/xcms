@@ -16,6 +16,7 @@ coverage run -m pytest
 
 调试：
 ```
+source activate xcms
 export FLASK_APP=xcms.py
 export FLASK_ENV=development
 flask run
