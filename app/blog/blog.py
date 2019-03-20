@@ -1,8 +1,9 @@
+import time
 from flask import (
     Blueprint, render_template, request, current_app, url_for, g, redirect
 )
 from app import db
-from app.models import Post, Tag
+from app.models import Post
 from app.forms import SearchForm
 from sqlalchemy import or_
 
@@ -34,27 +35,10 @@ def blog():
     prev_url = url_for('blog.blog', page=posts.prev_num) \
         if posts.has_prev else None
 
-    tags = Tag.query.all()
     post_count, pv_count = count()
 
     return render_template('blog/blog.html', posts=posts.items, next_url=next_url,
-                           prev_url=prev_url, tags=tags, post_count=post_count, pv_count=pv_count)
-
-@bp.route('/tag/<name>')
-def tag_filter(name):
-    page = request.args.get('page', 1, type=int)
-    posts = Tag.query.filter_by(name=name).first_or_404().posts.order_by(Post.pub_date.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('blog.tag_filter', name=name, page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('blog.tag_filter', name=name, page=posts.prev_num) \
-        if posts.has_prev else None
-
-    tags = Tag.query.all()
-    post_count, pv_count = count()
-
-    return render_template('blog/tag_filter.html', posts=posts.items, next_url=next_url,
-                           prev_url=prev_url, tags=tags, post_count=post_count, pv_count=pv_count)
+                           prev_url=prev_url, post_count=post_count, pv_count=pv_count)
 
 
 @bp.route('/detail/<slug>')
@@ -79,9 +63,8 @@ def detail(slug):
     prev_url = url_for('blog.detail', slug=prev_posts.items[0].slug) \
         if posts.has_prev else None
 
-    tags = Tag.query.all()
-    return render_template('blog/detail.html', post=posts.items[0], next_url=next_url,
-                           prev_url=prev_url, tags=tags)
+    return render_template('blog/detail.html', post=posts.items[0],
+                           next_url=next_url, prev_url=prev_url)
 
 
 @bp.route('/search')
@@ -89,7 +72,6 @@ def search():
     if not g.search_form.validate():
         return redirect(url_for('blog.blog'))
     page = request.args.get('page', 1, type=int)
-    tags = Tag.query.all()
     post_count, pv_count = count()
 
     if current_app.elasticsearch:
@@ -101,8 +83,7 @@ def search():
             if page > 1 else None
 
         return render_template('blog/search.html', posts=posts, next_url=next_url,
-                               prev_url=prev_url, tags=tags,
-                               post_count=post_count, pv_count=pv_count)
+                               prev_url=prev_url, post_count=post_count, pv_count=pv_count)
 
     else:
         posts = Post.query.filter(
@@ -117,5 +98,4 @@ def search():
             if posts.has_prev else None
 
         return render_template('blog/search.html', posts=posts.items, next_url=next_url,
-                               prev_url=prev_url, tags=tags,
-                               post_count=post_count, pv_count=pv_count)
+                               prev_url=prev_url, post_count=post_count, pv_count=pv_count)

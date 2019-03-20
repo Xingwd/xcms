@@ -57,14 +57,14 @@ def create_app(config_class=Config):
     from app.auth import auth
     app.register_blueprint(auth.bp)
 
-    from app.reading import reading
-    app.register_blueprint(reading.bp)
+    from app.xuesi import xuesi
+    app.register_blueprint(xuesi.bp)
 
-    from app.travel import travel
-    app.register_blueprint(travel.bp)
+    from app.tag import tag
+    app.register_blueprint(tag.bp)
 
-    from app.photography import photography
-    app.register_blueprint(photography.bp)
+    from app.proj import proj
+    app.register_blueprint(proj.bp)
 
     return app
 

@@ -33,7 +33,7 @@
     </ul>
     <div class="btn-group-sm" role="group">
       {% for tag in post.tags %}
-      <a href="{{ url_for('blog.tag_filter', name=tag.name) }}">
+      <a href="{{ url_for('tag.tag_filter', name=tag.name) }}">
         <button type="button" class="btn btn-info" style="padding: 0 5px 0 5px">{{ tag.name }}</button>
       </a>
       {% endfor %}

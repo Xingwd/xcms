@@ -63,11 +63,6 @@
       </div>
 
       <div class="p-3">
-        <h4 class="font-italic text-muted">TagCloud</h4>
-        <div id="tag-cloud"></div>
-      </div>
-
-      <div class="p-3">
         <h4 class="font-italic text-muted">Find Me</h4>
         <ul class="list-unstyled text-small">
           <li><a class="text-dark" href="https://github.com/Xingwd" target="_blank">GitHub</a></li>
@@ -92,41 +87,4 @@
   </div>
 </div>
 
-
-<script>
-  $( document ).ready( function() {
-    var entries = []
-    {% for tag in tags %}
-    entries.push({ label: '{{ tag.name }}', url: '{{ url_for('blog.tag_filter', name=tag.name) }}', target: '_top' })
-    {% endfor %}
-
-    var settings = {
-        entries: entries,
-        width: 300,
-        height: 300,
-        radius: '70%',
-        radiusMin: 75,
-        bgDraw: true,
-        bgColor: '#fff',
-        opacityOver: 1.00,
-        opacityOut: 0.05,
-        opacitySpeed: 6,
-        fov: 800,
-        speed: 0.2,
-        fontFamily: 'Oswald, Arial, sans-serif',
-        fontSize: '15',
-        fontColor: '#000',
-        fontWeight: 'normal',//bold
-        fontStyle: 'normal',//italic
-        fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
-        fontToUpperCase: false
-
-    };
-
-    //var svg3DTagCloud = new SVG3DTagCloud( document.getElementById( 'holder' ), settings );
-    $( '#tag-cloud' ).svg3DTagCloud( settings );
-
-  } );
-
-</script>
 {% endblock %}

@@ -172,29 +172,29 @@ def del_blog_tag(id):
 @bp.route('/admin_reading')
 @login_required
 def admin_reading():
-    return render_template('admin/reading/admin_reading.html')
+    return render_template('admin/xuesi/admin_reading.html')
 
 @bp.route('/new_reading', methods=['GET', 'POST'])
 @login_required
 def new_reading():
-    return render_template('admin/reading/new_reading.html')
+    return render_template('admin/xuesi/new_reading.html')
 
 @bp.route('/admin_travel')
 @login_required
 def admin_travel():
-    return render_template('admin/travel/admin_travel.html')
+    return render_template('admin/tag/admin_travel.html')
 
 @bp.route('/new_travel', methods=['GET', 'POST'])
 @login_required
 def new_travel():
-    return render_template('admin/travel/new_travel.html')
+    return render_template('admin/tag/new_travel.html')
 
 @bp.route('/admin_photography')
 @login_required
 def admin_photography():
-    return render_template('admin/photography/admin_photography.html')
+    return render_template('admin/proj/admin_photography.html')
 
 @bp.route('/new_photography', methods=['GET', 'POST'])
 @login_required
 def new_photography():
-    return render_template('admin/photography/new_photography.html')
+    return render_template('admin/proj/new_photography.html')
