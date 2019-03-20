@@ -14,7 +14,7 @@ def tag():
     return render_template('tag/tag.html', tags=tags)
 
 
-@bp.route('/tag/<name>')
+@bp.route('/<name>')
 def tag_filter(name):
     page = request.args.get('page', 1, type=int)
     posts = Tag.query.filter_by(name=name).first_or_404().posts.order_by(Post.pub_date.desc()).paginate(
