@@ -20,8 +20,8 @@
 <script>
   $( document ).ready( function() {
     var entries = []
-    {% for tag in tags %}
-    entries.push({ label: '{{ tag.name }}', url: '{{ url_for('tag.tag_filter', name=tag.name) }}', target: '_top' })
+    {% for tag in ['我是谁','我从哪里来','我到哪里去'] %}
+    entries.push({ label: '{{ tag }}'})
     {% endfor %}
 
     var settings = {
