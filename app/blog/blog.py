@@ -1,4 +1,3 @@
-import time
 from flask import (
     Blueprint, render_template, request, current_app, url_for, g, redirect
 )

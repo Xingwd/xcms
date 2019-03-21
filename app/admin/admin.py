@@ -168,33 +168,32 @@ def del_blog_tag(id):
     return redirect(url_for('admin.admin_blog_tag'))
 
 
-
-@bp.route('/admin_reading')
+@bp.route('/admin_proj')
 @login_required
-def admin_reading():
-    return render_template('admin/xuesi/admin_reading.html')
+def admin_proj():
+    return render_template('admin/proj/admin_proj.html')
 
-@bp.route('/new_reading', methods=['GET', 'POST'])
+@bp.route('/new_proj', methods=['GET', 'POST'])
 @login_required
-def new_reading():
-    return render_template('admin/xuesi/new_reading.html')
+def new_proj():
+    return render_template('admin/proj/new_proj.html')
 
-@bp.route('/admin_travel')
+@bp.route('/admin_xuesi')
 @login_required
-def admin_travel():
-    return render_template('admin/tag/admin_travel.html')
+def admin_xuesi():
+    return render_template('admin/xuesi/admin_xuesi.html')
 
-@bp.route('/new_travel', methods=['GET', 'POST'])
+@bp.route('/new_xuesi', methods=['GET', 'POST'])
 @login_required
-def new_travel():
-    return render_template('admin/tag/new_travel.html')
+def new_xuesi():
+    return render_template('admin/xuesi/new_xuesi.html')
 
-@bp.route('/admin_photography')
+@bp.route('/admin_about_me')
 @login_required
-def admin_photography():
-    return render_template('admin/proj/admin_photography.html')
+def admin_about_me():
+    return render_template('admin/about_me/admin_about_me.html')
 
-@bp.route('/new_photography', methods=['GET', 'POST'])
+@bp.route('/edit_about_me', methods=['GET', 'POST'])
 @login_required
-def new_photography():
-    return render_template('admin/proj/new_photography.html')
+def edit_about_me():
+    return render_template('admin/about_me/edit_about_me.html')
