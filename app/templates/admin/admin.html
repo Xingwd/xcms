@@ -26,7 +26,7 @@
             <a class="dropdown-item" href="{{ url_for('admin.admin_blog_tag') }}">Tags</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ url_for('admin.admin_blog') }}">Posts</a>
-        </div>
+          </div>
         </li>
         <li class="nav-item p-2">
           <a class="nav-link" href="{{ url_for('admin.admin_proj') }}">项目</a>
@@ -34,8 +34,15 @@
         <li class="nav-item p-2">
           <a class="nav-link" href="{{ url_for('admin.admin_xuesi') }}">学思</a>
         </li>
-        <li class="nav-item p-2">
-          <a class="nav-link" href="{{ url_for('admin.admin_about_me') }}">我</a>
+        <li class="nav-item p-2 dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="infoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Info
+          </a>
+          <div class="dropdown-menu" aria-labelledby="infoDropdown">
+            <a class="dropdown-item" href="{{ url_for('admin.admin_about_me') }}">About Me</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('admin.admin_copyright') }}">Copyright</a>
+          </div>
         </li>
       </ul>
       <ul class="navbar-nav px-3">
@@ -78,7 +85,7 @@
     </div>
     <div class="col-md-6">
       <div class="card text-white bg-dark mb-4 shadow-sm">
-        <div class="card-header"><h3>我</h3></div>
+        <div class="card-header"><h3>关于我</h3></div>
         <div class="card-body text-center">
           <a class="text-info" href="{{ url_for('admin.edit_about_me') }}"><i width="100" height="100" data-feather="edit-3"></i></a>
         </div>

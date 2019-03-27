@@ -1,0 +1,43 @@
+{% extends 'admin/admin.html' %}
+
+{% block adminmain %}
+<div style="padding-top: 50px;">
+    <form method="post">
+        {{ info_form.hidden_tag() }}
+        <div style="margin: 0 84px 0 84px">
+            <div class="row mb-3">
+                <div class="col-md-12 btn-toolbar justify-content-end" style="padding-top: 38px">
+                    {{ info_form.info_submit(class_="btn btn-info") }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div style="margin: 0 84px 0 84px">
+                {% block label %}{% endblock %}
+            </div>
+            <div id="content">
+                {{ info_form.content(style="display:none;") }}
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- editor.md -->
+<script type="text/javascript">
+    var content;
+
+    $(function () {
+        content = editormd("content", {
+            width: "90%",
+            height: 640,
+            syncScrolling: "single",
+            path: "{{ url_for('static',filename='editormd/lib/') }}"
+        });
+    });
+
+    // mdEditor.getMarkdown();
+    // mdEditor.getHTML();
+</script>
+
+{% endblock %}
+

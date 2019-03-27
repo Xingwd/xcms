@@ -6,8 +6,8 @@ from flask_login import login_required
 from sqlalchemy import or_
 
 from app import db
-from app.admin.forms import NewPostForm, NewTagForm, AdminSearchForm
-from app.models import Tag, Post
+from app.admin.forms import NewPostForm, NewTagForm, AdminSearchForm, EditInfoForm
+from app.models import Tag, Post, AboutMe, Copyright
 
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -188,12 +188,55 @@ def admin_xuesi():
 def new_xuesi():
     return render_template('admin/xuesi/new_xuesi.html')
 
+
+# about_me
 @bp.route('/admin_about_me')
 @login_required
 def admin_about_me():
-    return render_template('admin/about_me/admin_about_me.html')
+    info = AboutMe.query.order_by(AboutMe.id.desc()).first()
+    return render_template('admin/info/admin_about_me.html', info=info)
 
 @bp.route('/edit_about_me', methods=['GET', 'POST'])
 @login_required
 def edit_about_me():
-    return render_template('admin/about_me/edit_about_me.html')
+    info = AboutMe.query.order_by(AboutMe.id.desc()).first()
+    info_form = EditInfoForm()
+    if info is not None:
+        info_form.content.data = info.about_me
+
+    if info_form.validate_on_submit():
+        if info is None:
+            info = AboutMe(about_me=info_form.content.data)
+            db.session.add(info)
+        else:
+            info.about_me = request.form.get('content')
+        db.session.commit()
+        return redirect(url_for('admin.admin_about_me'))
+
+    return render_template('admin/info/edit_about_me.html', info_form=info_form)
+
+# copyright
+@bp.route('/admin_copyright')
+@login_required
+def admin_copyright():
+    info = Copyright.query.order_by(Copyright.id.desc()).first()
+    return render_template('admin/info/admin_copyright.html', info=info)
+
+@bp.route('/edit_copyright', methods=['GET', 'POST'])
+@login_required
+def edit_copyright():
+    info = Copyright.query.order_by(Copyright.id.desc()).first()
+    info_form = EditInfoForm()
+    if info is not None:
+        info_form.content.data = info.copyright
+
+    if info_form.validate_on_submit():
+        if info is None:
+            info = Copyright(copyright=info_form.content.data)
+            db.session.add(info)
+        else:
+            info.copyright = request.form.get('content')
+        db.session.commit()
+        return redirect(url_for('admin.admin_copyright'))
+
+    return render_template('admin/info/edit_copyright.html', info_form=info_form)

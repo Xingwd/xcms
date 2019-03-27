@@ -36,14 +36,6 @@ def create_app(config_class=Config):
     def index():
         return render_template('index.html')
 
-    @app.route('/about_me')
-    def about_me():
-        return render_template('about_me.html')
-
-    @app.route('/copyright')
-    def copyright():
-        return render_template('copyright.html')
-
 
     from app.admin import admin
     app.register_blueprint(admin.bp)
@@ -57,14 +49,17 @@ def create_app(config_class=Config):
     from app.auth import auth
     app.register_blueprint(auth.bp)
 
-    from app.xuesi import xuesi
-    app.register_blueprint(xuesi.bp)
-
     from app.tag import tag
     app.register_blueprint(tag.bp)
 
     from app.proj import proj
     app.register_blueprint(proj.bp)
+
+    from app.xuesi import xuesi
+    app.register_blueprint(xuesi.bp)
+
+    from app.info import info
+    app.register_blueprint(info.bp)
 
     return app
 

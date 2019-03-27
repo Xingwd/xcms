@@ -22,10 +22,13 @@ export FLASK_ENV=development
 flask run
 ```
 
-
-数据库迁移操作：
+数据库迁移初始化，只需要第一次执行：
 ```
 flask db init
+```
+
+数据库迁移操作，当数据库发生变化是执行，比如新增一个表结构：
+```
 flask db migrate
 flask db upgrade
 ```

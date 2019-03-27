@@ -96,6 +96,23 @@ class Post(SearchableMixin, db.Model):
         self.tags.remove(tag)
 
 
-
 db.event.listen(db.session, 'before_commit', Post.before_commit)
 db.event.listen(db.session, 'after_commit', Post.after_commit)
+
+
+class AboutMe(db.Model):
+    __tablename__ = 'about_me'
+    id = db.Column(db.Integer, primary_key=True)
+    about_me = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<About Me {}>'.format(self.id)
+
+
+class Copyright(db.Model):
+    __tablename__ = 'copyright'
+    id = db.Column(db.Integer, primary_key=True)
+    copyright = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Copyright {}>'.format(self.id)

@@ -55,3 +55,8 @@ class AdminSearchForm(FlaskForm):
         if 'csrf_enabled' not in kwargs:
             kwargs['csrf_enabled'] = False
         super(AdminSearchForm, self).__init__(*args, **kwargs)
+
+
+class EditInfoForm(FlaskForm):
+    content = TextAreaField('Content', validators=[DataRequired()])
+    info_submit = SubmitField('更新')
