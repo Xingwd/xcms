@@ -6,24 +6,18 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-2 border-right">
-    <div id="sidebar">
-      <h6 class="ml-3 mb-0">TOC</h6>
-      <div class="markdown-body editormd-preview-container" id="custom-toc-container" previewcontainer="false"></div>
-    </div>
-  </div>
-  <div class="col-1">
-    <nav class="nav justify-content-center">
-    <div class="position-fixed">
-      {% if prev_url %}
-      <a href="{{ prev_url }}">
-        <i width="150" height="150" class="text-warning" data-feather="chevron-left"></i>
-      </a>
-      {% else %}
-      <i width="150" height="150" class="text-muted" data-feather="chevron-left"></i>
-      {% endif %}
-      </div>
-    </nav>
+  <div class="col-2">
+    <!--<nav class="nav justify-content-center">-->
+      <!--<div class="position-fixed">-->
+        <!--{% if prev_post %}-->
+        <!--<a href="{{ url_for('blog.detail', slug=prev_post.slug) }}">-->
+          <!--<i width="150" height="150" class="text-warning" data-feather="chevron-left"></i>-->
+        <!--</a>-->
+        <!--{% else %}-->
+        <!--<i width="150" height="150" class="text-muted" data-feather="chevron-left"></i>-->
+        <!--{% endif %}-->
+      <!--</div>-->
+    <!--</nav>-->
   </div>
   <div class="col-8 shadow-lg p-3 rounded">
     <h2>{{ post.title }}</h2>
@@ -41,6 +35,37 @@
     <hr>
     <div id="md2html" >
       <textarea style="display:none;">{{ post.content }}</textarea>
+    </div>
+
+    <hr>
+    <div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-between">
+          {% if prev_post %}
+          <a href="{{ url_for('blog.detail', slug=prev_post.slug) }}" class="text-info">
+            <i class="fas fa-chevron-left"></i>
+            {{ prev_post.title }}
+          </a>
+          {% else %}
+          <a class="text-muted">
+            <i class="fas fa-chevron-left"></i>
+            前面没有了
+          </a>
+          {% endif %}
+
+          {% if next_post %}
+          <a href="{{ url_for('blog.detail', slug=next_post.slug) }}" class="text-info">
+            {{ next_post.title }}
+            <i class="fas fa-chevron-right"></i>
+          </a>
+          {% else %}
+          <a class="text-muted">
+            后面没有了
+            <i class="fas fa-chevron-right text-muted"></i>
+          </a>
+          {% endif %}
+        </ul>
+      </nav>
     </div>
 
     <!-- zanzhu -->
@@ -68,18 +93,18 @@
       </div>
     </div>
   </div>
-  <div class="col-1">
-    <nav class="nav justify-content-center">
-      <div class="position-fixed">
-        {% if next_url %}
-        <a href="{{ next_url }}">
-          <i width="150" height="150" class="text-warning" data-feather="chevron-right"></i>
-        </a>
-        {% else %}
-        <i width="150" height="150" class="text-muted" data-feather="chevron-right"></i>
-        {% endif %}
-      </div>
-    </nav>
+  <div class="col-2">
+    <!--<nav class="nav justify-content-center">-->
+      <!--<div class="position-fixed">-->
+        <!--{% if next_post %}-->
+        <!--<a href="{{ url_for('blog.detail', slug=next_post.slug) }}">-->
+          <!--<i width="150" height="150" class="text-warning" data-feather="chevron-right"></i>-->
+        <!--</a>-->
+        <!--{% else %}-->
+        <!--<i width="150" height="150" class="text-muted" data-feather="chevron-right"></i>-->
+        <!--{% endif %}-->
+      <!--</div>-->
+    <!--</nav>-->
     <div style="margin-top: 450px">
       <div class="position-fixed">
         <button id="back_top" type="button" class="btn btn-link" style="display: none">

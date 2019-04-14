@@ -27,7 +27,7 @@ def count():
 @bp.route('/', methods=['GET', 'POST'])
 def blog():
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.order_by(Post.pub_date.desc()).paginate(
+    pagination = Post.query.order_by(Post.id.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
 
     post_count, pv_count = count()
@@ -44,22 +44,19 @@ def detail(slug):
     current_post.pv += 1
     db.session.commit()
 
+    # 使用分页确定对象的前后关联，一个对象分为一页
+    # 倒排，对象的倒排位置，即是其所在分页页码
     current_page = Post.query.filter(Post.id >= current_post.id).count()
-    posts = Post.query.order_by(Post.pub_date.desc()).paginate(
+    pages = Post.query.order_by(Post.id.desc()).paginate(
         current_page, 1, False)
 
-    next_posts = Post.query.order_by(Post.pub_date.desc()).paginate(
-        posts.next_num, 1, False) if posts.has_next else None
-    prev_posts = Post.query.order_by(Post.pub_date.desc()).paginate(
-        posts.prev_num, 1, False) if posts.has_prev else None
+    # 上一个对象
+    prev_post = pages.prev().items[0] if pages.has_prev else None
+    # 下一个对象
+    next_post = pages.next().items[0] if pages.has_next else None
 
-    next_url = url_for('blog.detail', slug=next_posts.items[0].slug) \
-        if posts.has_next else None
-    prev_url = url_for('blog.detail', slug=prev_posts.items[0].slug) \
-        if posts.has_prev else None
-
-    return render_template('blog/detail.html', post=posts.items[0],
-                           next_url=next_url, prev_url=prev_url)
+    return render_template('blog/detail.html', post=current_post,
+                           prev_post=prev_post, next_post=next_post)
 
 
 @bp.route('/search')
