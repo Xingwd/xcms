@@ -9,6 +9,6 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE')) or 5
+    POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE')) if os.environ.get('POSTS_PER_PAGE') else 5
 
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
