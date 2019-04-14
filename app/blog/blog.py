@@ -27,17 +27,13 @@ def count():
 @bp.route('/', methods=['GET', 'POST'])
 def blog():
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.pub_date.desc()).paginate(
+    pagination = Post.query.order_by(Post.pub_date.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('blog.blog', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('blog.blog', page=posts.prev_num) \
-        if posts.has_prev else None
 
     post_count, pv_count = count()
 
-    return render_template('blog/blog.html', posts=posts.items, next_url=next_url,
-                           prev_url=prev_url, post_count=post_count, pv_count=pv_count)
+    return render_template('blog/blog.html', pagination=pagination,
+                           post_count=post_count, pv_count=pv_count)
 
 
 @bp.route('/detail/<slug>')
