@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from flask import Flask
-from config import ProductionConfig, DevelopmentConfig
+from conf.config import ProductionConfig, DevelopmentConfig
 
 
 def create_app(Config=ProductionConfig):

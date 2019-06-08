@@ -11,15 +11,16 @@ class Config(object):
     DEBUG = False
     TESTING = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24)
-    MONGO_CLIENT = 'mongodb://localhost:27017/'
-    MONGO_DB = 'xcms'
+    MONGO_HOST = 'localhost'
+    MONGO_PORT = '27017'
+    XCMS_DB = 'xcms'
 
 
 class ProductionConfig(Config):
     """Production Config"""
-    MONGO_CLIENT = os.environ.get('MONGO_CLIENT') or \
-        'mongodb://localhost:27017/'
-    MONGO_DB = os.environ.get('MONGO_DB') or 'xcms'
+    MONGO_HOST = os.environ.get('MONGO_HOST') or 'localhost'
+    MONGO_PORT = os.environ.get('MONGO_PORT') or '27017'
+    XCMS_DB = os.environ.get('XCMS_DB') or 'xcms'
 
 
 class DevelopmentConfig(Config):
