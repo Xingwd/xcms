@@ -12,11 +12,12 @@ class User(object):
 
     Attributes
     ----------
+    user : object
+        A user object.
     tablename : string
         Name of user table.
 
     """
-
     tablename = 'user'
 
     def __init__(self, username):
@@ -58,3 +59,18 @@ class User(object):
 
         """
         return check_password_hash(self.user['password_hash'], password)
+
+
+class Blog(object):
+    tablename = 'blog'
+
+    def __init__(self, slug):
+        self.blog = current_app.db[self.tablename].find_one({'slug': slug})
+
+    @property
+    def blog(self):
+        return self.blog
+
+    @staticmethod
+    def blogs(page, limit):
+        return current_app.db[Blog.tablename].find().skip((page-1)*limit).limit(limit)

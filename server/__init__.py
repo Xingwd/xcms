@@ -26,8 +26,11 @@ def create_app(config=ProductionConfig):
         else:
             return None
 
-    from server.auth import bp as auth_bp
-    app.register_blueprint(auth_bp)
+    from auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    from blog import bp as blog_bp
+    app.register_blueprint(blog_bp, url_prefix='/blogs')
 
     return app
 
