@@ -6,7 +6,7 @@ from server.auth import auth
 bp = Blueprint('blog', __name__)
 
 
-@bp.route('/', methods=['GET'])
+@bp.route('', methods=['GET'])
 def get_blogs():
     page = request.args.get('page', 1)
     limit = request.args.get('limit', 3)
@@ -28,7 +28,7 @@ def get_blog(slug):
         abort(404)
 
 
-@bp.route('/', methods=['POST'])
+@bp.route('', methods=['POST'])
 @auth.login_required
 def post_blog():
     if not request.json:
@@ -37,13 +37,13 @@ def post_blog():
         abort(400)
     title = request.json.get('title')
     slug = request.json.get('slug')
-    tag = request.json.get('tag')
+    tags = request.json.get('tags')
     content = request.json.get('content')
 
-    if isinstance(tag, list):
-        tag = list(set(tag))
+    if isinstance(tags, list):
+        tags = list(set(tags))
 
-    Blog.new_blog(title, slug, tag, content)
+    Blog.new_blog(title, slug, tags, content)
     return jsonify({'message': 'Created'}), 201
 
 
@@ -54,15 +54,15 @@ def put_blog(slug):
         abort(400)
     if 'title' not in request.json or 'slug' not in request.json:
         abort(400)
-    title = request.json.get('title')
-    slug = request.json.get('slug')
-    tag = request.json.get('tag')
-    content = request.json.get('content')
+    put_title = request.json.get('title')
+    put_slug = request.json.get('slug')
+    put_tags = request.json.get('tags')
+    put_content = request.json.get('content')
 
-    if isinstance(tag, list):
-        tag = list(set(tag))
+    if isinstance(put_tags, list):
+        put_tags = list(set(put_tags))
 
-    Blog(slug).update_blog(title, slug, tag, content)
+    Blog(slug).update_blog(put_title, put_slug, put_tags, put_content)
     return jsonify({'message': 'Updated'}), 201
 
 
