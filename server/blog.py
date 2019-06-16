@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from server.models import Blog
-from auth import auth
+from server.auth import auth
 
 
 bp = Blueprint('blog', __name__)

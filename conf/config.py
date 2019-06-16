@@ -12,7 +12,7 @@ class Config(object):
     TESTING = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24)
     MONGO_HOST = 'localhost'
-    MONGO_PORT = '27017'
+    MONGO_PORT = 27017
     MONGO_DB = 'xcms'
     MONGO_USERNAME = 'admin'
     MONGO_PASSWOED = 'admin'
@@ -21,7 +21,7 @@ class Config(object):
 class ProductionConfig(Config):
     """Production Config"""
     MONGO_HOST = os.environ.get('MONGO_HOST') or 'localhost'
-    MONGO_PORT = os.environ.get('MONGO_PORT') or '27017'
+    MONGO_PORT = os.environ.get('MONGO_PORT') or 27017
     MONGO_DB = os.environ.get('MONGO_DB') or 'xcms'
     MONGO_USERNAME = os.environ.get('MONGO_USERNAME')
     MONGO_PASSWOED = os.environ.get('MONGO_PASSWOED')
