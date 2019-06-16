@@ -7,14 +7,14 @@ class User(object):
 
     Parameters
     ----------
-    username : string
+    username : String
         User name.
 
     Attributes
     ----------
-    user : object
+    user : Object
         A user object.
-    tablename : string
+    tablename : String
         Name of user table.
 
     """
@@ -33,12 +33,12 @@ class User(object):
 
         Parameters
         ----------
-        password : string
+        password : String
             Password of a user.
 
         Returns
         -------
-        string
+        String
             Password hash.
 
         """
@@ -49,12 +49,12 @@ class User(object):
 
         Parameters
         ----------
-        password : type
+        password : String
             A password user typed.
 
         Returns
         -------
-        boolen
+        Boolen
             True of False.
 
         """
@@ -62,6 +62,21 @@ class User(object):
 
 
 class Blog(object):
+    """Blog Model.
+
+    Parameters
+    ----------
+    slug : String
+        The slug of a blog.
+
+    Attributes
+    ----------
+    blog : Object
+        A blog object.
+    tablename : String
+        Name of blog table.
+
+    """
     tablename = 'blog'
 
     def __init__(self, slug):
