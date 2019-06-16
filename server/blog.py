@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, abort
 from server.models import Blog
 from server.auth import auth
 
@@ -12,10 +12,9 @@ def get_blogs():
     limit = request.args.get('limit', 3)
     blogs = []
     docs = Blog.blogs(page, limit)
-    if len(docs) > 0:
-        for i in docs:
-            del i['_id']
-            blogs.append(i)
+    for i in docs:
+        del i['_id']
+        blogs.append(i)
     return jsonify(blogs)
 
 
@@ -26,22 +25,49 @@ def get_blog(slug):
         del blog['_id']
         return jsonify(blog)
     else:
-        return None
+        abort(404)
 
 
 @bp.route('/', methods=['POST'])
 @auth.login_required
-def post_blog():  # TODO: 新建博客的逻辑
-    pass
+def post_blog():
+    if not request.json:
+        abort(400)
+    if 'title' not in request.json or 'slug' not in request.json:
+        abort(400)
+    title = request.json.get('title')
+    slug = request.json.get('slug')
+    tag = request.json.get('tag')
+    content = request.json.get('content')
+
+    if isinstance(tag, list):
+        tag = list(set(tag))
+
+    Blog.new_blog(title, slug, tag, content)
+    return jsonify({'message': 'Created'}), 201
 
 
 @bp.route('/<string:slug>', methods=['PUT'])
 @auth.login_required
-def put_blog():  # TODO: 编辑博客的逻辑
-    pass
+def put_blog(slug):
+    if not request.json:
+        abort(400)
+    if 'title' not in request.json or 'slug' not in request.json:
+        abort(400)
+    title = request.json.get('title')
+    slug = request.json.get('slug')
+    tag = request.json.get('tag')
+    content = request.json.get('content')
+
+    if isinstance(tag, list):
+        tag = list(set(tag))
+
+    Blog(slug).update_blog(title, slug, tag, content)
+    return jsonify({'message': 'Updated'}), 201
 
 
 @bp.route('/<string:slug>', methods=['DELETE'])
 @auth.login_required
-def delete_blog():  # TODO: 删除博客的逻辑
-    pass
+def delete_blog(slug):
+    Blog(slug).delete_blog()
+    return jsonify({'message': 'Deleted'}), 201
