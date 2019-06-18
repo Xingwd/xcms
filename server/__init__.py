@@ -13,9 +13,9 @@ def create_app(config):
 
     # Blueprint
     from server.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/xcms/api/v1/auth')
+    app.register_blueprint(auth_bp, url_prefix='/xcms/api/auth')
 
     from server.blog import bp as blog_bp
-    app.register_blueprint(blog_bp, url_prefix='/xcms/api/v1/blogs')
+    app.register_blueprint(blog_bp, url_prefix='/xcms/api/blogs')
 
     return app
