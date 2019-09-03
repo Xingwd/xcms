@@ -16,6 +16,6 @@ def verify_password(username, password):
     return False
 
 
-@bp.route('/register', method=['POST'])
+@bp.route('/register', methods=['POST'])
 def register():  # TODO: 注册模块
     pass
