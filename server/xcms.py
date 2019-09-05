@@ -1,4 +1,4 @@
-from server.main import create_app
+from main import create_app
 from conf.config import ProductionConfig, DevelopmentConfig
 
 
