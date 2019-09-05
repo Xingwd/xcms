@@ -36,10 +36,10 @@ def create_app(config=DevelopmentConfig):
         return 'Hello, World!'
 
     # Blueprint
-    from server.main.auth import bp as auth_bp
+    from main.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/xcms/api/auth')
 
-    from server.main.blog import bp as blog_bp
+    from main.blog import bp as blog_bp
     app.register_blueprint(blog_bp, url_prefix='/xcms/api/blogs')
 
     return app

@@ -9,9 +9,9 @@ ps: 正在寻求不依赖mongodb的测试方法
 """
 import pytest
 import base64
-from server.main import create_app
+from main import create_app
 from conf.config import TestingConfig
-from server.main.mongodb_dm import User, Blog
+from main.mongodb_dm import User, Blog
 
 
 test_user = {'username': 'test', 'password': 'test'}

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, abort, current_app, jsonify
 from flask_httpauth import HTTPBasicAuth
-from server.main.mongodb_dm import User
+from main.mongodb_dm import User
 
 
 bp = Blueprint('auth', __name__)

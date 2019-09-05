@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, abort, current_app
-from server.main.mongodb_dm import Blog
-from server.main.auth import auth
+from main.mongodb_dm import Blog
+from main.auth import auth
 
 
 bp = Blueprint('blog', __name__)

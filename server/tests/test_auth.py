@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from server.main.mongodb_dm import User
+from main.mongodb_dm import User
 
 base_api_path = '/xcms/api/auth'
 

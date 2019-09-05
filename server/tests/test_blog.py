@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from server.main.mongodb_dm import Blog
+from main.mongodb_dm import Blog
 
 base_api_path = '/xcms/api/blogs'
 
