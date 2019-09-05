@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: 'Xcms Admin',
-      logo: '/favicon.ico'
+      logo: '/kee_pass_x_64px.png'
     }
   }
 }
