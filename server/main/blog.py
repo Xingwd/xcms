@@ -74,3 +74,6 @@ def delete_blog(id):
     Blog().delete_one(id)
     current_app.logger.info('Deleted a blog')
     return jsonify({'message': 'Deleted'}), 201
+
+
+# TODO: 开发tag相关的接口
