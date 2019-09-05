@@ -13,7 +13,9 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24)
     MONGO_HOST = 'localhost'
     MONGO_PORT = 27017
-    MONGO_DB = 'xcms'
+
+    # Blog
+    BLOG_LIMIT = os.environ.get('BLOG_LIMIT') or 5
 
 
 class ProductionConfig(Config):
@@ -26,8 +28,10 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     """Development Config"""
     DEBUG = True
+    MONGO_DB = 'xcms_dev'
 
 
 class TestingConfig(Config):
     """Testing Config"""
     TESTING = True
+    MONGO_DB = 'xcms_test'
