@@ -1,32 +1,8 @@
 <template>
   <div id="app">
-    <el-container>
-      <el-aside>
-        <NavMenu />
-      </el-aside>
-      <el-container>
-        <el-header>Header</el-header>
-        <el-main>
-          <div id="nav">
-            <router-link to="/">Home</router-link> |
-            <router-link to="/about">About</router-link>
-          </div>
-          <router-view/>
-        </el-main>
-      </el-container>
-    </el-container>
+    <router-view/>
   </div>
 </template>
-
-<script>
-import NavMenu from '@/components/NavMenu'
-
-export default {
-  components: {
-    NavMenu
-  }
-}
-</script>
 
 <style>
 #app {
