@@ -1,5 +1,5 @@
 <template>
-  <aside class="el-aside" style="width: 200px">
+  <aside class="el-aside" style="width: 250px;">
     <el-menu
       default-active="2"
       class="el-menu-over"
@@ -57,7 +57,7 @@
 
 <style>
 .el-menu-over {
-  width: 200px;
+  width: 249px;
   height: 100%;
 }
 </style>

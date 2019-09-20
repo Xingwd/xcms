@@ -1,5 +1,5 @@
 <template>
-  <header class="el-header" style="height: 60px; padding: 0">
+  <header class="el-header" style="width: 100%; height: 60px; padding: 0px;">
     <div class="navbar">
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
