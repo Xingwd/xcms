@@ -1,25 +1,16 @@
 <template>
-  <el-container>
-    <NavMenu />
-    <el-container class="is-vertical">
-      <Header />
-      <el-main>
-        <div class="home">
-          <h1>This is an home page</h1>
-        </div>
-      </el-main>
-     </el-container>
-  </el-container>
+  <x-layout>
+    <h1>This is an home page</h1>
+  </x-layout>
 </template>
 
 <script>
-import { NavMenu, Header } from './layout'
+import Layout from '@/layout/Layout'
 
 export default {
   name: 'home',
   components: {
-    NavMenu,
-    Header
+    'x-layout': Layout
   }
 }
 </script>
