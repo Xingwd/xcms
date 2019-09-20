@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <NavMenu />
-    <el-container>
+    <el-container class="is-vertical">
       <Header />
       <el-main>
         <div class="home">
