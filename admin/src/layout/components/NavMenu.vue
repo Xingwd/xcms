@@ -1,8 +1,8 @@
 <template>
-  <aside class="el-aside" style="width: 250px;">
+  <aside class="el-aside" style="width: 250px; background-color: #545c64;">
     <el-menu
       default-active="/"
-      class="el-menu-over"
+      class="left-menu"
       @open="handleOpen"
       @close="handleClose"
       unique-opened
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style>
-.el-menu-over {
-  height: 100%;
+.left-menu {
+  width: 100%
 }
 </style>
