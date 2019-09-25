@@ -10,31 +10,34 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item index="/">
-        <i class="el-icon-location"></i>
-        <span slot="title">Home</span>
-      </el-menu-item>
-      <el-submenu index="/blog/articleList">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>博客</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="/blog/articleList">文章列表</el-menu-item>
-          <el-menu-item index="/blog/createArticle">创建文章</el-menu-item>
-          <el-menu-item index="/blog/editArticle">编辑文章</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-      <el-menu-item index="/about">
-        <i class="el-icon-location"></i>
-        <span slot="title">About</span>
-      </el-menu-item>
+      <div v-for="item in menu" :key="item.path">
+        <div v-if="item.children">
+          <el-submenu :index="item.path">
+            <template slot="title">
+              <i :class="item.meta.icon"></i>
+              <span v-text="item.meta.title"></span>
+            </template>
+            <el-menu-item v-for="citem in item.children" :key="citem.path" :index="item.path + '/' + citem.path" v-text="citem.meta.title"></el-menu-item>
+          </el-submenu>
+        </div>
+        <div v-else>
+          <el-menu-item :index="item.path">
+            <i :class="item.meta.icon"></i>
+            <span slot="title" v-text="item.meta.title"></span>
+          </el-menu-item>
+        </div>
+      </div>
     </el-menu>
   </aside>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      menu: this.$router.options.routes
+    }
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath)
