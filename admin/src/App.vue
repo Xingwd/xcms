@@ -1,8 +1,21 @@
 <template>
   <div id="app">
-    <router-view/>
+    <x-layout>
+      <router-view/>
+    </x-layout>
   </div>
 </template>
+
+<script>
+import Layout from '@/layout/Layout'
+
+export default {
+  name: 'app',
+  components: {
+    'x-layout': Layout
+  }
+}
+</script>
 
 <style>
 #app {

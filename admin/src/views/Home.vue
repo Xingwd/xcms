@@ -1,16 +1,9 @@
 <template>
-  <x-layout>
-    <h1>This is an home page</h1>
-  </x-layout>
+  <h1>This is an home page</h1>
 </template>
 
 <script>
-import Layout from '@/layout/Layout'
-
 export default {
-  name: 'home',
-  components: {
-    'x-layout': Layout
-  }
+  name: 'home'
 }
 </script>
