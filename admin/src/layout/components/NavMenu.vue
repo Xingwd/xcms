@@ -2,7 +2,7 @@
   <aside class="el-aside" style="width: 250px; background-color: #545c64;">
     <el-menu
       default-active="/"
-      class="left-menu"
+      style="border-right: 0px"
       @open="handleOpen"
       @close="handleClose"
       unique-opened
@@ -48,9 +48,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.left-menu {
-  width: 100%
-}
-</style>
