@@ -7,13 +7,11 @@
 </template>
 
 <script>
-import Layout from '@/layout/Layout'
+import XLayout from '@/layout/XLayout'
 
 export default {
   name: 'app',
-  components: {
-    'x-layout': Layout
-  }
+  components: { XLayout }
 }
 </script>
 

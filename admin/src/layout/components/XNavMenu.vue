@@ -33,6 +33,7 @@
 
 <script>
 export default {
+  name: 'XNavMenu',
   data () {
     return {
       menu: this.$router.options.routes

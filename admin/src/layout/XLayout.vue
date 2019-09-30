@@ -1,8 +1,8 @@
 <template>
   <el-container style="height: 100%;">
-    <NavMenu />
+    <x-nav-menu />
     <el-container class="is-vertical">
-      <Header />
+      <x-header />
       <el-main>
         <slot></slot>
       </el-main>
@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import { Header, NavMenu } from './components'
+import { XHeader, XNavMenu } from './components'
 
 export default {
-  name: 'layout',
+  name: 'XLayout',
   components: {
-    Header,
-    NavMenu
+    XHeader,
+    XNavMenu
   },
   methods: {
     async logout() {

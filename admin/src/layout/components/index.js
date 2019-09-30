@@ -1,2 +1,2 @@
-export { default as Header } from './Header'
-export { default as NavMenu } from './NavMenu'
+export { default as XHeader } from './XHeader'
+export { default as XNavMenu } from './XNavMenu'

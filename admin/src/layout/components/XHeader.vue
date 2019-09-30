@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  name: 'XHeader',
   methods: {
     async logout() {
       await this.$store.dispatch('user/logout')
