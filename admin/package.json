@@ -12,6 +12,7 @@
     "element-ui": "^2.12.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.0",
+    "tui-editor": "^1.4.6",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"

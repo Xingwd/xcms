@@ -1,7 +1,12 @@
 <template>
-  <h1>编辑文章</h1>
+  <article-detail :is-edit="true" />
 </template>
 
 <script>
-export default {}
+import ArticleDetail from './components/ArticleDetail'
+
+export default {
+  name: 'EditBlog',
+  components: { ArticleDetail }
+}
 </script>

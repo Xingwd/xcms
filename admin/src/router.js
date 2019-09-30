@@ -18,20 +18,20 @@ export default new Router({
       meta: { icon: 'el-icon-notebook-1', title: '博客' },
       children: [
         {
-          path: 'articleList',
-          name: 'articleList',
+          path: 'blogList',
+          name: 'blogList',
           component: () => import(/* webpackChunkName: "blog" */ './views/blog/BlogList.vue'),
           meta: { title: '博客列表' }
         },
         {
-          path: 'createArticle',
-          name: 'createArticle',
+          path: 'createBLog',
+          name: 'createBlog',
           component: () => import(/* webpackChunkName: "blog" */ './views/blog/CreateBlog.vue'),
           meta: { title: '创建博客' }
         },
         {
-          path: 'editArticle',
-          name: 'editArticle',
+          path: 'editBlog',
+          name: 'editBlog',
           component: () => import(/* webpackChunkName: "blog" */ './views/blog/EditBlog.vue'),
           meta: { title: '编辑博客' }
         }

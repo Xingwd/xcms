@@ -1,7 +1,12 @@
 <template>
-  <h1>创建文章</h1>
+  <article-detail :is-edit="false" />
 </template>
 
 <script>
-export default {}
+import ArticleDetail from './components/ArticleDetail'
+
+export default {
+  name: 'CreateBlog',
+  components: { ArticleDetail }
+}
 </script>
