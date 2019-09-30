@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from main.mongodb_dm import User
 
-base_api_path = '/xcms/api/auth'
+base_api_path = '/api/auth'
 
 
 def test_register(client, app):

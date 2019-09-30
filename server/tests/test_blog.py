@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from main.mongodb_dm import Blog
 
-base_api_path = '/xcms/api/blogs'
+base_api_path = '/api/blogs'
 
 
 def test_get_blogs(client, app):

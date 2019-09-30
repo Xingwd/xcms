@@ -37,9 +37,9 @@ def create_app(config=DevelopmentConfig):
 
     # Blueprint
     from main.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/xcms/api/auth')
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
 
     from main.blog import bp as blog_bp
-    app.register_blueprint(blog_bp, url_prefix='/xcms/api/blogs')
+    app.register_blueprint(blog_bp, url_prefix='/api/blogs')
 
     return app
