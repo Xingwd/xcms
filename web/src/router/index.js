@@ -7,18 +7,38 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/admin',
+    component: XAdminLayout,
+    children: [
+      {
+        path: '',
+        component: Home
+      },
+      {
+        path: 'about',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+      },
+      {
+        path: 'main',
+        component: XAdminLayout,
+        children: [
+          {
+            path: 'home',
+            component: Home
+          },
+          {
+            path: 'about',
+            component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+          }
+        ]
+      }
+    ]
+  },
+  {
     path: '/',
     name: 'home',
-    components: {
-      layout: XAdminLayout,
-      main: Home
-    }
+    component: Home
   },
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: Home
-  // },
   {
     path: '/about',
     name: 'about',

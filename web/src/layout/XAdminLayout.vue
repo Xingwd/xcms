@@ -4,7 +4,7 @@
     <el-container class="is-vertical">
       <x-admin-header />
       <el-main>
-        <slot />
+        <router-view />
       </el-main>
       <x-footer />
     </el-container>
