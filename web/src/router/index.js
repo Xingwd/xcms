@@ -11,24 +11,24 @@ const routes = [
     component: XAdminLayout,
     children: [
       {
-        path: '',
-        component: Home
+        path: 'dashboard',
+        component: () => import(/* webpackChunkName: "admin" */ '../views/Dashboard.vue')
       },
       {
-        path: 'about',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-      },
-      {
-        path: 'main',
-        component: XAdminLayout,
+        path: 'blog',
+        component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Blog.vue'),
         children: [
           {
-            path: 'home',
-            component: Home
+            path: '',
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/List.vue')
           },
           {
-            path: 'about',
-            component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+            path: 'create',
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Create.vue')
+          },
+          {
+            path: 'edit',
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Edit.vue')
           }
         ]
       }
