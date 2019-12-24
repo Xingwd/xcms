@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    sideBarIsCollapse: false
   },
   mutations: {
+    changeIsCollapse (state) {
+      state.sideBarIsCollapse = !state.sideBarIsCollapse
+    }
   },
   actions: {
   },

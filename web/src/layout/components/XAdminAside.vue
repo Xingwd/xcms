@@ -6,7 +6,8 @@
       style="border-right: 0px"
       :background-color="variables.menuBg"
       :text-color="variables.menuText"
-      :active-text-color="variables.menuActiveText">
+      :active-text-color="variables.menuActiveText"
+      :collapse="sideBarIsCollapse">
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -43,12 +44,16 @@
 
 <script>
 import variables from '@/styles/variables.scss'
+import { mapState } from 'vuex'
 
 export default {
   computed: {
     variables () {
       return variables
-    }
+    },
+    ...mapState([
+      'sideBarIsCollapse'
+    ])
   }
 }
 </script>
@@ -59,6 +64,8 @@ export default {
 .el-aside {
   background-color: $menuBg;
   text-align: left;
-  width: $sideBarWidth;
+  .el-menu:not(.el-menu--collapse) {
+    width: $sideBarWidth;
+  }
 }
 </style>
