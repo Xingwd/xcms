@@ -1,6 +1,6 @@
 <template>
   <footer class="el-footer">
-    Footer
+    Copyright © 2020 by xingweidong
   </footer>
 </template>
 
@@ -10,9 +10,11 @@ export default {}
 
 <style>
 .el-footer {
-  background-color: #B3C0D1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
+  padding: 0px;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 -1px 4px rgba(0,21,41,.08);
 }
 </style>
