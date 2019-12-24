@@ -4,11 +4,9 @@
     <el-menu
       default-active="2"
       style="border-right: 0px"
-      @open="handleOpen"
-      @close="handleClose"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
+      :background-color="variables.menuBg"
+      :text-color="variables.menuText"
+      :active-text-color="variables.menuActiveText">
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -44,15 +42,23 @@
 </template>
 
 <script>
-export default {}
+import variables from '@/styles/variables.scss'
+
+export default {
+  computed: {
+    variables () {
+      return variables
+    }
+  }
+}
 </script>
 
-<style>
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-    width: 200px;
-  }
+<style lang="scss" scoped>
+@import '@/styles/variables.scss';
+
+.el-aside {
+  background-color: $menuBg;
+  text-align: left;
+  width: $sideBarWidth;
+}
 </style>
