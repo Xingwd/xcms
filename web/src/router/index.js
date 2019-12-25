@@ -19,7 +19,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Blog.vue'),
         children: [
           {
-            path: '',
+            path: 'list',
             component: () => import(/* webpackChunkName: "admin" */ '../views/blog/List.vue')
           },
           {
