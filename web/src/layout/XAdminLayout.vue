@@ -22,7 +22,7 @@ export default {
     XAdminHeader,
     XFooter
   },
-
+  // TODO: 页面大小发生变化，min-height随之变化，其他地方可能也需要，使用vuex管理？
   computed: {
     classObject: function () {
       return {
