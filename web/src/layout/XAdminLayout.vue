@@ -1,12 +1,14 @@
 <template>
-  <el-container :style="classObject">
-    <x-admin-aside />
-    <el-container class="is-vertical">
-      <x-admin-header />
-      <el-main>
-        <router-view />
-      </el-main>
-      <x-footer />
+  <el-container :style="classObject" class="is-vertical">
+    <x-admin-header />
+    <el-container>
+      <x-admin-aside />
+      <el-container class="is-vertical">
+        <el-main>
+          <router-view />
+        </el-main>
+        <x-footer />
+      </el-container>
     </el-container>
   </el-container>
 </template>
