@@ -4,6 +4,7 @@ from main.mongodb_dm import User
 base_api_path = '/api/auth'
 
 
+# TODO: 调整测试逻辑
 def test_register(client, app):
     assert client.post(base_api_path + '/register').status_code == 400
     assert client.post(base_api_path + '/register', json={"test": "test"}).status_code == 400

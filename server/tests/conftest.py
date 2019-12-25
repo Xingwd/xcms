@@ -1,11 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-测试配置类
-需要本地启动mongodb:
-    host --> localhost
-    port --> 27017
-
-ps: 正在寻求不依赖mongodb的测试方法
+测试
 """
 import pytest
 import base64
@@ -13,7 +8,7 @@ from main import create_app
 from conf.config import TestingConfig
 from main.mongodb_dm import User, Blog
 
-
+# TODO: 调整测试逻辑
 test_user = {'username': 'test', 'password': 'test'}
 
 test_blogs = [

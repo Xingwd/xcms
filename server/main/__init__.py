@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 from flask import Flask
 from flask_cors import CORS
-from pymongo import MongoClient
 from logging.config import dictConfig
 from conf.config import DevelopmentConfig
 
@@ -28,7 +27,6 @@ def create_app(config=DevelopmentConfig):
     app = Flask(__name__)  # 创建应用对象
     CORS(app)  # 解决ajax跨域问题
     app.config.from_object(config)
-    app.db = MongoClient(config.MONGO_HOST, config.MONGO_PORT)[config.MONGO_DB]  # mongo数据库实例
 
     # 测试接口
     @app.route('/hello')
