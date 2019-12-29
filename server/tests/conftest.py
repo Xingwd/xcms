@@ -5,13 +5,10 @@
 import os
 import tempfile
 import pytest
-# import base64
-from main import create_app, db
+# from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from config import TestingConfig
-
-# # TODO: 调整测试逻辑
-# test_user = {'username': 'test', 'password': 'test'}
-#
+from main import create_app, db
+from main.models import User
 
 
 @pytest.fixture()
@@ -33,8 +30,13 @@ def client(app):
     with app.test_client() as client:
         yield client
 
-#
-# @pytest.fixture
-# def auth(app):
-#     b64_user = str(base64.b64encode('{}:{}'.format(test_user['username'], test_user['password']).encode('utf-8')), 'utf-8')
-#     return {'Authorization': 'Basic ' + b64_user}
+
+@pytest.fixture()
+def auth(app):
+    with app.app_context():
+        user = User(username='test')
+        user.hash_password('test')
+        db.session.add(user)
+        db.session.commit()
+    # s = Serializer(app.config['SECRET_KEY'])
+    # return {'Authorization': 'Token ' + s.dumps({'id': 1})}
