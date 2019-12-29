@@ -17,30 +17,24 @@ python -c 'import os; print(os.urandom(24))'
 
 
 # 开发调试
-## flask
-### 使用flask命令
 ```
 source activate xcms
-export FLASK_APP=xcms.py
+export FLASK_APP=xcms_dev.py
 export FLASK_ENV=development
+flask db init
+flask db migrate
+flask db upgrade
 flask run
-```
-### 直接启动
-```
-source activate xcms
-python xcms.py
 ```
 
 
 # 测试
-## Python
-### Flask
 使用`pytest`测试工具，测试代码都写在`server/tests`目录下
 
-#### 执行测试
+## 执行测试
 在server目录下，直接执行命令：`pytest`。
 
-#### 衡量测试覆盖率
+## 衡量测试覆盖率
 使用`coverage`命令代替直接使用`pytest`来运行测试：`coverage run -m pytest`
 
 查看覆盖率报告：`coverage report`

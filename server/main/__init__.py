@@ -1,13 +1,18 @@
 # -*- coding: UTF-8 -*-
-from flask import Flask
+from flask import Flask, make_response, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_cors import CORS
 from logging.config import dictConfig
-from conf.config import DevelopmentConfig
+from config import DevelopmentConfig
+
+db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app(config=DevelopmentConfig):
 
-    # logging 配置，在创建应用对象之前进行配置
+    # TODO: logging 配置，在创建应用对象之前进行配置
     dictConfig({
         'version': 1,
         'formatters': {'default': {
@@ -24,9 +29,21 @@ def create_app(config=DevelopmentConfig):
         }
     })
 
-    app = Flask(__name__)  # 创建应用对象
-    CORS(app)  # 解决ajax跨域问题
+    app = Flask(__name__)
     app.config.from_object(config)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+    CORS(app)
+
+    # TODO: 错误处理，深入研究
+    @app.errorhandler(404)
+    def not_found(error):
+        return make_response(jsonify({'msg': 'Not found', 'status_code': 404}), 404)
+
+    @app.errorhandler(400)
+    def bad_request(error):
+        return make_response(jsonify({'msg': 'Bad request', 'status_code': 400}), 400)
 
     # 测试接口
     @app.route('/hello')
@@ -34,10 +51,10 @@ def create_app(config=DevelopmentConfig):
         return 'Hello, World!'
 
     # Blueprint
-    from main.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    from .auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prefix='/xcms/auth/api')
 
-    from main.blog import bp as blog_bp
-    app.register_blueprint(blog_bp, url_prefix='/api/blogs')
+    from .blog import bp as blog_bp
+    app.register_blueprint(blog_bp, url_prefix='/xcms/blog/api')
 
     return app

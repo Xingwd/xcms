@@ -1,11 +1,10 @@
 from main import create_app
-from conf.config import TestingConfig
 
 
 # TODO: 调整测试逻辑
-def test_config():
+def test_config(app):
     assert not create_app().testing
-    assert create_app(config=TestingConfig).testing
+    assert app.testing
 
 
 def test_hello(client):

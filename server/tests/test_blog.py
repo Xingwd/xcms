@@ -1,77 +1,143 @@
 # -*- coding: UTF-8 -*-
-from main.mongodb_dm import Blog
+import pytest
+import json
+from main import db
+from main.models import BlogPost as Post, BlogCategory as Category
 
-base_api_path = '/api/blogs'
 
-
-# TODO: 调整测试逻辑
-def test_get_blogs(client, app):
-    assert client.get(base_api_path).status_code == 200
+@pytest.fixture()
+def init(app):
     with app.app_context():
-        assert app.db[Blog.tablename].count_documents({}) == 2
+        category1 = Category(name='c1')
+        category2 = Category(name='c2')
+        post1 = Post(title='Testing Title1', body='I am testing data.')
+        post2 = Post(title='Testing Title2', body='')
+        category1.posts.append(post1)
+        category2.posts.append(post2)
+        db.session.add(category1)
+        db.session.add(category2)
+        db.session.commit()
 
 
-def test_get_blog(client, app):
-    assert client.get(base_api_path + '/1').status_code == 200
-    with app.app_context():
-        assert app.db[Blog.tablename].count_documents({}) == 2
+class TestPost:
+    BASE_URI = '/xcms/blog/api/v1.0/posts'
 
-    assert client.get(base_api_path + '/3').status_code == 404
+    def test_get_posts(self, init, client):
+        # category不存在
+        assert client.get(self.BASE_URI + '?category_name=c10').status_code == 404
+        # 全部数据
+        resp1 = client.get(self.BASE_URI)
+        assert resp1.status_code == 200
+        assert len(json.loads(resp1.data).get('posts', [])) == 2
+        # 属于c1的数据
+        resp2 = client.get(self.BASE_URI + '?category_name=c1')
+        assert resp2.status_code == 200
+        assert len(json.loads(resp2.data).get('posts', [])) == 1
+
+    def test_get_post(self, init, client):
+        # post不存在
+        assert client.get(self.BASE_URI + '/10').status_code == 404
+        # post.id = 1
+        resp = client.get(self.BASE_URI + '/1')
+        assert resp.status_code == 200
+        assert json.loads(resp.data).get('title') == 'Testing Title1'
+
+    def test_create_post(self, init, client):
+        # 没有request.json
+        assert client.post(self.BASE_URI).status_code == 400
+        # request.json中有category_name，没有title
+        assert client.post(self.BASE_URI, json={'category_name': 'c1'}).status_code == 400
+        # request.json中有title，没有category_name
+        assert client.post(self.BASE_URI, json={'title': 'Title'}).status_code == 400
+        # category不存在
+        assert client.post(self.BASE_URI, json={'title': 'Title', 'category_name': 'c10'}).status_code == 404
+        # 成功创建
+        data = {
+            'title': 'Create Testing Title',
+            'body': 'I am testing data.',
+            'category_name': 'c1'
+        }
+        assert client.post(self.BASE_URI, json=data).status_code == 201
+        # 验证创建
+        assert json.loads(client.get(self.BASE_URI + '/3').data).get('title') == 'Create Testing Title'
+
+    def test_update_post(self, init, client):
+        # 没有request.json
+        assert client.put(self.BASE_URI + '/1').status_code == 400
+        # 没有request.json['title']
+        assert client.put(self.BASE_URI + '/1', json={}).status_code == 400
+        # 没有找到post
+        assert client.put(self.BASE_URI + '/10', json={'title': 'Update Title'}).status_code == 404
+        # 成功更新
+        data = {
+            'title': 'Upate Testing Tilte',
+            'body': 'I am testing data.',
+            'category_name': 'c1'
+        }
+        assert client.put(self.BASE_URI + '/1', json=data).status_code == 201
+        # 验证更新
+        assert json.loads(client.get(self.BASE_URI + '/1').data).get('title') == 'Upate Testing Tilte'
+
+    def test_delete_post(self, init, client):
+        # 没有找到post
+        assert client.delete(self.BASE_URI + '/10').status_code == 404
+        # 删除成功
+        assert client.delete(self.BASE_URI + '/1').status_code == 201
+        # 验证删除
+        assert client.get(self.BASE_URI + '/1').status_code == 404
 
 
-def test_post_blog(client, auth, app):
-    assert client.post(base_api_path).status_code == 401
+class TestCategory:
+    BASE_URI = '/xcms/blog/api/v1.0/categories'
 
-    assert client.post(base_api_path, headers=auth).status_code == 400
-    assert client.post(base_api_path, headers=auth, json={"test": "test"}).status_code == 400
+    def test_get_categories(self, init, client):
+        # 全部数据
+        resp = client.get(self.BASE_URI)
+        assert resp.status_code == 200
+        assert len(json.loads(resp.data)) == 2
 
-    resp = client.post(base_api_path, headers=auth,
-                       json={"title": "Post Testing Title",
-                             "author": "Post Testing Author",
-                             "tags": ["post_tag1", "post_tag2"],
-                             "content": "I am post testing data, I am post testing data."})
-    assert resp.status_code == 201
-    with app.app_context():
-        assert app.db[Blog.tablename].count_documents({}) == 3
+    def test_get_category(self, init, client):
+        # category不存在
+        assert client.get(self.BASE_URI + '/10').status_code == 404
+        # category.id = 1
+        resp = client.get(self.BASE_URI + '/1')
+        assert resp.status_code == 200
+        assert json.loads(resp.data).get('id') == 1
 
-    resp = client.post(base_api_path, headers=auth,
-                       json={"title": "Post Testing Title",
-                             "author": "Post Testing Author",
-                             "tags": ["post_tag1", "post_tag2"],
-                             "content": "I am post testing data, I am post testing data."})
-    assert resp.status_code == 409
-    with app.app_context():
-        assert app.db[Blog.tablename].count_documents({}) == 3
+    def test_create_category(self, init, client):
+        # 没有request.json
+        assert client.post(self.BASE_URI).status_code == 400
+        # 没有request.json['name']
+        assert client.post(self.BASE_URI, json={}).status_code == 400
+        # 成功创建
+        data = {
+            'name': 'Testing'
+        }
+        assert client.post(self.BASE_URI, json=data).status_code == 201
+        # 验证创建
+        assert json.loads(client.get(self.BASE_URI + '/3').data).get('name') == 'Testing'
 
+    def test_update_category(self, init, client):
+        # 没有request.json
+        assert client.put(self.BASE_URI + '/1').status_code == 400
+        # 没有request.json['name']
+        assert client.put(self.BASE_URI + '/1', json={}).status_code == 400
+        # 成功更新
+        data = {
+            'name': 'New c1'
+        }
+        assert client.put(self.BASE_URI + '/1', json=data).status_code == 201
+        # 验证更新
+        assert json.loads(client.get(self.BASE_URI + '/1').data).get('name') == 'New c1'
 
-def test_put_blog(client, auth, app):
-    assert client.put(base_api_path + '/1').status_code == 401
-
-    assert client.put(base_api_path + '/1', headers=auth).status_code == 400
-    assert client.put(base_api_path + '/1', headers=auth, json={"test": "test"}).status_code == 400
-
-    resp1 = client.put(base_api_path + '/1', headers=auth,
-                       json={"title": "Updated Testing Title",
-                             "author": "Testing Author",
-                             "tags": ["tag1", "tag2"],
-                             "content": "I am testing data, I am testing data."})
-    assert resp1.status_code == 201
-    with app.app_context():
-        doc = app.db[Blog.tablename].find_one({'_id': 1})
-        assert doc['title'] == 'Updated Testing Title'
-
-    resp2 = client.put(base_api_path + '/3', headers=auth,
-                       json={"title": "Updated Testing Title",
-                             "author": "Testing Author",
-                             "tags": ["tag1", "tag2"],
-                             "content": "I am testing data, I am testing data."})
-    assert resp2.status_code == 404
-
-
-def test_delete_blog(client, auth, app):
-    assert client.delete(base_api_path + '/1').status_code == 401
-
-    assert client.delete(base_api_path + '/1', headers=auth).status_code == 201
-    with app.app_context():
-        doc = app.db[Blog.tablename].find_one({'_id': 1})
-        assert doc is None
+    def test_delete_category(self, init, client):
+        # 没有找到category
+        assert client.delete(self.BASE_URI + '/10').status_code == 404
+        # 删除成功
+        assert client.delete(self.BASE_URI + '/1').status_code == 201
+        # 验证删除
+        assert client.get(self.BASE_URI + '/1').status_code == 404
+        # 验证post.category_id
+        resp = client.get(TestPost.BASE_URI + '/1')
+        assert json.loads(resp.data).get('category_id') is None
+        assert json.loads(resp.data).get('category_name') is None
