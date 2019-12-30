@@ -6,6 +6,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/register',
+    component: () => import(/* webpackChunkName: "auth" */ '../views/auth/Register.vue')
+  },
+  {
+    path: '/login',
+    component: () => import(/* webpackChunkName: "auth" */ '../views/auth/Login.vue')
+  },
+  {
     path: '/admin',
     component: XAdminLayout,
     children: [
