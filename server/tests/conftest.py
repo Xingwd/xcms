@@ -5,7 +5,7 @@
 import os
 import tempfile
 import pytest
-# from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+import base64
 from config import TestingConfig
 from main import create_app, db
 from main.models import User
@@ -33,10 +33,12 @@ def client(app):
 
 @pytest.fixture()
 def auth(app):
+    token = None
     with app.app_context():
         user = User(username='test')
         user.hash_password('test')
         db.session.add(user)
         db.session.commit()
-    # s = Serializer(app.config['SECRET_KEY'])
-    # return {'Authorization': 'Token ' + s.dumps({'id': 1})}
+        token = User.query.filter_by(username='test').first().generate_token().decode('ascii')
+    basic = str(base64.b64encode('{}:{}'.format(token, 'unused').encode('utf-8')), 'utf-8')
+    return {'Authorization': 'Basic {}'.format(basic)}

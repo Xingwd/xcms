@@ -42,47 +42,53 @@ class TestPost:
         assert resp.status_code == 200
         assert json.loads(resp.data).get('title') == 'Testing Title1'
 
-    def test_create_post(self, init, client):
+    def test_create_post(self, init, auth, client):
+        # 认证失败
+        assert client.post(self.BASE_URI).status_code == 401
         # 没有request.json
-        assert client.post(self.BASE_URI).status_code == 400
+        assert client.post(self.BASE_URI, headers=auth).status_code == 400
         # request.json中有category_name，没有title
-        assert client.post(self.BASE_URI, json={'category_name': 'c1'}).status_code == 400
+        assert client.post(self.BASE_URI, headers=auth, json={'category_name': 'c1'}).status_code == 400
         # request.json中有title，没有category_name
-        assert client.post(self.BASE_URI, json={'title': 'Title'}).status_code == 400
+        assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title'}).status_code == 400
         # category不存在
-        assert client.post(self.BASE_URI, json={'title': 'Title', 'category_name': 'c10'}).status_code == 404
+        assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title', 'category_name': 'c10'}).status_code == 404
         # 成功创建
         data = {
             'title': 'Create Testing Title',
             'body': 'I am testing data.',
             'category_name': 'c1'
         }
-        assert client.post(self.BASE_URI, json=data).status_code == 201
+        assert client.post(self.BASE_URI, headers=auth, json=data).status_code == 201
         # 验证创建
         assert json.loads(client.get(self.BASE_URI + '/3').data).get('title') == 'Create Testing Title'
 
-    def test_update_post(self, init, client):
+    def test_update_post(self, init, auth, client):
+        # 认证失败
+        assert client.put(self.BASE_URI + '/1').status_code == 401
         # 没有request.json
-        assert client.put(self.BASE_URI + '/1').status_code == 400
+        assert client.put(self.BASE_URI + '/1', headers=auth).status_code == 400
         # 没有request.json['title']
-        assert client.put(self.BASE_URI + '/1', json={}).status_code == 400
+        assert client.put(self.BASE_URI + '/1', headers=auth, json={}).status_code == 400
         # 没有找到post
-        assert client.put(self.BASE_URI + '/10', json={'title': 'Update Title'}).status_code == 404
+        assert client.put(self.BASE_URI + '/10', headers=auth, json={'title': 'Update Title'}).status_code == 404
         # 成功更新
         data = {
             'title': 'Upate Testing Tilte',
             'body': 'I am testing data.',
             'category_name': 'c1'
         }
-        assert client.put(self.BASE_URI + '/1', json=data).status_code == 201
+        assert client.put(self.BASE_URI + '/1', headers=auth, json=data).status_code == 201
         # 验证更新
         assert json.loads(client.get(self.BASE_URI + '/1').data).get('title') == 'Upate Testing Tilte'
 
-    def test_delete_post(self, init, client):
+    def test_delete_post(self, init, auth, client):
+        # 认证失败
+        assert client.delete(self.BASE_URI + '/1').status_code == 401
         # 没有找到post
-        assert client.delete(self.BASE_URI + '/10').status_code == 404
+        assert client.delete(self.BASE_URI + '/10', headers=auth).status_code == 404
         # 删除成功
-        assert client.delete(self.BASE_URI + '/1').status_code == 201
+        assert client.delete(self.BASE_URI + '/1', headers=auth).status_code == 201
         # 验证删除
         assert client.get(self.BASE_URI + '/1').status_code == 404
 
@@ -104,37 +110,43 @@ class TestCategory:
         assert resp.status_code == 200
         assert json.loads(resp.data).get('id') == 1
 
-    def test_create_category(self, init, client):
+    def test_create_category(self, init, auth, client):
+        # 认证失败
+        assert client.post(self.BASE_URI).status_code == 401
         # 没有request.json
-        assert client.post(self.BASE_URI).status_code == 400
+        assert client.post(self.BASE_URI, headers=auth).status_code == 400
         # 没有request.json['name']
-        assert client.post(self.BASE_URI, json={}).status_code == 400
+        assert client.post(self.BASE_URI, headers=auth, json={}).status_code == 400
         # 成功创建
         data = {
             'name': 'Testing'
         }
-        assert client.post(self.BASE_URI, json=data).status_code == 201
+        assert client.post(self.BASE_URI, headers=auth, json=data).status_code == 201
         # 验证创建
         assert json.loads(client.get(self.BASE_URI + '/3').data).get('name') == 'Testing'
 
-    def test_update_category(self, init, client):
+    def test_update_category(self, init, auth, client):
+        # 认证失败
+        assert client.put(self.BASE_URI + '/1').status_code == 401
         # 没有request.json
-        assert client.put(self.BASE_URI + '/1').status_code == 400
+        assert client.put(self.BASE_URI + '/1', headers=auth).status_code == 400
         # 没有request.json['name']
-        assert client.put(self.BASE_URI + '/1', json={}).status_code == 400
+        assert client.put(self.BASE_URI + '/1', headers=auth, json={}).status_code == 400
         # 成功更新
         data = {
             'name': 'New c1'
         }
-        assert client.put(self.BASE_URI + '/1', json=data).status_code == 201
+        assert client.put(self.BASE_URI + '/1', headers=auth, json=data).status_code == 201
         # 验证更新
         assert json.loads(client.get(self.BASE_URI + '/1').data).get('name') == 'New c1'
 
-    def test_delete_category(self, init, client):
+    def test_delete_category(self, init, auth, client):
+        # 认证失败
+        assert client.delete(self.BASE_URI + '/10').status_code == 401
         # 没有找到category
-        assert client.delete(self.BASE_URI + '/10').status_code == 404
+        assert client.delete(self.BASE_URI + '/10', headers=auth).status_code == 404
         # 删除成功
-        assert client.delete(self.BASE_URI + '/1').status_code == 201
+        assert client.delete(self.BASE_URI + '/1', headers=auth).status_code == 201
         # 验证删除
         assert client.get(self.BASE_URI + '/1').status_code == 404
         # 验证post.category_id

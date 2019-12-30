@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, abort
 from . import db
 from .models import BlogPost as Post, BlogCategory as Category
-# from ..auth import auth
+from .auth import auth
 
 bp = Blueprint('blog', __name__)
 
@@ -51,8 +51,9 @@ def get_post(id):
     }
     return jsonify(data)
 
-# TODO: 增加auth
+
 @bp.route('/v1.0/posts', methods=['POST'])
+@auth.login_required
 def create_post():
     if not request.json or 'title' not in request.json or 'category_name' not in request.json:
         abort(400)
@@ -64,8 +65,9 @@ def create_post():
     db.session.commit()
     return jsonify({'msg': 'Created the blog', 'status_code': 201}), 201
 
-# TODO: 增加auth
+
 @bp.route('/v1.0/posts/<int:id>', methods=['PUT'])
+@auth.login_required
 def update_post(id):
     if not request.json or 'title' not in request.json:
         abort(400)
@@ -75,8 +77,9 @@ def update_post(id):
     db.session.commit()
     return jsonify({'msg': 'Updated the blog', 'status_code': 201}), 201
 
-# TODO: 增加auth
+
 @bp.route('/v1.0/posts/<int:id>', methods=['DELETE'])
+@auth.login_required
 def delete_post(id):
     post = Post.query.filter_by(id=id).first_or_404()
     db.session.delete(post)
@@ -104,8 +107,9 @@ def get_category(id):
     }
     return jsonify(data)
 
-# TODO: 增加auth
+
 @bp.route('/v1.0/categories', methods=['POST'])
+@auth.login_required
 def create_category():
     if not request.json or 'name' not in request.json:
         abort(400)
@@ -114,9 +118,11 @@ def create_category():
     db.session.commit()
     return jsonify({'msg': 'Created the category', 'status_code': 201}), 201
 
-# TODO: 增加auth
+
 @bp.route('/v1.0/categories/<int:id>', methods=['PUT'])
+@auth.login_required
 def update_category(id):
+
     if not request.json or 'name' not in request.json:
         abort(400)
     category = Category.query.filter_by(id=id).first_or_404()
@@ -124,8 +130,9 @@ def update_category(id):
     db.session.commit()
     return jsonify({'msg': 'Updated the category', 'status_code': 201}), 201
 
-# TODO: 增加auth
+
 @bp.route('/v1.0/categories/<int:id>', methods=['DELETE'])
+@auth.login_required
 def delete_category(id):
     category = Category.query.filter_by(id=id).first_or_404()
     db.session.delete(category)

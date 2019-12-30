@@ -1,15 +1,15 @@
 from flask import Blueprint, request, abort, jsonify
-from flask_httpauth import HTTPTokenAuth
+from flask_httpauth import HTTPBasicAuth
 from . import db
 from .models import User
 
 
 bp = Blueprint('auth', __name__)
-auth = HTTPTokenAuth(scheme='Token')
+auth = HTTPBasicAuth()
 
 
-@auth.verify_token
-def verify_token(username_or_token, password):
+@auth.verify_password
+def verify_password(username_or_token, password):
     # 先尝试token认证
     user = User.check_token(username_or_token)
     if not user:

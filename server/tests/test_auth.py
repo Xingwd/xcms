@@ -28,6 +28,8 @@ def test_login(auth, client):
     assert client.post(URI, json={'username': 'test'}).status_code == 400
     # 用户不存在
     assert client.post(URI, json={'username': 'test1', 'password': ''}).status_code == 404
+    # 密码错误
+    assert client.post(URI, json={'username': 'test', 'password': ''}).status_code == 400
     # 登陆成功
     resp = client.post(URI, json={'username': 'test', 'password': 'test'})
     assert json.loads(resp.data).get('token') is not None
