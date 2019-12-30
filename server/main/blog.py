@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from flask import Blueprint, request, jsonify, abort
 from . import db
 from .models import BlogPost as Post, BlogCategory as Category
