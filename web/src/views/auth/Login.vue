@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { login } from '@/api/auth'
+
 export default {
   data () {
     return {
@@ -37,22 +39,42 @@ export default {
       rules: {
         username: [
           { required: true, message: 'admin', trigger: 'blur' },
-          { min: 2, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          { min: 3, max: 15, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
         password: [
           { required: true, message: 'admin', trigger: 'blur' },
-          { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' }
+          { min: 5, max: 18, message: '长度在 5 到 18 个字符', trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+    submitForm (form) {
+      this.$refs[form].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          login({
+            username: this.ruleForm.username,
+            password: this.ruleForm.password
+          }).then(response => {
+            this.$message.success('登录成功')
+            // 保存token
+            this.$store.commit('set_token', response.data.token)
+            this.$router.push('/admin/dashboard')
+          }).catch(error => {
+            console.log(error)
+            switch (error.status) {
+              case 404:
+                this.$message.error('用户不存在!')
+                break
+              case 400:
+                this.$message.error('密码错误!')
+                break
+              default:
+                this.$message.error(error.status)
+            }
+          })
         } else {
-          console.log('error submit!!')
+          this.$message.error('表单验证失败!')
           return false
         }
       })

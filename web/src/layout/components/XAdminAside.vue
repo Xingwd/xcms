@@ -15,11 +15,10 @@
       <el-submenu index="/admin/blog">
         <template slot="title">
           <i class="el-icon-edit"></i>
-          <!-- TODO: 修改成 博客 ，包括调整子菜单-->
-          <span>导航二</span>
+          <span>博客</span>
         </template>
-        <el-menu-item index="/admin/blog/list">列表</el-menu-item>
-        <el-menu-item index="/admin/blog/create">博客</el-menu-item>
+        <el-menu-item index="/admin/blog/list">博客列表</el-menu-item>
+        <el-menu-item index="/admin/blog/create">创建博客</el-menu-item>
       </el-submenu>
     </el-menu>
   </aside>

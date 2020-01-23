@@ -23,7 +23,10 @@ const routes = [
         children: [
           {
             path: 'list',
-            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/List.vue')
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/List.vue'),
+            meta: {
+              requiresAuth: true
+            }
           },
           {
             path: 'create',
