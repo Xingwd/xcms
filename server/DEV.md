@@ -24,10 +24,14 @@ export FLASK_ENV=development
 flask db init
 flask db migrate
 flask db upgrade
-flask createadmin --name admin --password admin
 flask run
 ```
 
+创建管理员用户
+```
+flask createadmin --help
+flask createadmin --name admin --password admin
+```
 
 # 测试
 使用`pytest`测试工具，测试代码都写在`server/tests`目录下
