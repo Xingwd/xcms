@@ -35,6 +35,21 @@ const routes = [
           {
             path: 'edit',
             component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Edit.vue')
+          },
+          {
+            path: 'categories',
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Categories.vue'),
+            meta: {
+              requiresAuth: true
+            }
+          },
+          {
+            path: 'create_category',
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/CreateCategory.vue')
+          },
+          {
+            path: 'edit_category',
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/EditCategory.vue')
           }
         ]
       }

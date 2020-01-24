@@ -9,16 +9,36 @@
       :active-text-color="variables.menuActiveText"
       :collapse="sideBarIsCollapse">
       <el-menu-item index="/admin/dashboard">
-        <i class="el-icon-sunrise"></i>
+        <i class="el-icon-sunrise" />
         <span slot="title">仪表盘</span>
       </el-menu-item>
       <el-submenu index="/admin/blog">
         <template slot="title">
-          <i class="el-icon-edit"></i>
+          <i class="el-icon-notebook-1" />
           <span>博客</span>
         </template>
-        <el-menu-item index="/admin/blog/list">博客列表</el-menu-item>
-        <el-menu-item index="/admin/blog/create">创建博客</el-menu-item>
+        <el-menu-item-group>
+          <template slot="title">文章</template>
+          <el-menu-item index="/admin/blog/list">
+            <i class="el-icon-s-order" />
+            <span>文章列表</span>
+          </el-menu-item>
+          <el-menu-item index="/admin/blog/create">
+            <i class="el-icon-edit" />
+            <span>写文章</span>
+          </el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group>
+          <template slot="title">分类</template>
+          <el-menu-item index="/admin/blog/categories">
+            <i class="el-icon-s-grid"/>
+            <span>所有分类</span>
+          </el-menu-item>
+          <el-menu-item index="/admin/blog/create_category">
+            <i class="el-icon-plus" />
+            <span>新建分类</span>
+          </el-menu-item>
+        </el-menu-item-group>
       </el-submenu>
     </el-menu>
   </aside>
