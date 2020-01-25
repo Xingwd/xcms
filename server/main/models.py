@@ -21,7 +21,7 @@ class User(db.Model):  # TODO: email注册，验证码
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def generate_token(self, expiration=600):
+    def generate_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.id})
 

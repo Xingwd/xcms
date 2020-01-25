@@ -9,18 +9,19 @@ const instance = axios.create({
 })
 
 // Add a request interceptor
-// instance.interceptors.request.use(
-//   config => {
-//     if (localStorage.token) {
-//       config.headers['Authorization'] = 'Basics {}:unused'.format(localStorage.token)
-//     }
-//     return config
-//   },
-//   error => {
-//     console.log(error) // for debug
-//     return Promise.reject(error)
-//   }
-// )
+instance.interceptors.request.use(
+  config => {
+    if (localStorage.token) {
+      let Base64 = require('js-base64').Base64
+      config.headers['Authorization'] = 'Basic ' + Base64.encode(localStorage.token + ':unused')
+    }
+    return config
+  },
+  error => {
+    console.log(error) // for debug
+    return Promise.reject(error)
+  }
+)
 
 // Add a response interceptor
 instance.interceptors.response.use(
@@ -31,7 +32,7 @@ instance.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401: // 401状态时跳转登录页并清除token
-          store.del_token()
+          store.commit('del_token')
           router.push('/login')
       }
     }

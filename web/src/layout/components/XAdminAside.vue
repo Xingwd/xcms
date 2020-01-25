@@ -34,10 +34,6 @@
             <i class="el-icon-s-grid"/>
             <span>所有分类</span>
           </el-menu-item>
-          <el-menu-item index="/admin/blog/create_category">
-            <i class="el-icon-plus" />
-            <span>新建分类</span>
-          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>

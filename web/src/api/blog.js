@@ -13,7 +13,7 @@ export function fetchPosts (query) {
 
 export function fetchPost (id) {
   return instance({
-    url: postBaseURI + '/{}'.format(id),
+    url: postBaseURI + '/' + id,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function createPost (data) {
 
 export function updatePost (id, data) {
   return instance({
-    url: postBaseURI + '/{}'.format(id),
+    url: postBaseURI + '/' + id,
     method: 'put',
     data: data
   })
@@ -36,7 +36,7 @@ export function updatePost (id, data) {
 
 export function deletePost (id) {
   return instance({
-    url: postBaseURI + '/{}'.format(id),
+    url: postBaseURI + '/' + id,
     method: 'delete'
   })
 }
@@ -51,7 +51,7 @@ export function fetchCategories (query) {
 
 export function fetchCategory (id) {
   return instance({
-    url: categoryBaseURI + '/{}'.format(id),
+    url: categoryBaseURI + '/' + id,
     method: 'get'
   })
 }
@@ -66,7 +66,7 @@ export function createCategory (data) {
 
 export function updateCategory (id, data) {
   return instance({
-    url: categoryBaseURI + '/{}'.format(id),
+    url: categoryBaseURI + '/' + id,
     method: 'put',
     data: data
   })
@@ -74,7 +74,7 @@ export function updateCategory (id, data) {
 
 export function deleteCategory (id) {
   return instance({
-    url: categoryBaseURI + '/{}'.format(id),
+    url: categoryBaseURI + '/' + id,
     method: 'delete'
   })
 }

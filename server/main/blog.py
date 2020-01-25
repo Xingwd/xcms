@@ -94,7 +94,8 @@ def get_categories():
     for category in Category.query.all():
         data.append({
             'id': category.id,
-            'name': category.name
+            'name': category.name,
+            'posts': category.posts
         })
     return jsonify(data)
 
@@ -104,7 +105,8 @@ def get_category(id):
     category = Category.query.filter_by(id=id).first_or_404()
     data = {
         'id': category.id,
-        'name': category.name
+        'name': category.name,
+        'posts': category.posts
     }
     return jsonify(data)
 
@@ -123,7 +125,6 @@ def create_category():
 @bp.route('/v1.0/categories/<int:id>', methods=['PUT'])
 @auth.login_required
 def update_category(id):
-
     if not request.json or 'name' not in request.json:
         abort(400)
     category = Category.query.filter_by(id=id).first_or_404()

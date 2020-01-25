@@ -1,31 +1,62 @@
 <template>
-  <el-row :gutter="40" class="panel-group">
-    <el-col v-for="item in items" :key="item.id" :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <el-popover
-        placement="bottom"
-        trigger="click">
-        <el-button-group>
-          <el-button type="primary" @click="handleEdit(item)">编辑</el-button>
-          <el-button type="danger" @click="handleDelete(item)">删除</el-button>
-        </el-button-group>
-        <el-card slot="reference" class="card-panel">
-          <div class="card-panel-title">
-            {{ item.name }}
-          </div>
-          <div class="card-panel-description">
-            <div class="card-panel-text">
-              Posts
+  <div>
+    <el-row>
+      <el-button style="float: left" type="primary" icon="el-icon-plus" @click="dialogNewFormVisible = true">新建分类</el-button>
+      <el-dialog title="新建分类" :visible.sync="dialogNewFormVisible" width="390px">
+        <el-form :model="newForm">
+          <el-form-item label="分类名" label-width="60px">
+            <el-input v-model="newForm.name" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="initNewForm">取 消</el-button>
+          <el-button type="primary" @click="newCategory">确 定</el-button>
+        </div>
+      </el-dialog>
+    </el-row>
+    <el-row :gutter="40" class="panel-group">
+      <el-col v-for="item in items" :key="item.id" :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <el-popover
+          placement="bottom"
+          trigger="click">
+          <el-button-group>
+            <el-button type="primary" @click="openEditForm(item)">编辑</el-button>
+            <el-button type="danger" @click="handleDelete(item)">删除</el-button>
+          </el-button-group>
+          <el-card slot="reference" class="card-panel">
+            <div class="card-panel-title">
+              {{ item.name }}
             </div>
-            <count-to :start-val="0" :end-val="item.count" :duration="2600" class="card-panel-num" />
+            <div class="card-panel-description">
+              <div class="card-panel-text">
+                Posts
+              </div>
+              <count-to :start-val="0" :end-val="item.posts.length" :duration="2600" class="card-panel-num" />
+            </div>
+          </el-card>
+        </el-popover>
+        <el-dialog title="编辑分类" :visible.sync="dialogEditFormVisible" width="390px">
+          <el-form :model="editForm">
+            <el-form-item label="分类名" label-width="80px">
+              <el-input v-model="editForm.name" autocomplete="off" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="新分类名" label-width="80px">
+              <el-input v-model="editForm.newName" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="initEditForm">取 消</el-button>
+            <el-button type="primary" @click="handleEdit">确 定</el-button>
           </div>
-        </el-card>
-      </el-popover>
-    </el-col>
-  </el-row>
+        </el-dialog>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
 import CountTo from 'vue-count-to'
+import { fetchCategories, createCategory, updateCategory, deleteCategory } from '@/api/blog'
 
 export default {
   components: {
@@ -33,36 +64,17 @@ export default {
   },
   data () {
     return {
-      items: [{
-        id: 1,
-        name: 'vue',
-        count: 123
+      items: [],  // TODO: 分类为None的设置为默认分类，放在第一个
+      currentItem: {},
+      dialogNewFormVisible: false,
+      dialogEditFormVisible: false,
+      newForm: {
+        name: ''
       },
-      {
-        id: 2,
-        name: 'flask',
-        count: 234
-      },
-      {
-        id: 3,
-        name: 'python',
-        count: 345
-      },
-      {
-        id: 4,
-        name: 'hadoop',
-        count: 456
-      },
-      {
-        id: 5,
-        name: 'spark',
-        count: 567
-      },
-      {
-        id: 6,
-        name: 'Algorithm',
-        count: 678
-      }]
+      editForm: {
+        name: '',
+        newName: ''
+      }
     }
   },
   created () {
@@ -72,13 +84,72 @@ export default {
       type: 'info',
       offset: 70
     })
+    this.getAllCategories()
   },
   methods: {
-    handleEdit (item) {
-      console.log('Edit ' + item.name)
+    getAllCategories () {
+      fetchCategories(
+      ).then(response => {
+        this.items = response.data
+      }).catch(error => {
+        this.$message.error(error)
+      })
+    },
+    openEditForm (item) {
+      this.editForm.name = item.name
+      this.dialogEditFormVisible = true
+      this.currentItem = item
+    },
+    handleEdit () {
+      // TODO: 增加判断name唯一性
+      updateCategory(this.currentItem.id, { 'name': this.editForm.newName }
+      ).then(response => {
+        switch (response.status) {
+          default:
+            this.$message.success('更新成功')
+        }
+        let newItems = []
+        for (let i = 0; i < this.items.length; i++) {
+          if (this.items[i].id === this.currentItem.id) {
+            this.items[i].name = this.editForm.newName
+          }
+          newItems.push(this.items[i])
+        }
+        this.items = newItems
+        this.initEditForm()
+      }).catch(error => {
+        this.$message.error(error)
+      })
     },
     handleDelete (item) {
-      console.log('Delete ' + item.name)
+      deleteCategory(item.id
+      ).then(response => {
+        switch (response.status) {
+          default:
+            this.$message.success('删除成功')
+        }
+        // this.items = Object.assign({}, this.items.splice(item)) 这样写不行，why?
+        this.getAllCategories()
+      }).catch(error => {
+        this.$message.error(error)
+      })
+    },
+    initNewForm () {
+      this.dialogNewFormVisible = false
+      this.newForm.name = ''
+    },
+    initEditForm () {
+      this.dialogEditFormVisible = false
+      this.editForm.newName = ''
+    },
+    newCategory () {
+      createCategory({ 'name': this.newForm.name }
+      ).then(response => {
+        this.items.push({ 'name': this.newForm.name, 'posts': [] })
+        this.initNewForm()
+      }).catch(error => {
+        this.$message.error(error)
+      })
     }
   }
 }
