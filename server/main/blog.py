@@ -72,11 +72,17 @@ def create_post():
 @bp.route('/v1.0/posts/<int:id>', methods=['PUT'])
 @auth.login_required
 def update_post(id):
-    if not request.json or 'title' not in request.json:
+    if not request.json or 'title' not in request.json or 'category_id' not in request.json:
         abort(400)
+    category = Category.query.filter_by(id=request.json['category_id']).first()
+    if not category:
+        return jsonify({
+            'msg': 'Category <{}> does not exist'.format(request.json['category_id']),
+            'status_code': 404}), 404
     post = Post.query.filter_by(id=id).first_or_404()
     post.title = request.json['title']
     post.content = request.json.get('content', '')
+    post.category_id = request.json['category_id']
     db.session.commit()
     return jsonify({'msg': 'Updated the blog', 'status_code': 201}), 201
 

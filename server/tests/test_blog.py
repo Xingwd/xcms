@@ -47,9 +47,9 @@ class TestPost:
         assert client.post(self.BASE_URI).status_code == 401
         # 没有request.json
         assert client.post(self.BASE_URI, headers=auth).status_code == 400
-        # request.json中有category_name，没有title
-        assert client.post(self.BASE_URI, headers=auth, json={'category_name': 'c1'}).status_code == 400
-        # request.json中有title，没有category_name
+        # request.json中有category_id，没有title
+        assert client.post(self.BASE_URI, headers=auth, json={'category_id': 1}).status_code == 400
+        # request.json中有title，没有category_id
         assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title'}).status_code == 400
         # category不存在
         assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title', 'category_id': 10}).status_code == 404
@@ -68,15 +68,21 @@ class TestPost:
         assert client.put(self.BASE_URI + '/1').status_code == 401
         # 没有request.json
         assert client.put(self.BASE_URI + '/1', headers=auth).status_code == 400
-        # 没有request.json['title']
-        assert client.put(self.BASE_URI + '/1', headers=auth, json={}).status_code == 400
+        # request.json中有category_id，没有title
+        assert client.post(self.BASE_URI, headers=auth, json={'category_id': 1}).status_code == 400
+        # request.json中有title，没有category_id
+        assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title'}).status_code == 400
         # 没有找到post
-        assert client.put(self.BASE_URI + '/10', headers=auth, json={'title': 'Update Title'}).status_code == 404
+        assert client.put(
+            self.BASE_URI + '/10',
+            headers=auth,
+            json={'title': 'Update Title', 'category_id': 1}
+        ).status_code == 404
         # 成功更新
         data = {
             'title': 'Upate Testing Tilte',
             'content': 'I am testing data.',
-            'category_name': 'c1'
+            'category_id': 2
         }
         assert client.put(self.BASE_URI + '/1', headers=auth, json=data).status_code == 201
         # 验证更新
