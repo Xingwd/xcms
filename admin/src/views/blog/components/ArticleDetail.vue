@@ -47,7 +47,7 @@
 
 <script>
 import MDinput from '@/components/MDinput'
-import { fetchPost, createPost, fetchCategories } from '@/api/blog'
+import { fetchPost, createPost, updatePost, fetchCategories } from '@/api/blog'
 
 const defaultForm = {
   category_id: '', // 文章分类
@@ -111,21 +111,38 @@ export default {
             'category_id': this.postForm.category_id
           }
           this.loading = true
-          createPost(data
-          ).then(response => {
-            this.$notify({
-              title: '成功',
-              message: '发布文章成功',
-              type: 'success',
-              duration: 2000
+          if (this.isEdit) {
+            updatePost(this.$route.params.id, data
+            ).then(response => {
+              this.$notify({
+                title: '成功',
+                message: '更新文章成功',
+                type: 'success',
+                duration: 2000,
+                offset: 70
+              })
+              this.postForm = {}
+            }).catch(error => {
+              this.$message.error(error)
             })
-            this.postForm = {}
-          }).catch(error => {
-            this.$message.error(error)
-          })
+          } else {
+            createPost(data
+            ).then(response => {
+              this.$notify({
+                title: '成功',
+                message: '发布文章成功',
+                type: 'success',
+                duration: 2000,
+                offset: 70
+              })
+              this.postForm = {}
+            }).catch(error => {
+              this.$message.error(error)
+            })
+          }
           this.loading = false
         } else {
-          this.$message.error('error submit!!')
+          this.$message.error('提交错误！！')
           return false
         }
       })

@@ -1,57 +1,62 @@
 <template>
-  <!-- TODO: 填充真实数据 -->
   <div>
-    <el-button @click="resetDateFilter">清除日期过滤器</el-button>
-    <el-button @click="clearFilter">清除所有过滤器</el-button>
+    <el-row>
+      <el-col :span="2">
+        <router-link to="/admin/blog/create">
+          <el-button style="float: left" type="primary" icon="el-icon-plus">
+            写文章
+          </el-button>
+        </router-link>
+      </el-col>
+      <el-col :span="22">
+        <el-pagination
+          style="padding: 10px 200px 0 0"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :pager-count="7"
+          :current-page="currentPage"
+          :page-sizes="[15, 30, 45]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </el-col>
+    </el-row>
     <el-table
       :data="tableData"
-      style="width: 100%"
-      max-height="250"
+      stripe
+      border
+      style="width: 100%; margin-top: 25px"
+      :max-height="maxHeight"
       size="small"
-      :default-sort = "{prop: 'date', order: 'descending'}">
+      :default-sort = "{prop: 'ID', order: 'descending'}">
       <el-table-column
-        fixed
-        sortable
-        prop="date"
-        label="日期"
-        width="250"
-        column-key="date"
-        :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
-        :filter-method="filterHandler">
+        prop="id"
+        label="ID"
+        width="80">
       </el-table-column>
       <el-table-column
-        sortable
-        prop="name"
-        label="姓名"
-        width="250">
+        prop="title"
+        label="Title"
+        width="380">
       </el-table-column>
       <el-table-column
-        prop="province"
-        label="省份"
-        width="250">
+        show-overflow-tooltip
+        prop="content"
+        label="内容">
       </el-table-column>
       <el-table-column
-        prop="city"
-        label="市区"
-        width="250">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址"
-        width="550">
-      </el-table-column>
-      <el-table-column
-        prop="zip"
-        label="邮编"
-        width="250">
+        prop="category"
+        label="分类"
+        width="150">
       </el-table-column>
       <el-table-column
         fixed="right"
         label="操作"
         width="120">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="editPost(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,61 +64,57 @@
 </template>
 
 <script>
+import { fetchPosts, deletePost } from '@/api/blog'
+
 export default {
-  methods: {
-    handleClick (row) {
-      console.log(row)
-    },
-    resetDateFilter () {
-      this.$refs.filterTable.clearFilter('date')
-    },
-    clearFilter () {
-      this.$refs.filterTable.clearFilter()
-    },
-    formatter (row, column) {
-      return row.address
-    },
-    filterTag (value, row) {
-      return row.tag === value
-    },
-    filterHandler (value, row, column) {
-      const property = column['property']
-      return row[property] === value
-    }
-  },
   data () {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1517 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1519 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1516 弄',
-          zip: 200333
-        }
-      ]
+      maxHeight: '600px',
+      tableData: [],
+      currentPage: 1,
+      total: 0,
+      pageSize: 15
+    }
+  },
+  created () {
+    this.getPagePosts()
+    this.getHeight()
+  },
+  methods: {
+    getHeight () { // TODO: 页面大小发生变化，max-height随之变化
+      this.maxHeight = window.innerHeight - 185 + 'px'
+    },
+    getPagePosts () {
+      fetchPosts({ 'page': this.currentPage, 'page_size': this.pageSize }
+      ).then(response => {
+        // console.log(response.data)
+        this.tableData = response.data.posts
+        this.total = response.data.total
+      }).catch(error => {
+        this.$message.error(error)
+      })
+    },
+    editPost (row) {
+      this.$router.push({ name: 'editPost', params: { id: row.id } })
+    },
+    handleClick (row) {
+      deletePost(row.id
+      ).then(response => {
+        this.getPagePosts()
+        this.$message.success('删除成功')
+      }).catch(error => {
+        this.$message.error(error)
+      })
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+      this.pageSize = val
+      this.getPagePosts()
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+      this.currentPage = val
+      this.getPagePosts()
     }
   }
 }

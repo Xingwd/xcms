@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <!-- TODO: 编辑blog -->
-    <h1>Edit</h1>
-  </div>
+  <article-detail :is-edit="true" />
 </template>
+
+<script>
+import ArticleDetail from './components/ArticleDetail'
+export default {
+  name: 'EditArticle',
+  components: { ArticleDetail }
+}
+</script>

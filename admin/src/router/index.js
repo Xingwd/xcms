@@ -33,7 +33,8 @@ const routes = [
             component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Create.vue')
           },
           {
-            path: 'edit',
+            path: 'edit/:id',
+            name: 'editPost',
             component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Edit.vue')
           },
           {
