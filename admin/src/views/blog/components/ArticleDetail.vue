@@ -1,20 +1,22 @@
 <template>
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules">
-
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="5">
-            <el-form-item prop="category_name" label-width="50px" label="Category:">
+            <el-form-item prop="category_id" label-width="50px" label="Category:">
               <el-select
-                v-model="postForm.category_name"
-                :remote-method="getCategories"
+                v-model="postForm.category_id"
                 filterable
+                clearable
                 default-first-option
-                remote
                 size="medium"
                 placeholder="Search category">
-                <el-option v-for="item in categories" :key="item.id" :label="item.id" :value="item.name" />
+                <el-option
+                  v-for="item in categories"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -48,7 +50,7 @@ import MDinput from '@/components/MDinput'
 import { fetchPost, createPost, fetchCategories } from '@/api/blog'
 
 const defaultForm = {
-  category_name: '', // 文章分类
+  category_id: '', // 文章分类
   title: '', // 文章题目
   content: '' // 文章内容
 }
@@ -80,7 +82,8 @@ export default {
       categories: [],
       rules: {
         title: [{ validator: validateRequire }],
-        content: [{ validator: validateRequire }]
+        content: [{ validator: validateRequire }],
+        category_id: [{ validator: validateRequire }]
       }
     }
   },
@@ -89,21 +92,26 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
+    this.getAllCategories()
   },
   methods: {
     fetchData (id) {
       fetchPost(id).then(response => {
         this.postForm = response.data
-      }).catch(err => {
-        console.log(err)
+      }).catch(error => {
+        this.$message.error(error)
       })
     },
     submitForm () {
-      // console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
         if (valid) {
+          let data = {
+            'title': this.postForm.title,
+            'content': this.postForm.content,
+            'category_id': this.postForm.category_id
+          }
           this.loading = true
-          createPost(this.postForm
+          createPost(data
           ).then(response => {
             this.$notify({
               title: '成功',
@@ -111,20 +119,23 @@ export default {
               type: 'success',
               duration: 2000
             })
+            this.postForm = {}
           }).catch(error => {
             this.$message.error(error)
           })
           this.loading = false
         } else {
-          console.log('error submit!!')
+          this.$message.error('error submit!!')
           return false
         }
       })
     },
-    getCategories (query) {
-      fetchCategories(query).then(response => {
-        if (!response.data) return
+    getAllCategories () {
+      fetchCategories(
+      ).then(response => {
         this.categories = response.data
+      }).catch(error => {
+        this.$message.error(error)
       })
     }
   }
