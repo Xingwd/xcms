@@ -10,21 +10,20 @@ bp = Blueprint('blog', __name__)
 @bp.route('/v1.0/posts', methods=['GET'])
 def get_posts():
     page = request.args.get('page', 1, type=int)
-    limit = request.args.get('page', 5, type=int)
+    page_size = request.args.get('page_size', 5, type=int)
     category_id = request.args.get('category_id')
     pagination = None
     data = {}
     if category_id:
         category = Category.query.filter_by(id=category_id).first_or_404()
         pagination = Post.query.with_parent(category).order_by(
-            Post.id.desc()).paginate(page=page, per_page=limit, error_out=False)
+            Post.id.desc()).paginate(page=page, per_page=page_size, error_out=False)
     else:
         pagination = Post.query.order_by(Post.id.desc()).paginate(
-            page=page, per_page=limit, error_out=False)
+            page=page, per_page=page_size, error_out=False)
     if pagination:
         # 对象属性：https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/#flask_sqlalchemy.Pagination
-        data['has_next'] = pagination.has_next
-        data['has_prev'] = pagination.has_prev
+        data['total'] = pagination.total
 
         posts = []
         for i in pagination.items:
