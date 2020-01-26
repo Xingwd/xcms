@@ -24,13 +24,13 @@ class TestPost:
 
     def test_get_posts(self, init, client):
         # category不存在
-        assert client.get(self.BASE_URI + '?category_name=c10').status_code == 404
+        assert client.get(self.BASE_URI + '?category_id=10').status_code == 404
         # 全部数据
         resp1 = client.get(self.BASE_URI)
         assert resp1.status_code == 200
         assert len(json.loads(resp1.data).get('posts', [])) == 2
         # 属于c1的数据
-        resp2 = client.get(self.BASE_URI + '?category_name=c1')
+        resp2 = client.get(self.BASE_URI + '?category_id=1')
         assert resp2.status_code == 200
         assert len(json.loads(resp2.data).get('posts', [])) == 1
 
@@ -52,12 +52,12 @@ class TestPost:
         # request.json中有title，没有category_name
         assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title'}).status_code == 400
         # category不存在
-        assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title', 'category_name': 'c10'}).status_code == 404
+        assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title', 'category_id': 10}).status_code == 404
         # 成功创建
         data = {
             'title': 'Create Testing Title',
             'body': 'I am testing data.',
-            'category_name': 'c1'
+            'category_id': 1
         }
         assert client.post(self.BASE_URI, headers=auth, json=data).status_code == 201
         # 验证创建

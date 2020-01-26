@@ -11,11 +11,11 @@ bp = Blueprint('blog', __name__)
 def get_posts():
     page = request.args.get('page', 1, type=int)
     limit = request.args.get('page', 5, type=int)
-    category_name = request.args.get('category_name')
+    category_id = request.args.get('category_id')
     pagination = None
     data = {}
-    if category_name:
-        category = Category.query.filter_by(name=category_name).first_or_404()
+    if category_id:
+        category = Category.query.filter_by(id=category_id).first_or_404()
         pagination = Post.query.with_parent(category).order_by(
             Post.id.desc()).paginate(page=page, per_page=limit, error_out=False)
     else:
@@ -56,11 +56,13 @@ def get_post(id):
 @bp.route('/v1.0/posts', methods=['POST'])
 @auth.login_required
 def create_post():
-    if not request.json or 'title' not in request.json or 'category_name' not in request.json:
+    if not request.json or 'title' not in request.json or 'category_id' not in request.json:
         abort(400)
-    category = Category.query.filter_by(name=request.json['category_name']).first()
+    category = Category.query.filter_by(id=request.json['category_id']).first()
     if not category:
-        return jsonify({'msg': 'Category <{}> does not exist', 'status_code': 404}), 404
+        return jsonify({
+            'msg': 'Category <{}> does not exist'.format(request.json['category_id']),
+            'status_code': 404}), 404
     post = Post(title=request.json['title'], body=request.json.get('body', ''), category_id=category.id)
     db.session.add(post)
     db.session.commit()
@@ -92,10 +94,17 @@ def delete_post(id):
 def get_categories():
     data = []
     for category in Category.query.all():
+        posts = []
+        for post in category.posts:
+            posts.append({
+                'id': post.id,
+                'title': post.title,
+                'body': post.body
+            })
         data.append({
             'id': category.id,
             'name': category.name,
-            'posts': category.posts
+            'posts': posts
         })
     return jsonify(data)
 
@@ -103,10 +112,17 @@ def get_categories():
 @bp.route('/v1.0/categories/<int:id>', methods=['GET'])
 def get_category(id):
     category = Category.query.filter_by(id=id).first_or_404()
+    posts = []
+    for post in category.posts:
+        posts.append({
+            'id': post.id,
+            'title': post.title,
+            'body': post.body
+        })
     data = {
         'id': category.id,
         'name': category.name,
-        'posts': category.posts
+        'posts': posts
     }
     return jsonify(data)
 
