@@ -32,7 +32,7 @@ def get_posts():
             posts.append({
                 'id': i.id,
                 'title': i.title,
-                'body': i.body,
+                'content': i.content,
                 'category_id': i.category_id,
                 'category': category_name
             })
@@ -46,7 +46,7 @@ def get_post(id):
     data = {
         'id': post.id,
         'title': post.title,
-        'body': post.body,
+        'content': post.content,
         'category_id': post.category_id,
         'category': post.category.name if post.category_id else None
     }
@@ -63,7 +63,7 @@ def create_post():
         return jsonify({
             'msg': 'Category <{}> does not exist'.format(request.json['category_id']),
             'status_code': 404}), 404
-    post = Post(title=request.json['title'], body=request.json.get('body', ''), category_id=category.id)
+    post = Post(title=request.json['title'], content=request.json.get('content', ''), category_id=category.id)
     db.session.add(post)
     db.session.commit()
     return jsonify({'msg': 'Created the blog', 'status_code': 201}), 201
@@ -76,7 +76,7 @@ def update_post(id):
         abort(400)
     post = Post.query.filter_by(id=id).first_or_404()
     post.title = request.json['title']
-    post.body = request.json.get('body', '')
+    post.content = request.json.get('content', '')
     db.session.commit()
     return jsonify({'msg': 'Updated the blog', 'status_code': 201}), 201
 
@@ -99,7 +99,7 @@ def get_categories():
             posts.append({
                 'id': post.id,
                 'title': post.title,
-                'body': post.body
+                'content': post.content
             })
         data.append({
             'id': category.id,
@@ -117,7 +117,7 @@ def get_category(id):
         posts.append({
             'id': post.id,
             'title': post.title,
-            'body': post.body
+            'content': post.content
         })
     data = {
         'id': category.id,

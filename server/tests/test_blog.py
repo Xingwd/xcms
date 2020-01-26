@@ -10,8 +10,8 @@ def init(app):
     with app.app_context():
         category1 = Category(name='c1')
         category2 = Category(name='c2')
-        post1 = Post(title='Testing Title1', body='I am testing data.')
-        post2 = Post(title='Testing Title2', body='')
+        post1 = Post(title='Testing Title1', content='I am testing data.')
+        post2 = Post(title='Testing Title2', content='')
         category1.posts.append(post1)
         category2.posts.append(post2)
         db.session.add(category1)
@@ -56,7 +56,7 @@ class TestPost:
         # 成功创建
         data = {
             'title': 'Create Testing Title',
-            'body': 'I am testing data.',
+            'content': 'I am testing data.',
             'category_id': 1
         }
         assert client.post(self.BASE_URI, headers=auth, json=data).status_code == 201
@@ -75,7 +75,7 @@ class TestPost:
         # 成功更新
         data = {
             'title': 'Upate Testing Tilte',
-            'body': 'I am testing data.',
+            'content': 'I am testing data.',
             'category_name': 'c1'
         }
         assert client.put(self.BASE_URI + '/1', headers=auth, json=data).status_code == 201

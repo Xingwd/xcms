@@ -42,7 +42,7 @@ class BlogPost(db.Model):
     __tablename__ = 'blog_post'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False, index=True)
-    body = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
 
     category_id = db.Column(db.Integer, db.ForeignKey('blog_category.id'), index=True)
     category = db.relationship('BlogCategory', backref=db.backref('posts', lazy=True))
