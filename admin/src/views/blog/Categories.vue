@@ -64,7 +64,7 @@ export default {
   },
   data () {
     return {
-      items: [],  // TODO: 分类为None的设置为默认分类，放在第一个
+      items: [], // TODO: 分类为None的设置为默认分类，放在第一个
       currentItem: {},
       dialogNewFormVisible: false,
       dialogEditFormVisible: false,
