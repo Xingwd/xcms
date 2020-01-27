@@ -1,9 +1,10 @@
 <template>
   <aside class="el-aside">
     <el-menu
-      default-active="/admin/dashboard"
+      :default-active="defaultActive"
       style="border-right: 0px"
       router
+      unique-opened
       :background-color="variables.menuBg"
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
@@ -45,6 +46,14 @@ import variables from '@/styles/variables.scss'
 import { mapState } from 'vuex'
 
 export default {
+  data () {
+    return {
+      defaultActive: '/admin/dashboard'
+    }
+  },
+  created () {
+    this.defaultActive = this.$router.currentRoute.path
+  },
   computed: {
     variables () {
       return variables
