@@ -57,7 +57,6 @@ export default {
   },
   watch: {
     '$route': function () {
-      console.log(this.$route.path)
       this.defaultActive = this.$route.path
     }
   },
