@@ -51,3 +51,12 @@ def login():
         return jsonify({'msg': 'Password is incorrect', 'status_code': 400}), 400
     token = user.generate_token()
     return jsonify({'token': token.decode('ascii')})
+
+
+@bp.route('/v1.0/verify_token', methods=['POST'])
+def verify_token():
+    if not request.json:
+        abort(400)
+    token = request.json.get('token')
+    verify = True if User.check_token(token) else False
+    return jsonify(verify), 200

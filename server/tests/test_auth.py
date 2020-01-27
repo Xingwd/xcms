@@ -33,3 +33,15 @@ def test_login(auth, client):
     # 登陆成功
     resp = client.post(URI, json={'username': 'test', 'password': 'test'})
     assert json.loads(resp.data).get('token') is not None
+
+
+def test_verify_token(auth, client):
+    URI = '/xcms/auth/api/v1.0/verify_token'
+    # 没有request.json
+    assert client.post(URI).status_code == 400
+    # 无效的token
+    assert json.loads(client.post(URI, json={'token': ''}).data) is False
+    # 有效的token
+    resp = client.post('/xcms/auth/api/v1.0/login', json={'username': 'test', 'password': 'test'})
+    token = json.loads(resp.data).get('token')
+    assert json.loads(client.post(URI, json={'token': token}).data) is True

@@ -126,7 +126,7 @@ class TestCategory:
         # 没有request.json
         assert client.post(self.BASE_URI, headers=auth).status_code == 400
         # 没有request.json['name']
-        assert client.post(self.BASE_URI, headers=auth, json={}).status_code == 400
+        assert client.post(self.BASE_URI, headers=auth, json={'noname': ''}).status_code == 400
         # 成功创建
         data = {
             'name': 'Testing'
@@ -141,7 +141,7 @@ class TestCategory:
         # 没有request.json
         assert client.put(self.BASE_URI + '/1', headers=auth).status_code == 400
         # 没有request.json['name']
-        assert client.put(self.BASE_URI + '/1', headers=auth, json={}).status_code == 400
+        assert client.put(self.BASE_URI + '/1', headers=auth, json={'noname': ''}).status_code == 400
         # 成功更新
         data = {
             'name': 'New c1'
