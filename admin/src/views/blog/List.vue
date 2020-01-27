@@ -91,7 +91,7 @@ export default {
         this.tableData = response.data.posts
         this.total = response.data.total
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     },
     editPost (row) {
@@ -103,7 +103,7 @@ export default {
         this.getPagePosts()
         this.$message.success('删除成功')
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     },
     handleSizeChange (val) {

@@ -99,7 +99,7 @@ export default {
       fetchPost(id).then(response => {
         this.postForm = response.data
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     },
     submitForm () {
@@ -123,7 +123,7 @@ export default {
               })
               this.postForm = {}
             }).catch(error => {
-              this.$message.error(error)
+              console.log(error)
             })
           } else {
             createPost(data
@@ -137,7 +137,7 @@ export default {
               })
               this.postForm = {}
             }).catch(error => {
-              this.$message.error(error)
+              console.log(error)
             })
           }
           this.loading = false
@@ -152,7 +152,7 @@ export default {
       ).then(response => {
         this.categories = response.data
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     }
   }

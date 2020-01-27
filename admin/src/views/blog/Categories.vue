@@ -95,13 +95,13 @@ export default {
           'posts': response.data.posts
         }]
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
       fetchCategories(
       ).then(response => {
         this.items.push(...response.data)
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     },
     openEditForm (item) {
@@ -127,7 +127,7 @@ export default {
         this.items = newItems
         this.initEditForm()
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     },
     handleDelete (item) {
@@ -140,7 +140,7 @@ export default {
         // this.items = Object.assign({}, this.items.splice(item)) 这样写不行，why?
         this.getAllCategories()
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     },
     initNewForm () {
@@ -157,7 +157,7 @@ export default {
         this.items.push({ 'name': this.newForm.name, 'posts': [] })
         this.initNewForm()
       }).catch(error => {
-        this.$message.error(error)
+        console.log(error)
       })
     }
   }
