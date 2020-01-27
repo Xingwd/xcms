@@ -9,3 +9,11 @@ export function login (data) {
     data: data
   })
 }
+
+export function verifyToken (data) {
+  return instance({
+    url: authBaseURI + '/verify_token',
+    method: 'post',
+    data: data
+  })
+}

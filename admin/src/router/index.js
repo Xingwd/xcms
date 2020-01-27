@@ -15,7 +15,10 @@ const routes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import(/* webpackChunkName: "admin" */ '../views/Dashboard.vue')
+        component: () => import(/* webpackChunkName: "admin" */ '../views/Dashboard.vue'),
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: 'blog',
@@ -30,12 +33,18 @@ const routes = [
           },
           {
             path: 'create',
-            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Create.vue')
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Create.vue'),
+            meta: {
+              requiresAuth: true
+            }
           },
           {
             path: 'edit/:id',
             name: 'editPost',
-            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Edit.vue')
+            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Edit.vue'),
+            meta: {
+              requiresAuth: true
+            }
           },
           {
             path: 'categories',
@@ -47,14 +56,6 @@ const routes = [
         ]
       }
     ]
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 
