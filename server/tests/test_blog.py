@@ -33,6 +33,10 @@ class TestPost:
         resp2 = client.get(self.BASE_URI + '?category_id=1')
         assert resp2.status_code == 200
         assert len(json.loads(resp2.data).get('posts', [])) == 1
+        # 属于未分类的数据
+        resp3 = client.get(self.BASE_URI + '?category_id=0')
+        assert resp3.status_code == 200
+        assert len(json.loads(resp3.data).get('posts', [])) == 0
 
     def test_get_post(self, init, client):
         # post不存在

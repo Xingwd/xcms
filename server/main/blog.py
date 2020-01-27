@@ -11,12 +11,15 @@ bp = Blueprint('blog', __name__)
 def get_posts():
     page = request.args.get('page', 1, type=int)
     page_size = request.args.get('page_size', 5, type=int)
-    category_id = request.args.get('category_id')
+    category_id = request.args.get('category_id', type=int)
     pagination = None
     data = {}
     if category_id:
         category = Category.query.filter_by(id=category_id).first_or_404()
         pagination = Post.query.with_parent(category).order_by(
+            Post.id.desc()).paginate(page=page, per_page=page_size, error_out=False)
+    elif category_id == 0:
+        pagination = Post.query.filter(Post.category_id.is_(None)).order_by(
             Post.id.desc()).paginate(page=page, per_page=page_size, error_out=False)
     else:
         pagination = Post.query.order_by(Post.id.desc()).paginate(

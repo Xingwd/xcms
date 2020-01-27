@@ -56,7 +56,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-import { fetchCategories, createCategory, updateCategory, deleteCategory } from '@/api/blog'
+import { fetchPosts, fetchCategories, createCategory, updateCategory, deleteCategory } from '@/api/blog'
 
 export default {
   components: {
@@ -64,7 +64,7 @@ export default {
   },
   data () {
     return {
-      items: [], // TODO: 分类为None的设置为默认分类，放在第一个
+      items: [],
       currentItem: {},
       dialogNewFormVisible: false,
       dialogEditFormVisible: false,
@@ -88,9 +88,18 @@ export default {
   },
   methods: {
     getAllCategories () {
+      fetchPosts({ 'category_id': 0 }
+      ).then(response => {
+        this.items = [{
+          'name': '未分类',
+          'posts': response.data.posts
+        }]
+      }).catch(error => {
+        this.$message.error(error)
+      })
       fetchCategories(
       ).then(response => {
-        this.items = response.data
+        this.items.push(...response.data)
       }).catch(error => {
         this.$message.error(error)
       })
