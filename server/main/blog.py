@@ -10,7 +10,7 @@ bp = Blueprint('blog', __name__)
 @bp.route('/v1.0/posts', methods=['GET'])
 def get_posts():
     page = request.args.get('page', 1, type=int)
-    page_size = request.args.get('page_size', 5, type=int)
+    page_size = request.args.get('page_size', type=int)
     category_id = request.args.get('category_id', type=int)
     pagination = None
     data = {}
