@@ -40,8 +40,12 @@ def test_verify_token(auth, client):
     # 没有request.json
     assert client.post(URI).status_code == 400
     # 无效的token
-    assert json.loads(client.post(URI, json={'token': ''}).data) is False
+    resp1 = client.post(URI, json={'token': ''})
+    assert resp1.status_code == 401
+    assert json.loads(resp1.data) is False
     # 有效的token
-    resp = client.post('/xcms/auth/api/v1.0/login', json={'username': 'test', 'password': 'test'})
-    token = json.loads(resp.data).get('token')
-    assert json.loads(client.post(URI, json={'token': token}).data) is True
+    login_resp = client.post('/xcms/auth/api/v1.0/login', json={'username': 'test', 'password': 'test'})
+    token = json.loads(login_resp.data).get('token')
+    resp2 = client.post(URI, json={'token': token})
+    assert resp2.status_code == 200
+    assert json.loads(resp2.data) is True

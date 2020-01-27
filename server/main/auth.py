@@ -58,5 +58,6 @@ def verify_token():
     if not request.json:
         abort(400)
     token = request.json.get('token')
-    verify = True if User.check_token(token) else False
-    return jsonify(verify), 200
+    if User.check_token(token):
+        return jsonify(True), 200
+    return jsonify(False), 401
