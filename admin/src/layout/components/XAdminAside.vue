@@ -52,7 +52,14 @@ export default {
     }
   },
   created () {
-    this.defaultActive = this.$router.currentRoute.path
+    // this.defaultActive = this.$router.currentRoute.path
+    this.defaultActive = this.$route.path
+  },
+  watch: {
+    '$route': function () {
+      console.log(this.$route.path)
+      this.defaultActive = this.$route.path
+    }
   },
   computed: {
     variables () {
