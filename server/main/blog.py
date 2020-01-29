@@ -10,7 +10,7 @@ bp = Blueprint('blog', __name__)
 @bp.route('/v1.0/posts', methods=['GET'])
 def get_posts():
     page = request.args.get('page', 1, type=int)
-    page_size = request.args.get('page_size', type=int)
+    page_size = request.args.get('page_size', 5, type=int)
     category_id = request.args.get('category_id', type=int)
     pagination = None
     data = {}
@@ -100,38 +100,36 @@ def delete_post(id):
 
 @bp.route('/v1.0/categories', methods=['GET'])
 def get_categories():
-    data = []
+    data = [{
+        'id': 0,
+        'name': 'Unclassified',
+        'total': len(Post.query.filter(Post.category_id.is_(None)).all())
+    }]
     for category in Category.query.all():
-        posts = []
-        for post in category.posts:
-            posts.append({
-                'id': post.id,
-                'title': post.title,
-                'content': post.content
-            })
         data.append({
             'id': category.id,
             'name': category.name,
-            'posts': posts
+            'total': len(category.posts)
         })
     return jsonify(data)
 
 
 @bp.route('/v1.0/categories/<int:id>', methods=['GET'])
 def get_category(id):
-    category = Category.query.filter_by(id=id).first_or_404()
-    posts = []
-    for post in category.posts:
-        posts.append({
-            'id': post.id,
-            'title': post.title,
-            'content': post.content
-        })
-    data = {
-        'id': category.id,
-        'name': category.name,
-        'posts': posts
-    }
+    data = {}
+    if id == 0:
+        data = {
+            'id': 0,
+            'name': 'Unclassified',
+            'total': len(Post.query.filter(Post.category_id.is_(None)).all())
+        }
+    else:
+        category = Category.query.filter_by(id=id).first_or_404()
+        data = {
+            'id': category.id,
+            'name': category.name,
+            'total': len(category.posts)
+        }
     return jsonify(data)
 
 

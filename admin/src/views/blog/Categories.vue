@@ -31,7 +31,7 @@
               <div class="card-panel-text">
                 Posts
               </div>
-              <count-to :start-val="0" :end-val="item.posts.length" :duration="2600" class="card-panel-num" />
+              <count-to :start-val="0" :end-val="item.total" :duration="2600" class="card-panel-num" />
             </div>
           </el-card>
         </el-popover>
@@ -56,7 +56,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-import { fetchPosts, fetchCategories, createCategory, updateCategory, deleteCategory } from '@/api/blog'
+import { fetchCategories, createCategory, updateCategory, deleteCategory } from '@/api/blog'
 
 export default {
   components: {
@@ -88,18 +88,9 @@ export default {
   },
   methods: {
     getAllCategories () {
-      fetchPosts({ 'category_id': 0 }
-      ).then(response => {
-        this.items = [{
-          'name': '未分类',
-          'posts': response.data.posts
-        }]
-      }).catch(error => {
-        console.log(error)
-      })
       fetchCategories(
       ).then(response => {
-        this.items.push(...response.data)
+        this.items = response.data
       }).catch(error => {
         console.log(error)
       })
