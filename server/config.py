@@ -13,10 +13,12 @@ class Config(object):
     TESTING = False
     SECRET_KEY = os.urandom(24)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    REGISTER_ENABLED = True
 
 
 class ProductionConfig(Config):
     """Production Config"""
+    REGISTER_ENABLED = False
     @property
     def SECRET_KEY(self):
         value = os.environ.get('SECRET_KEY')

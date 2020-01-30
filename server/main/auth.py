@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from flask import Blueprint, request, abort, jsonify
+from flask import Blueprint, request, abort, jsonify, current_app
 from flask_httpauth import HTTPBasicAuth
 from . import db
 from .models import User
@@ -23,6 +23,10 @@ def verify_password(username_or_token, password):
 
 @bp.route('/v1.0/register', methods=['POST'])
 def register():
+    # 检测注册功能是否开放
+    if not current_app.config['REGISTER_ENABLED']:
+        return jsonify({'msg': '注册功能未开放！'}), 406
+    # 处理注册请求
     if not request.json:
         abort(400)
     username = request.json.get('username')
