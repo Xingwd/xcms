@@ -18,6 +18,7 @@
                 dark
                 large
                 href="https://github.com/Xingwd/xcms"
+                target="_blank"
               >
                 github
               </v-btn>
@@ -88,6 +89,7 @@
                 dark
                 large
                 href="https://github.com/Xingwd/xcms"
+                target="_blank"
               >
                 github
               </v-btn>
