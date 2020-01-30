@@ -120,7 +120,7 @@ def get_category(id):
     if id == 0:
         data = {
             'id': 0,
-            'name': 'Unclassified',
+            'name': '未分类',
             'total': len(Post.query.filter(Post.category_id.is_(None)).all())
         }
     else:

@@ -110,7 +110,7 @@ class TestCategory:
         # 全部数据
         resp = client.get(self.BASE_URI)
         assert resp.status_code == 200
-        assert len(json.loads(resp.data)) == 2
+        assert len(json.loads(resp.data)) == 3
 
     def test_get_category(self, init, client):
         # category不存在
