@@ -1,8 +1,5 @@
 <template>
   <div>
-    <v-toolbar color="white">
-      <v-toolbar-title v-text="title"></v-toolbar-title>
-    </v-toolbar>
     <section>
       <v-parallax src="@/assets/home1.jpeg" height="600">
         <v-row align="center">
@@ -29,11 +26,11 @@
     <section>
       <v-container>
         <v-row class="my-12" justify="center">
-          <v-col xs12 sm4>
+          <v-col align="center" xs12 sm4>
             <v-card
               flat
               class="transparent"
-              to="blog"
+              to="/blog"
             >
               <v-card-text class="text-center">
                 <v-icon x-large class="blue--text text--lighten-2">mdi-feather</v-icon>
@@ -42,7 +39,7 @@
                 <div class="headline text-center">博客</div>
               </v-card-title>
               <v-card-text>
-                技术博客，记录学习和工作中遇到的一些问题，作为分享和备忘。
+                千里之行，始于足下
               </v-card-text>
             </v-card>
           </v-col>
@@ -67,7 +64,7 @@
             <v-card
               flat
               class="transparent"
-              to="project"
+              to="/project"
             >
               <v-card-text class="text-center">
                 <v-icon x-large class="blue--text text--lighten-2">mdi-github-circle</v-icon>
@@ -76,7 +73,7 @@
                 <div class="headline text-center">项目</div>
               </v-card-title>
               <v-card-text>
-                一些独立开发或者二次开发的项目。
+                学以致用，用以致学
               </v-card-text>
             </v-card>
           </v-col>
@@ -84,16 +81,16 @@
             <v-card
               flat
               class="transparent"
-              to="about"
+              to="/history"
             >
               <v-card-text class="text-center">
                 <v-icon x-large class="blue--text text--lighten-2">mdi-seed</v-icon>
               </v-card-text>
               <v-card-title primary-title class="justify-center">
-                <div class="headline text-center">关于</div>
+                <div class="headline text-center">历程</div>
               </v-card-title>
               <v-card-text>
-                一些简单说明，包括本站的设计，使用到的框架等。
+                繁花易落尽，流年不再来
               </v-card-text>
             </v-card>
           </v-col>
