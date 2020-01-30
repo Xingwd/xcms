@@ -28,53 +28,78 @@
       </section>
 
       <section>
-        <v-row class="my-12" align="center">
-          <v-col xs12>
-            <v-container>
-              <v-row align="center">
-                <v-col align="center" xs12 md4>
-                  <v-card flat class="transparent">
-                    <v-card-text class="text-center">
-                      <v-icon x-large class="blue--text text--lighten-2">mdi-feather</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-center">博客</div>
-                    </v-card-title>
-                    <v-card-text>
-                      学而不思则惘，思而不学则怠
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-                <v-col align="center" xs12 md4>
-                  <v-card flat class="transparent">
-                    <v-card-text class="text-center">
-                      <v-icon x-large class="blue--text text--lighten-2">mdi-sprout</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline">学思</div>
-                    </v-card-title>
-                    <v-card-text>
-                      学而不思则惘，思而不学则怠
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-                <v-col align="center" xs12 md4>
-                  <v-card flat class="transparent">
-                    <v-card-text class="text-center">
-                      <v-icon x-large class="blue--text text--lighten-2">mdi-github-circle</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-center">项目</div>
-                    </v-card-title>
-                    <v-card-text>
-                      学而不思则惘，思而不学则怠
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-col>
-        </v-row>
+        <v-container>
+          <v-row class="my-12" justify="center">
+            <v-col xs12 sm4>
+              <v-card
+                flat
+                class="transparent"
+                to="about"
+              >
+                <v-card-text class="text-center">
+                  <v-icon x-large class="blue--text text--lighten-2">mdi-feather</v-icon>
+                </v-card-text>
+                <v-card-title primary-title class="justify-center">
+                  <div class="headline text-center">博客</div>
+                </v-card-title>
+                <v-card-text>
+                  技术博客，记录学习和工作中遇到的一些问题，作为分享和备忘。
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <!-- <v-col align="center" xs12 sm4>
+              <v-card
+                flat
+                class="transparent"
+                to="about"
+              >
+                <v-card-text class="text-center">
+                  <v-icon x-large class="blue--text text--lighten-2">mdi-sprout</v-icon>
+                </v-card-text>
+                <v-card-title primary-title class="justify-center">
+                  <div class="headline">学思</div>
+                </v-card-title>
+                <v-card-text>
+                  学而不思则惘，思而不学则怠
+                </v-card-text>
+              </v-card>
+            </v-col> -->
+            <v-col align="center" xs12 sm4>
+              <v-card
+                flat
+                class="transparent"
+                to="about"
+              >
+                <v-card-text class="text-center">
+                  <v-icon x-large class="blue--text text--lighten-2">mdi-github-circle</v-icon>
+                </v-card-text>
+                <v-card-title primary-title class="justify-center">
+                  <div class="headline text-center">项目</div>
+                </v-card-title>
+                <v-card-text>
+                  一些独立开发或者二次开发的项目。
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col align="center" xs12 sm4>
+              <v-card
+                flat
+                class="transparent"
+                to="about"
+              >
+                <v-card-text class="text-center">
+                  <v-icon x-large class="blue--text text--lighten-2">mdi-seed</v-icon>
+                </v-card-text>
+                <v-card-title primary-title class="justify-center">
+                  <div class="headline text-center">关于</div>
+                </v-card-title>
+                <v-card-text>
+                  一些说明，包括本站的设计，使用到的框架等。
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
       </section>
 
       <section>
@@ -103,7 +128,7 @@
           <v-row justify="center" class="mt-7 mb-12">
             <v-col xs12 sm4 class="px-12">
               <v-card flat class="transparent">
-                <v-card-title primary-title class="layout justify-center">
+                <v-card-title primary-title class="justify-center">
                   <div class="headline">声明</div>
                 </v-card-title>
                 <v-card-text>
@@ -115,7 +140,7 @@
             </v-col>
             <v-col xs12 sm4 class="px-12">
               <v-card flat class="transparent">
-                <v-card-title primary-title class="layout justify-center">
+                <v-card-title primary-title class="justify-center">
                   <div class="headline">联系我</div>
                 </v-card-title>
                 <v-card-text>
