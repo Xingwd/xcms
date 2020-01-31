@@ -1,55 +1,57 @@
 <template>
-  <v-container class="mt-12">
-    <v-data-iterator
-      :items="items"
-      hide-default-footer
-    >
-      <template v-slot:default="props">
-        <v-row>
-          <v-col
-            v-for="item in props.items"
-            :key="item.name"
-            cols="12"
-            sm="12"
-            md="6"
-            lg="4"
-          >
-            <v-card height="150px">
-              <v-card-title>
-                <v-badge
-                  :value="hover"
-                  color="deep-purple"
-                  :content="item.type"
-                  right
-                  transition="slide-x-transition"
-                >
-                  <v-hover v-model="hover">
-                    <v-icon color="grey lighten-1">
-                    {{ item.name }}
-                  </v-icon>
-                  </v-hover>
-                </v-badge>
-                <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  icon
-                  color="cyan"
-                  :href="item.url"
-                  target="_blank"
-                >
-                  <v-icon>mdi-github-circle</v-icon>
-                </v-btn>
+  <v-img src="@/assets/project-bg.jpg">
+    <v-container class="mt-12">
+      <v-data-iterator
+        :items="items"
+        hide-default-footer
+      >
+        <template v-slot:default="props">
+          <v-row>
+            <v-col
+              v-for="item in props.items"
+              :key="item.name"
+              cols="12"
+              sm="12"
+              md="6"
+              lg="4"
+            >
+              <v-card height="150px">
+                <v-card-title>
+                  <v-badge
+                    :value="hover"
+                    color="deep-purple"
+                    :content="item.type"
+                    right
+                    transition="slide-x-transition"
+                  >
+                    <v-hover v-model="hover">
+                      <v-icon color="grey lighten-1">
+                      {{ item.name }}
+                    </v-icon>
+                    </v-hover>
+                  </v-badge>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    text
+                    icon
+                    color="cyan"
+                    :href="item.url"
+                    target="_blank"
+                  >
+                    <v-icon>mdi-github-circle</v-icon>
+                  </v-btn>
 
-              </v-card-title>
-              <v-card-text class="">
-                <p>{{ item.text }}</p>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </template>
-    </v-data-iterator>
-  </v-container>
+                </v-card-title>
+                <v-card-text class="">
+                  <p>{{ item.text }}</p>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </template>
+      </v-data-iterator>
+    </v-container>
+  </v-img>
 </template>
 
 <script>
