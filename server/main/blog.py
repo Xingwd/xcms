@@ -102,7 +102,7 @@ def delete_post(id):
 def get_categories():
     data = [{
         'id': 0,
-        'name': 'Unclassified',
+        'name': '未分类',
         'total': len(Post.query.filter(Post.category_id.is_(None)).all())
     }]
     for category in Category.query.all():
