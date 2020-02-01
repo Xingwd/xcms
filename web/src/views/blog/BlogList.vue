@@ -152,10 +152,11 @@ export default {
       })
     },
     handlePage (val) {
-      console.log(`当前页: ${val}`)
+      // console.log(`当前页: ${val}`)
       this.getPagePosts()
     },
     changeCurrentCategoryId (categoryId) {
+      this.page = 1 // 初始化页码
       if (this.currentCategoryId === categoryId) {
         this.currentCategoryId = ''
       } else {
