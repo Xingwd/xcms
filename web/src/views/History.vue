@@ -40,7 +40,7 @@ export default {
       {
         time: '2019',
         title: 'v1.0_dev',
-        text: '重新规划项目结构，使用前后端分离设计思想，后端使用Flask，前端使用Vue。'
+        text: '重新规划项目结构，使用MVVM架构设计思想，后端使用Flask，前端使用Vue。'
       },
       {
         time: '2018',
@@ -50,7 +50,7 @@ export default {
       {
         time: '2017',
         title: 'v0.1',
-        text: '初始化xcms工程，使用Flask框架构建个人博客。'
+        text: '初始化xcms工程，使用MVC架构设计思想，通过Flask框架构建个人博客。'
       }
     ]
   })
