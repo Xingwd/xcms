@@ -18,6 +18,7 @@
         <v-icon color="cyan">mdi-eye</v-icon> {{ item.view }}
         <v-icon class="ml-3" color="red">mdi-heart</v-icon> {{ item.like }}
       </v-card-subtitle> -->
+      <!-- BUG: mavon-editor渲染的内容会覆盖顶部导航栏，使用z-index相关知识解决 -->
       <mavon-editor
         :toolbarsFlag="toolbarsFlag"
         :subfield="subfield"

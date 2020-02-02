@@ -18,16 +18,10 @@ class Config(object):
 
 class ProductionConfig(Config):
     """Production Config"""
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'c39d2bf6ee0348aba82eb9bfd3c31e73')
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        'SQLALCHEMY_DATABASE_URI', 'sqlite:///' + os.path.join(basedir, 'xcms.db'))
     REGISTER_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
-
-    @property
-    def SECRET_KEY(self):
-        value = os.environ.get('SECRET_KEY')
-        if value:
-            return value
-        else:
-            raise ValueError("No SECRET_KEY set for Flask application")
 
 
 class DevelopmentConfig(Config):
