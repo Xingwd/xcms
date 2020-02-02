@@ -13,9 +13,22 @@
 > 操作系统CentOS7
 
 ## 准备
-安装基础服务和环境：mysql(or mariadb), nginx, supervisor, git, nodejs, pyenv
+### 安装基础服务
+> 数据库使用mariadb
+```
+yum install git nginx supervisor mariadb-server mariadb-devel
+```
 
-获取应用代码
+### 安装基础环境
+#### Nodejs
+下载 [Linux x64 tar](https://npm.taobao.org/mirrors/node/v12.14.1/node-v12.14.1-linux-x64.tar.xz)。
+
+解压后，配置环境变量即可。
+#### Pyenv
+参照 [安装说明](https://github.com/pyenv/pyenv#installation) 进行安装。
+
+
+### 获取应用代码
 ```
 mkdir /var/www
 cd /var/www
@@ -36,10 +49,11 @@ cd /var/www/xcms/server
 /root/.pyenv/versions/3.7.6/bin/virtualenv venv
 venv/bin/pip install -r requirements.txt
 venv/bin/pip install uwsgi
+venv/bin/pip install mysqlclient
 ```
 
 ### 应用基础设置
-**数据库设置**
+#### 数据库设置
 ```
 create database xcms character set utf8 collate utf8_bin;
 create user '<db-user>'@'localhost' identified by '<db-password>';
@@ -47,21 +61,33 @@ grant all privileges on xcms.* to '<db-user>'@'localhost';
 flush privileges;
 quit;
 ```
-**初始化应用模型**
+#### 应用生产配置
+为SECRET_KEY生成一个随机字符串：
+```
+cd /var/www/xcms/server
+venv/bin/python -c "import uuid; print(uuid.uuid4().hex)"
+```
+编辑`/var/www/xcms/server/.env`：
+```
+SECRET_KEY=<random string>
+SQLALCHEMY_DATABASE_URI=mysql://<db-user>:<db-password>@localhost/xcms
+```
+#### 初始化应用模型
 ```
 source venv/bin/activate
+export FLASK_APP=/var/www/xcms/server/xcms.py
 flask db upgrade
 ```
-**创建管理员用户**
+#### 创建管理员用户
 ```
 flask createadmin --name <admin-user> --password <admin-password>
 ```
 
 ### 设置Supervisor
-编辑/etc/supervisor/conf.d/xcms.conf文件：
+编辑/etc/supervisord.d/xcms.ini文件：
 ```
 [program:xcms]
-command=/var/www/xcms/venv/bin/uwsgi --socket 127.0.0.1:3031 --wsgi-file xcms.py --callable app --processes 2 --threads 2 --stats 127.0.0.1:9191
+command=/var/www/xcms/server/venv/bin/uwsgi --http-socket 127.0.0.1:3031 --wsgi-file xcms.py --callable app --processes 2 --threads 2 --stats 127.0.0.1:9191
 directory=/var/www/xcms/server
 user=root
 autostart=true
@@ -97,12 +123,7 @@ npm run build
 [CentOS7安装Certbot](https://certbot.eff.org/lets-encrypt/centosrhel7-nginx)
 
 ### Nginx配置文件
-```
-cd /etc/nginx
-cp nginx.conf.default conf.d/xcms.conf
-```
-
-主要修改：
+编辑`/etc/nginx/nginx.conf`文件，主要修改：
 ```
 http {
     ...
@@ -121,7 +142,6 @@ http {
         ...
     }
 
-
     # HTTPS server
     #
     server {
@@ -137,9 +157,12 @@ http {
         access_log /var/log/xcms_access.log;
         error_log /var/log/xcms_error.log;
 
-        location /xcms {
-            include uwsgi_params;
-            uwsgi_pass 127.0.0.1:3031/xcms;
+        location /server {
+            proxy_pass http://127.0.0.1:3031;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 
         location /admin {
@@ -150,6 +173,16 @@ http {
             alias /var/www/xcms/web/dist/;
         }
     }
-
 }
+```
+
+重载nginx：`systemctl reload nginx`
+
+开始启动后，服务无法正常运行，观察`/var/log/nginx/error.log`发现问题：
+```
+connect() to 127.0.0.1:3031 failed (13: Permission denied) while connecting to upstream
+```
+网上查阅资料后，解决方案是执行以下命令：(以后有时间再细究)
+```
+setsebool -P httpd_can_network_connect 1
 ```

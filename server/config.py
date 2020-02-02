@@ -19,6 +19,8 @@ class Config(object):
 class ProductionConfig(Config):
     """Production Config"""
     REGISTER_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+
     @property
     def SECRET_KEY(self):
         value = os.environ.get('SECRET_KEY')
@@ -26,14 +28,6 @@ class ProductionConfig(Config):
             return value
         else:
             raise ValueError("No SECRET_KEY set for Flask application")
-
-    @property
-    def SQLALCHEMY_DATABASE_URI(self):
-        value = os.environ.get('SQLALCHEMY_DATABASE_URI')
-        if value:
-            return value
-        else:
-            raise ValueError("No SQLALCHEMY_DATABASE_URI set for Flask application")
 
 
 class DevelopmentConfig(Config):
