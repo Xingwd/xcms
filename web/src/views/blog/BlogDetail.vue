@@ -24,7 +24,6 @@
         :subfield="subfield"
         :defaultOpen="defaultOpen"
         :boxShadow="boxShadow"
-        :navigation="navigation"
         v-model="post.content"/>
     </v-card>
   </v-container>
@@ -39,7 +38,6 @@ export default {
     subfield: false,
     defaultOpen: 'preview',
     boxShadow: false, // 关闭边框阴影
-    navigation: true, // 默认展示目录
     post: {
       title: '从删库到跑路',
       category: 'VUE',
