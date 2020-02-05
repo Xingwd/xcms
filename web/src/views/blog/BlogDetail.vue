@@ -18,18 +18,14 @@
         <v-icon color="cyan">mdi-eye</v-icon> {{ item.view }}
         <v-icon class="ml-3" color="red">mdi-heart</v-icon> {{ item.like }}
       </v-card-subtitle> -->
-      <!-- BUG:
-      2、渲染的代码块有问题，每行代码都有海拔，很难看
-      -->
-      <v-card-text>
       <mavon-editor
         style="z-index: 0"
         :toolbarsFlag="toolbarsFlag"
         :subfield="subfield"
         :defaultOpen="defaultOpen"
         :boxShadow="boxShadow"
+        :codeStyle="codeStyle"
         v-model="post.content"/>
-      </v-card-text>
     </v-card>
   </v-container>
 </template>
@@ -43,13 +39,14 @@ export default {
     subfield: false,
     defaultOpen: 'preview',
     boxShadow: false, // 关闭边框阴影
+    codeStyle: 'atom-one-light', // 代码风格
     post: {
       title: '从删库到跑路',
       category: 'VUE',
       content: '# 2'
     }
   }),
-  created () {
+  mounted () {
     const id = this.$route.params && this.$route.params.id
     this.getPost(id)
   },
@@ -65,3 +62,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.v-application code { /* 修复：渲染的代码块有问题，每行代码都有阴影，此处覆盖vuetify的code样式 */
+  box-shadow: 0 0 0;
+  color: black;
+}
+</style>
