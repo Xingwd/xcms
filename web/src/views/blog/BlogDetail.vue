@@ -18,13 +18,18 @@
         <v-icon color="cyan">mdi-eye</v-icon> {{ item.view }}
         <v-icon class="ml-3" color="red">mdi-heart</v-icon> {{ item.like }}
       </v-card-subtitle> -->
-      <!-- BUG: mavon-editor渲染的内容会覆盖顶部导航栏，使用z-index相关知识解决 -->
+      <!-- BUG:
+      2、渲染的代码块有问题，每行代码都有海拔，很难看
+      -->
+      <v-card-text>
       <mavon-editor
+        style="z-index: 0"
         :toolbarsFlag="toolbarsFlag"
         :subfield="subfield"
         :defaultOpen="defaultOpen"
         :boxShadow="boxShadow"
         v-model="post.content"/>
+      </v-card-text>
     </v-card>
   </v-container>
 </template>
