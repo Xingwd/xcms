@@ -6,7 +6,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
 
-# TODO: 学习flask配置，https://dormousehole.readthedocs.io/en/latest/config.html#config
+# https://dormousehole.readthedocs.io/en/latest/config.html#config
 class Config(object):
     """Base Config"""
     DEBUG = False

@@ -12,7 +12,7 @@ migrate = Migrate()
 
 def create_app(config=DevelopmentConfig):
 
-    # TODO: logging 配置，在创建应用对象之前进行配置
+    # https://dormousehole.readthedocs.io/en/latest/logging.html#logging
     dictConfig({
         'version': 1,
         'formatters': {'default': {
@@ -36,7 +36,8 @@ def create_app(config=DevelopmentConfig):
     migrate.init_app(app, db)
     CORS(app)
 
-    # TODO: 错误处理，深入研究
+    # https://dormousehole.readthedocs.io/en/latest/api.html#flask.Flask.errorhandler
+    # https://dormousehole.readthedocs.io/en/latest/errorhandling.html#error-handlers
     @app.errorhandler(404)
     def not_found(error):
         return make_response(jsonify({'msg': 'Not found', 'status_code': 404}), 404)
