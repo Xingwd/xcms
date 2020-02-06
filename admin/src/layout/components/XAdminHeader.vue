@@ -1,6 +1,5 @@
 <template>
   <header class="el-header">
-    <!-- TODO: 使用this.$emit控制侧边栏缩放，移除使用store全局变量的方式 -->
     <div @click="changeIsCollapse" class="left-menu">
       <i v-if="sideBarIsCollapse" class="el-icon-s-unfold x-collapse" />
       <i v-else class="el-icon-s-fold x-collapse" />
