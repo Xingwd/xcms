@@ -10,11 +10,13 @@ const routes = [
     component: () => import(/* webpackChunkName: "auth" */ '../views/auth/Login.vue')
   },
   {
-    path: '/admin', // BUG: 浏览器直接访问 /admin，没效果，需要默认导向 dashboard
+    path: '/',
+    redirect: { name: 'dashboard' },
     component: XAdminLayout,
     children: [
       {
         path: 'dashboard',
+        name: 'dashboard',
         component: () => import(/* webpackChunkName: "admin" */ '../views/Dashboard.vue'),
         meta: {
           requiresAuth: true

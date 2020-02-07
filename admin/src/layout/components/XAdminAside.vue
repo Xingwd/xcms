@@ -9,29 +9,29 @@
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
       :collapse="sideBarIsCollapse">
-      <el-menu-item index="/admin/dashboard">
+      <el-menu-item index="/dashboard">
         <i class="el-icon-sunrise" />
         <span slot="title">仪表盘</span>
       </el-menu-item>
-      <el-submenu index="/admin/blog">
+      <el-submenu index="/blog">
         <template slot="title">
           <i class="el-icon-notebook-1" />
           <span>博客</span>
         </template>
         <el-menu-item-group>
           <template slot="title">文章</template>
-          <el-menu-item index="/admin/blog/list">
+          <el-menu-item index="/blog/list">
             <i class="el-icon-s-order" />
             <span>文章列表</span>
           </el-menu-item>
-          <el-menu-item index="/admin/blog/create">
+          <el-menu-item index="/blog/create">
             <i class="el-icon-edit" />
             <span>写文章</span>
           </el-menu-item>
         </el-menu-item-group>
         <el-menu-item-group>
           <template slot="title">分类</template>
-          <el-menu-item index="/admin/blog/categories">
+          <el-menu-item index="/blog/categories">
             <i class="el-icon-s-grid"/>
             <span>所有分类</span>
           </el-menu-item>
@@ -48,7 +48,7 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      defaultActive: '/admin/dashboard'
+      defaultActive: '/dashboard'
     }
   },
   created () {

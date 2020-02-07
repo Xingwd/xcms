@@ -70,7 +70,7 @@ import { fetchPosts, deletePost } from '@/api/blog'
 export default {
   data () {
     return {
-      maxHeight: '',
+      maxHeight: document.documentElement.clientHeight - 190 + 'px',
       tableData: [],
       currentPage: 1,
       total: 0,
@@ -78,7 +78,6 @@ export default {
     }
   },
   mounted () {
-    this.maxHeight = document.documentElement.clientHeight - 190 + 'px'
     this.getPagePosts()
   },
   methods: {
