@@ -37,7 +37,6 @@
         </el-row>
 
         <el-form-item prop="content">
-           <!-- TODO: 设置自适应最小高度  -->
           <mavon-editor v-model="postForm.content" style="min-height: 630px"/>
         </el-form-item>
       </div>
@@ -87,7 +86,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)

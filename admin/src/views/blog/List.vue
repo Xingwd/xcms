@@ -23,13 +23,14 @@
       </el-col>
     </el-row>
     <el-table
+      ref="blogTable"
       :data="tableData"
       stripe
       border
       style="width: 100%; margin-top: 25px"
       :max-height="maxHeight"
       size="small"
-      :default-sort = "{prop: 'ID', order: 'descending'}">
+    >
       <el-table-column
         prop="id"
         label="ID"
@@ -69,21 +70,18 @@ import { fetchPosts, deletePost } from '@/api/blog'
 export default {
   data () {
     return {
-      maxHeight: '600px',
+      maxHeight: '',
       tableData: [],
       currentPage: 1,
       total: 0,
       pageSize: 15
     }
   },
-  created () {
+  mounted () {
+    this.maxHeight = document.documentElement.clientHeight - 190 + 'px'
     this.getPagePosts()
-    this.getHeight()
   },
   methods: {
-    getHeight () { // TODO: 页面大小发生变化，max-height随之变化
-      this.maxHeight = window.innerHeight - 185 + 'px'
-    },
     getPagePosts () {
       fetchPosts({ 'page': this.currentPage, 'page_size': this.pageSize }
       ).then(response => {

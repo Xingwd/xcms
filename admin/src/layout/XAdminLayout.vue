@@ -22,12 +22,22 @@ export default {
     XAdminHeader,
     XFooter
   },
-  // TODO: 页面大小发生变化，min-height随之变化，其他地方可能也需要，使用vuex管理？
-  computed: {
-    classObject: function () {
-      return {
-        'min-height': window.innerHeight + 'px' // 设置页面最小高度为浏览器高度
+  data () {
+    return {
+      classObject: {
+        'min-height': ''
       }
+    }
+  },
+  mounted () {
+    this.setMinHeight()
+    window.onresize = () => {
+      this.setMinHeight()
+    }
+  },
+  methods: {
+    setMinHeight () {
+      this.classObject['min-height'] = document.documentElement.clientHeight + 'px'
     }
   }
 }
