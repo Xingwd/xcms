@@ -54,7 +54,7 @@ def create_app(config=DevelopmentConfig):
     # Blueprint
     from .auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/xcms/auth/api')
-
+    # TODO: 更新url_prefix=/api/<module>
     from .blog import bp as blog_bp
     app.register_blueprint(blog_bp, url_prefix='/xcms/blog/api')
 
