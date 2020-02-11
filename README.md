@@ -178,11 +178,11 @@ server {
     }
 
     location /admin {
-        alias /var/www/xcms/admin/dist/;
+        alias /var/www/xcms/admin/;
     }
 
     location / {
-        alias /var/www/xcms/web/dist/;
+        alias /var/www/xcms/web/;
     }
 }
 ```
