@@ -5,6 +5,9 @@ from main import db
 from main.models import BlogPost as Post, BlogCategory as Category
 
 
+URL_PREFIX = '/api/blog'
+
+
 @pytest.fixture()
 def init(app):
     with app.app_context():
@@ -20,7 +23,7 @@ def init(app):
 
 
 class TestPost:
-    BASE_URI = '/xcms/blog/api/v1.0/posts'
+    BASE_URI = URL_PREFIX + '/v1.0/posts'
 
     def test_get_posts(self, init, client):
         # category不存在
@@ -105,7 +108,7 @@ class TestPost:
 
 
 class TestCategory:
-    BASE_URI = '/xcms/blog/api/v1.0/categories'
+    BASE_URI = URL_PREFIX + '/v1.0/categories'
 
     def test_get_categories(self, init, client):
         # 全部数据

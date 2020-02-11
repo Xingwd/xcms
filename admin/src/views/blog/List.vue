@@ -57,6 +57,7 @@
         width="120">
         <template slot-scope="scope">
           <el-button @click="editPost(scope.row)" type="text" size="small">编辑</el-button>
+          <!-- TODO: 增加确认删除弹框 -->
           <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>

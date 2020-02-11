@@ -1,7 +1,7 @@
 import instance from './base'
 
-let postBaseURI = '/xcms/blog/api/v1.0/posts'
-let categoryBaseURI = '/xcms/blog/api/v1.0/categories'
+let postBaseURI = '/api/blog/v1.0/posts'
+let categoryBaseURI = '/api/blog/v1.0/categories'
 
 export function fetchPosts (query) {
   return instance({

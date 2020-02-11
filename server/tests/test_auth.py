@@ -2,8 +2,11 @@
 import json
 
 
+URL_PREFIX = '/api/auth'
+
+
 def test_register(client):
-    URI = '/xcms/auth/api/v1.0/register'
+    URI = URL_PREFIX + '/v1.0/register'
     # 没有request.json
     assert client.post(URI).status_code == 400
     # request.json中有password，没有username
@@ -19,7 +22,7 @@ def test_register(client):
 
 
 def test_login(auth, client):
-    URI = '/xcms/auth/api/v1.0/login'
+    URI = URL_PREFIX + '/v1.0/login'
     # 没有request.json
     assert client.post(URI).status_code == 400
     # request.json中有password，没有username
@@ -36,7 +39,7 @@ def test_login(auth, client):
 
 
 def test_verify_token(auth, client):
-    URI = '/xcms/auth/api/v1.0/verify_token'
+    URI = URL_PREFIX + '/v1.0/verify_token'
     # 没有request.json
     assert client.post(URI).status_code == 400
     # 无效的token
@@ -44,7 +47,7 @@ def test_verify_token(auth, client):
     assert resp1.status_code == 401
     assert json.loads(resp1.data) is False
     # 有效的token
-    login_resp = client.post('/xcms/auth/api/v1.0/login', json={'username': 'test', 'password': 'test'})
+    login_resp = client.post(URL_PREFIX + '/v1.0/login', json={'username': 'test', 'password': 'test'})
     token = json.loads(login_resp.data).get('token')
     resp2 = client.post(URI, json={'token': token})
     assert resp2.status_code == 200
