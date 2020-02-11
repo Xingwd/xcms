@@ -13,11 +13,11 @@
           {{ post.category }}
         </v-btn>
       </v-card-title>
-      <!-- TODO: 增加浏览量和喜欢数量 -->
-      <!-- <v-card-subtitle class="white--text">
-        <v-icon color="cyan">mdi-eye</v-icon> {{ item.view }}
-        <v-icon class="ml-3" color="red">mdi-heart</v-icon> {{ item.like }}
-      </v-card-subtitle> -->
+      <v-card-subtitle>
+        <v-icon color="cyan">mdi-eye</v-icon> {{ post.pv }}
+        <!-- TODO: 增加喜欢数量 -->
+        <!-- <v-icon class="ml-3" color="red">mdi-heart</v-icon> {{ post.like }} -->
+      </v-card-subtitle>
       <mavon-editor
         style="z-index: 0"
         :toolbarsFlag="toolbarsFlag"

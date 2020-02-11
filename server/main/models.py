@@ -43,6 +43,8 @@ class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False, index=True)
     content = db.Column(db.Text, nullable=False)
+    pv = db.Column(db.Integer, index=True, default=0)
+    # TODO: 增加时间，推荐时，做为指标使用
 
     category_id = db.Column(db.Integer, db.ForeignKey('blog_category.id'), index=True)
     category = db.relationship('BlogCategory', backref=db.backref('posts', lazy=True))

@@ -21,10 +21,16 @@ python -c 'import os; print(os.urandom(24))'
 source activate xcms
 export FLASK_APP=xcms_dev.py
 export FLASK_ENV=development
-flask db init
-flask db migrate
-flask db upgrade
 flask run
+```
+
+flask-migrate说明
+> migrations目录需要跟随版本控制，用于记录模型迁移版本
+
+```
+flask db init  # 生成初始化迁移版本，在工程模型初始化时执行
+flask db migrate  # 模型发生改变时，执行，生成迁移版本
+flask db upgrade  # 根据迁移版本升级数据库，生产环境使用
 ```
 
 创建管理员用户

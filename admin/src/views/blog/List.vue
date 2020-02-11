@@ -34,17 +34,17 @@
       <el-table-column
         prop="id"
         label="ID"
-        width="80">
-      </el-table-column>
-      <el-table-column
-        prop="title"
-        label="Title"
-        width="380">
+        width="100">
       </el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="content"
-        label="内容">
+        prop="title"
+        label="Title">
+      </el-table-column>
+      <el-table-column
+        prop="pv"
+        label="PV"
+        width="120">
       </el-table-column>
       <el-table-column
         prop="category"

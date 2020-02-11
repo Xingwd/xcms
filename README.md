@@ -86,10 +86,9 @@ sudo apt-get install git nginx supervisor mysql-server libmysqlclient-dev
 
 ```
 pyenv install 3.7.6
-/root/.pyenv/versions/3.7.6/bin/pip install virtualenv
 mkdir /opt/pyvenv
 cd /opt/pyvenv
-/root/.pyenv/versions/3.7.6/bin/virtualenv xcms
+/root/.pyenv/versions/3.7.6/bin/python -m venv xcms
 xcms/bin/pip install -r /var/www/xcms/server/requirements.txt
 xcms/bin/pip install uwsgi
 xcms/bin/pip install mysqlclient

@@ -6,7 +6,19 @@ from .auth import auth
 
 bp = Blueprint('blog', __name__)
 
-# TODO: 更新restful api写法？，https://dormousehole.readthedocs.io/en/latest/views.html#api
+
+def format_post(post):
+    return {
+        'id': post.id,
+        'title': post.title,
+        'content': post.content,
+        'pv': post.pv,
+        'category_id': post.category_id,
+        'category': post.category.name if post.category_id else None
+    }
+
+
+# 另一种api写法：https://dormousehole.readthedocs.io/en/latest/views.html#api
 @bp.route('/v1.0/posts', methods=['GET'])
 def get_posts():
     page = request.args.get('page', 1, type=int)
@@ -30,14 +42,7 @@ def get_posts():
 
         posts = []
         for i in pagination.items:
-            category_name = i.category.name if i.category_id else None
-            posts.append({
-                'id': i.id,
-                'title': i.title,
-                'content': i.content,
-                'category_id': i.category_id,
-                'category': category_name
-            })
+            posts.append(format_post(i))
         data['posts'] = posts
     return jsonify(data)
 
@@ -45,14 +50,13 @@ def get_posts():
 @bp.route('/v1.0/posts/<int:id>', methods=['GET'])
 def get_post(id):
     post = Post.query.filter_by(id=id).first_or_404()
-    data = {
-        'id': post.id,
-        'title': post.title,
-        'content': post.content,
-        'category_id': post.category_id,
-        'category': post.category.name if post.category_id else None
-    }
-    return jsonify(data)
+    # 每次访问都更新PV
+    if post.pv is None:
+        post.pv = 0
+    post.pv += 1
+    db.session.commit()
+
+    return jsonify(format_post(post))
 
 
 @bp.route('/v1.0/posts', methods=['POST'])

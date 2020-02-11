@@ -45,6 +45,7 @@ class TestPost:
         resp = client.get(self.BASE_URI + '/1')
         assert resp.status_code == 200
         assert json.loads(resp.data).get('title') == 'Testing Title1'
+        assert json.loads(resp.data).get('pv') == 1
 
     def test_create_post(self, init, auth, client):
         # 认证失败

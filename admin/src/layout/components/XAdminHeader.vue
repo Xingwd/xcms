@@ -23,6 +23,7 @@
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
+            <!-- TODO: 实现登出功能，点击登出，删除存储的token -->
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
