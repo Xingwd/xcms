@@ -30,27 +30,10 @@ cd xcms
 git checkout v1.0.0
 ```
 
-## 编译admin
-```
-cd xcms/amdin
-npm install
-npm run build
-```
-结果目录`admin/dist`。
+## 编译及打包
+执行`build.sh`，进行自动编译。
 
-## 编译web
-```
-cd xcms/web
-npm install
-npm run build
-```
-结果目录`web/dist`。
-
-## 打包工程
-编译完成后，将整个工程打包，打包命令如下：
-```
-tar czvf xcms.tar.gz xcms
-```
+编译完成后，可找到`build/xcms.tar.gz`。
 
 
 # 部署
