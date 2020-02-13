@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import variables from '@/styles/variables.scss'
 import { XAdminAside, XAdminHeader, XFooter } from './components'
 
 export default {
@@ -37,8 +38,8 @@ export default {
   },
   methods: {
     setHeight () {
-      // 减去header高度
-      this.classObject.height = document.documentElement.clientHeight - 50 + 'px'
+      let headerHeight = parseInt(variables.headerHeight.split('px')[0])
+      this.classObject.height = document.documentElement.clientHeight - headerHeight + 'px'
     }
   }
 }

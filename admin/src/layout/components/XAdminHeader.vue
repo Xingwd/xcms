@@ -54,9 +54,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/variables.scss';
+
 .el-header {
   padding: 0px;
-  height: 50px;
+  height: $headerHeight;
   overflow: hidden;
   position: relative;
   background: #fff;
