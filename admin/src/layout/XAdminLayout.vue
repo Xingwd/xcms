@@ -1,9 +1,9 @@
 <template>
-  <el-container :style="classObject" class="is-vertical">
+  <el-container class="is-vertical">
     <x-admin-header />
     <el-container>
       <x-admin-aside />
-      <el-container class="is-vertical">
+      <el-container :style="classObject" class="is-vertical">
         <el-main>
           <router-view />
         </el-main>
@@ -25,19 +25,20 @@ export default {
   data () {
     return {
       classObject: {
-        'min-height': ''
+        'height': ''
       }
     }
   },
   mounted () {
-    this.setMinHeight()
+    this.setHeight()
     window.onresize = () => {
-      this.setMinHeight()
+      this.setHeight()
     }
   },
   methods: {
-    setMinHeight () {
-      this.classObject['min-height'] = document.documentElement.clientHeight + 'px'
+    setHeight () {
+      // 减去header高度
+      this.classObject.height = document.documentElement.clientHeight - 50 + 'px'
     }
   }
 }
