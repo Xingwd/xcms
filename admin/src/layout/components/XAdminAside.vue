@@ -9,7 +9,7 @@
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
       :collapse="sideBarIsCollapse">
-      <!-- TODO： 根据路由自动渲染菜单 -->
+      <!-- TODO： 根据路由自动渲染菜单，改造布局通用方式，在App.vue中使用layout组件作为默认父组件，不再使用嵌套路由这种方式 -->
       <el-menu-item index="/dashboard">
         <i class="el-icon-sunrise" />
         <span slot="title">仪表盘</span>
@@ -38,6 +38,10 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+      <el-menu-item index="/history">
+        <i class="el-icon-rank" />
+        <span slot="title">历程</span>
+      </el-menu-item>
     </el-menu>
   </aside>
 </template>

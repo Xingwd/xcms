@@ -24,18 +24,18 @@ const routes = [
       },
       {
         path: 'blog',
-        component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Blog.vue'),
+        component: () => import(/* webpackChunkName: "blog" */ '../views/blog/Blog.vue'),
         children: [
           {
             path: 'list',
-            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/List.vue'),
+            component: () => import(/* webpackChunkName: "blog" */ '../views/blog/List.vue'),
             meta: {
               requiresAuth: true
             }
           },
           {
             path: 'create',
-            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Create.vue'),
+            component: () => import(/* webpackChunkName: "blog" */ '../views/blog/Create.vue'),
             meta: {
               requiresAuth: true
             }
@@ -43,19 +43,27 @@ const routes = [
           {
             path: 'edit/:id',
             name: 'editPost',
-            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Edit.vue'),
+            component: () => import(/* webpackChunkName: "blog" */ '../views/blog/Edit.vue'),
             meta: {
               requiresAuth: true
             }
           },
           {
             path: 'categories',
-            component: () => import(/* webpackChunkName: "admin" */ '../views/blog/Categories.vue'),
+            component: () => import(/* webpackChunkName: "blog" */ '../views/blog/Categories.vue'),
             meta: {
               requiresAuth: true
             }
           }
         ]
+      },
+      {
+        path: 'history',
+        name: 'history',
+        component: () => import(/* webpackChunkName: "admin" */ '../views/History.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   }

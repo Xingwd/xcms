@@ -13,6 +13,7 @@ def get_histories():
     data = []
     for h in History.query.order_by(History.id.desc()).all():
         data.append({
+            'id': h.id,
             'time': h.time,
             'release': h.release,
             'description': h.description
