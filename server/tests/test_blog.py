@@ -77,9 +77,9 @@ class TestPost:
         # 没有request.json
         assert client.put(self.BASE_URI + '/1', headers=auth).status_code == 400
         # request.json中有category_id，没有title
-        assert client.post(self.BASE_URI, headers=auth, json={'category_id': 1}).status_code == 400
+        assert client.put(self.BASE_URI + '/1', headers=auth, json={'category_id': 1}).status_code == 400
         # request.json中有title，没有category_id
-        assert client.post(self.BASE_URI, headers=auth, json={'title': 'Title'}).status_code == 400
+        assert client.put(self.BASE_URI + '/1', headers=auth, json={'title': 'Title'}).status_code == 400
         # 没有找到post
         assert client.put(
             self.BASE_URI + '/10',

@@ -9,6 +9,7 @@
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
       :collapse="sideBarIsCollapse">
+      <!-- TODO： 根据路由自动渲染菜单 -->
       <el-menu-item index="/dashboard">
         <i class="el-icon-sunrise" />
         <span slot="title">仪表盘</span>

@@ -56,5 +56,7 @@ def create_app(config=DevelopmentConfig):
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     from .blog import bp as blog_bp
     app.register_blueprint(blog_bp, url_prefix='/api/blog')
+    from .history import bp as history_bp
+    app.register_blueprint(history_bp, url_prefix='/api/history')
 
     return app

@@ -60,3 +60,14 @@ class BlogCategory(db.Model):
 
     def __repr__(self):
         return '<Category %r>' % self.name
+
+
+class History(db.Model):
+    __tablename__ = 'project_history'
+    id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.String(20), nullable=False, index=True)
+    release = db.Column(db.String(20), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return '<History %r>' % self.name
