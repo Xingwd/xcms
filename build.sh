@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
 # 编译admin
-echo 'Building admin'
+echo '########## Building admin ##########'
 cd admin
 npm install
 npm run build
 cd ..
 
 # 编译web
-echo 'Building web'
+echo '########## Building web ##########'
 cd web
 npm install
 npm run build
 cd ..
 
 # 打包
-echo 'Packing'
+echo '########## Packing ##########'
 
 if [ -d './build' ]; then
   rm -rf ./build

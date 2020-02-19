@@ -16,14 +16,7 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
           <el-dropdown-item divided>
-            <!-- TODO: 实现登出功能，点击登出，删除存储的token -->
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -43,10 +36,11 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'changeIsCollapse'
+      'changeIsCollapse',
+      'del_token'
     ]),
-    async logout () {
-      await this.$store.dispatch('user/logout')
+    logout () {
+      this.$store.commit('del_token')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }

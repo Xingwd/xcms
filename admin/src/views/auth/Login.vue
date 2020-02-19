@@ -59,7 +59,7 @@ export default {
             this.$message.success('登录成功')
             // 保存token
             this.$store.commit('set_token', response.data.token)
-            this.$router.push('/dashboard') // TODO: 调整成直接调转到要访问的路由
+            this.$router.push('/dashboard') // TODO: 调整成直接跳转到要访问的路由
           }).catch(error => {
             console.log(error)
             switch (error.status) {
