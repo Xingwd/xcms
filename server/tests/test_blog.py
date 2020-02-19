@@ -14,7 +14,7 @@ def init(app):
         category1 = Category(name='c1')
         category2 = Category(name='c2')
         post1 = Post(title='Testing Title1', content='I am testing data.')
-        post2 = Post(title='Testing Title2', content='')
+        post2 = Post(title='Testing Title2', content='', pubdate='2020.02')
         category1.posts.append(post1)
         category2.posts.append(post2)
         db.session.add(category1)
@@ -65,6 +65,7 @@ class TestPost:
         data = {
             'title': 'Create Testing Title',
             'content': 'I am testing data.',
+            'pubdate': '2020.02',
             'category_id': 1
         }
         assert client.post(self.BASE_URI, headers=auth, json=data).status_code == 201
@@ -90,6 +91,7 @@ class TestPost:
         data = {
             'title': 'Upate Testing Tilte',
             'content': 'I am testing data.',
+            'pubdate': '2020.03',
             'category_id': 2
         }
         assert client.put(self.BASE_URI + '/1', headers=auth, json=data).status_code == 201

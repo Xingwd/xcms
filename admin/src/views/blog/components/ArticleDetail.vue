@@ -4,14 +4,16 @@
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="5">
-            <el-form-item prop="category_id" label-width="50px" label="Category:">
+            <el-form-item prop="category_id" label-width="50px" label="分类:">
               <el-select
                 v-model="postForm.category_id"
                 filterable
                 clearable
                 default-first-option
                 size="medium"
-                placeholder="Search category">
+                placeholder="选择分类"
+                class="x-input"
+              >
                 <el-option
                   v-for="item in categories"
                   :key="item.id"
@@ -20,9 +22,22 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="2" :offset="17">
+          <el-col :span="5" :offset="1">
+            <el-form-item prop="pubdate" label-width="80px" label="发布时间:">
+              <el-date-picker
+                v-model="postForm.pubdate"
+                type="month"
+                placeholder="选择月"
+                :format="dateFormat"
+                :value-format="dateFormat"
+                class="x-input"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="2" :offset="11">
             <el-button class="publish" v-loading="loading" type="success" @click="submitForm">
-              Publish
+              发布
             </el-button>
           </el-col>
         </el-row>
@@ -30,7 +45,7 @@
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
               <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
-                Title
+                标题
               </MDinput>
             </el-form-item>
           </el-col>
@@ -51,7 +66,8 @@ import { fetchPost, createPost, updatePost, fetchCategories } from '@/api/blog'
 const defaultForm = {
   category_id: '', // 文章分类
   title: '', // 文章题目
-  content: '' // 文章内容
+  content: '', // 文章内容
+  pubdate: '' // 发布日期
 }
 
 export default {
@@ -79,9 +95,11 @@ export default {
       postForm: Object.assign({}, defaultForm),
       loading: false,
       categories: [],
+      dateFormat: 'yyyy.MM',
       rules: {
         title: [{ validator: validateRequire }],
         content: [{ validator: validateRequire }],
+        pubdate: [{ validator: validateRequire }],
         category_id: [{ validator: validateRequire }]
       }
     }
@@ -107,8 +125,10 @@ export default {
           let data = {
             'title': this.postForm.title,
             'content': this.postForm.content,
+            'pubdate': this.postForm.pubdate,
             'category_id': this.postForm.category_id
           }
+          console.log(data)
           this.loading = true
           if (this.isEdit) {
             updatePost(this.$route.params.id, data
@@ -161,6 +181,9 @@ export default {
 <style lang="scss" scoped>
 
 .createPost-container {
+  .x-input {
+      float: left;
+  }
   .publish {
     float: right;
   }

@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="2">
-        <router-link to="/admin/blog/create">
+        <router-link :to="{ name: 'createPost' }">
           <el-button style="float: left" type="primary" icon="el-icon-plus">
             写文章
           </el-button>
@@ -39,17 +39,22 @@
       <el-table-column
         show-overflow-tooltip
         prop="title"
-        label="Title">
+        label="标题">
+      </el-table-column>
+      <el-table-column
+        prop="pubdate"
+        label="发布时间"
+        width="120">
       </el-table-column>
       <el-table-column
         prop="pv"
         label="PV"
-        width="120">
+        width="100">
       </el-table-column>
       <el-table-column
         prop="category"
         label="分类"
-        width="150">
+        width="120">
       </el-table-column>
       <el-table-column
         fixed="right"

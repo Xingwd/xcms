@@ -35,6 +35,7 @@ const routes = [
           },
           {
             path: 'create',
+            name: 'createPost',
             component: () => import(/* webpackChunkName: "blog" */ '../views/blog/Create.vue'),
             meta: {
               requiresAuth: true

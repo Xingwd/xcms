@@ -47,7 +47,8 @@
               </v-btn>
             </v-card-title>
             <v-card-subtitle class="white--text">
-              <v-icon color="cyan">mdi-eye</v-icon> {{ item.pv }}
+              <v-icon color="light-blue lighten-4">mdi-alarm-plus</v-icon> {{ item.pubdate }}
+              <v-icon color="cyan" class="ml-3">mdi-eye</v-icon> {{ item.pv }}
               <!-- TODO: 增加喜欢数量 -->
               <!-- <v-icon class="ml-3" color="red">mdi-heart</v-icon> {{ item.like }} -->
             </v-card-subtitle>

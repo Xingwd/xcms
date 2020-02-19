@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from datetime import datetime
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import (TimedJSONWebSignatureSerializer
@@ -43,8 +44,8 @@ class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False, index=True)
     content = db.Column(db.Text, nullable=False)
+    pubdate = db.Column(db.String(10), index=True, default=datetime.now().strftime('%Y.%m'))
     pv = db.Column(db.Integer, index=True, default=0)
-    # TODO: 增加时间，推荐时，做为指标使用
 
     category_id = db.Column(db.Integer, db.ForeignKey('blog_category.id'), index=True)
     category = db.relationship('BlogCategory', backref=db.backref('posts', lazy=True))

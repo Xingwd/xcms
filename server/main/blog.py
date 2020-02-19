@@ -13,6 +13,7 @@ def format_post(post):
         'title': post.title,
         'content': post.content,
         'pv': post.pv,
+        'pubdate': post.pubdate,
         'category_id': post.category_id,
         'category': post.category.name if post.category_id else None
     }
@@ -69,7 +70,11 @@ def create_post():
         return jsonify({
             'msg': 'Category <{}> does not exist'.format(request.json['category_id']),
             'status_code': 404}), 404
-    post = Post(title=request.json['title'], content=request.json.get('content', ''), category_id=category.id)
+    post = Post(
+        title=request.json['title'],
+        content=request.json.get('content'),
+        pubdate=request.json.get('pubdate'),
+        category_id=category.id)
     db.session.add(post)
     db.session.commit()
     return jsonify({'msg': 'Created the blog', 'status_code': 201}), 201
@@ -87,7 +92,8 @@ def update_post(id):
             'status_code': 404}), 404
     post = Post.query.filter_by(id=id).first_or_404()
     post.title = request.json['title']
-    post.content = request.json.get('content', '')
+    post.content = request.json.get('content')
+    post.pubdate = request.json.get('pubdate')
     post.category_id = request.json['category_id']
     db.session.commit()
     return jsonify({'msg': 'Updated the blog', 'status_code': 201}), 201
