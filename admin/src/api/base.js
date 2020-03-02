@@ -32,7 +32,7 @@ instance.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401: // 401状态时跳转登录页并清除token
-          store.commit('del_token')
+          store.commit('delToken')
           router.push('/login')
       }
     }

@@ -37,11 +37,11 @@ export default {
   methods: {
     ...mapMutations([
       'changeIsCollapse',
-      'del_token'
+      'delToken'
     ]),
     logout () {
-      this.$store.commit('del_token')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$store.commit('delToken')
+      this.$router.push(`/login`)
     }
   }
 }

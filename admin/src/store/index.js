@@ -5,18 +5,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    pathTo: '',
     sideBarIsCollapse: false,
     token: ''
   },
   mutations: {
+    setPathTo (state, path) {
+      state.pathTo = path
+    },
     changeIsCollapse (state) {
       state.sideBarIsCollapse = !state.sideBarIsCollapse
     },
-    set_token (state, token) {
+    setToken (state, token) {
       state.token = token
       localStorage.token = token
     },
-    del_token (state) {
+    delToken (state) {
       state.token = ''
       localStorage.removeItem('token')
     }

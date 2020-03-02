@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
         Message.warning('认证过期，请重新登录！')
       })
     } else {
+      store.commit('setPathTo', to.path)
       next({ path: '/login' })
     }
   } else {

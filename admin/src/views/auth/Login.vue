@@ -28,6 +28,7 @@
 
 <script>
 import { login } from '@/api/auth'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -48,6 +49,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState([
+      'pathTo'
+    ])
+  },
   methods: {
     submitForm (form) {
       this.$refs[form].validate((valid) => {
@@ -58,8 +64,11 @@ export default {
           }).then(response => {
             this.$message.success('登录成功')
             // 保存token
-            this.$store.commit('set_token', response.data.token)
-            this.$router.push('/dashboard') // TODO: 调整成直接跳转到要访问的路由
+            this.$store.commit('setToken', response.data.token)
+            // 跳转到目标路由
+            let path = this.pathTo ? this.pathTo : { name: 'dashboard' }
+            console.log(path)
+            this.$router.push(path)
           }).catch(error => {
             console.log(error)
             switch (error.status) {
