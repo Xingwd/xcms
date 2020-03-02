@@ -61,9 +61,8 @@
         label="操作"
         width="120">
         <template slot-scope="scope">
-          <el-button @click="editPost(scope.row)" type="text" size="small">编辑</el-button>
-          <!-- TODO: 增加确认删除弹框 -->
-          <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,16 +96,28 @@ export default {
         console.log(error)
       })
     },
-    editPost (row) {
+    handleEdit (row) {
       this.$router.push({ name: 'editPost', params: { id: row.id } })
     },
-    handleClick (row) {
-      deletePost(row.id
-      ).then(response => {
-        this.getPagePosts()
-        this.$message.success('删除成功')
-      }).catch(error => {
-        console.log(error)
+    handleDelete (row) {
+      this.$confirm('此操作将永久删除该博客, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        customClass: 'x-message-box'
+      }).then(() => {
+        deletePost(row.id
+        ).then(response => {
+          this.getPagePosts()
+          this.$message.success('删除成功')
+        }).catch(error => {
+          console.log(error)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
     handleSizeChange (val) {
@@ -122,3 +133,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.x-message-box {
+  vertical-align: baseline;
+}
+</style>

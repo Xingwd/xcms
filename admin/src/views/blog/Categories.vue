@@ -122,16 +122,28 @@ export default {
       })
     },
     handleDelete (item) {
-      deleteCategory(item.id
-      ).then(response => {
-        switch (response.status) {
-          default:
-            this.$message.success('删除成功')
-        }
-        // this.items = Object.assign({}, this.items.splice(item)) 这样写不行，why?
-        this.getAllCategories()
-      }).catch(error => {
-        console.log(error)
+      this.$confirm('此操作将永久删除该历程, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        customClass: 'x-message-box'
+      }).then(() => {
+        deleteCategory(item.id
+        ).then(response => {
+          switch (response.status) {
+            default:
+              this.$message.success('删除成功')
+          }
+          // this.items = Object.assign({}, this.items.splice(item)) 这样写不行，why?
+          this.getAllCategories()
+        }).catch(error => {
+          console.log(error)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
     initNewForm () {
@@ -204,5 +216,11 @@ export default {
   .card-panel-description {
     display: none;
   }
+}
+</style>
+
+<style>
+.x-message-box {
+  vertical-align: baseline;
 }
 </style>

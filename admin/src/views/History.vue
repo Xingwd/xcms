@@ -157,16 +157,31 @@ export default {
         console.log(error)
       })
     },
-    handleDelete (item) { // TODO: 增加确认弹窗
-      deleteHistory(item.id
-      ).then(response => {
-        switch (response.status) {
-          default:
-            this.$message.success('删除成功')
-        }
-        this.getHistories()
-      }).catch(error => {
-        console.log(error)
+    handleDelete (item) {
+      this.$confirm('此操作将永久删除该历程, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        customClass: 'x-message-box'
+      }).then(() => {
+        deleteHistory(item.id
+        ).then(response => {
+          switch (response.status) {
+            case 201:
+              this.$message.success('删除成功')
+              break
+            default:
+              break
+          }
+          this.getHistories()
+        }).catch(error => {
+          console.log(error)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     }
   }
@@ -176,5 +191,9 @@ export default {
 <style>
 .myHistory {
   margin: 20px 50px 30px 30px;
+}
+
+.x-message-box {
+  vertical-align: baseline;
 }
 </style>
