@@ -4,24 +4,24 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card>
-          <ECharts chartId="category" :option="option"/>
+          <ECharts chartId="category" :option="option" width="600px" height="400px" :resize="resizeChart"/>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <ECharts chartId="category1" :option="option"/>
+          <ECharts chartId="category1" :option="option" width="600px" height="400px"/>
         </el-card>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card>
-          <ECharts chartId="category2" :option="option"/>
+          <ECharts chartId="category2" :option="option" width="600px" height="400px"/>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <ECharts chartId="category3" :option="option"/>
+          <ECharts chartId="category3" :option="option" width="600px" height="400px"/>
         </el-card>
       </el-col>
     </el-row>
@@ -45,6 +45,9 @@ export default {
     this.setBlogCategoryOption()
   },
   computed: {
+    resizeChart: function () {
+      return this.$store.state.sideBarIsCollapse
+    },
     option: function () {
       return {
         tooltip: {

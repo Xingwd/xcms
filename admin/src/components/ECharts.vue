@@ -12,11 +12,15 @@ export default {
     option: Object,
     width: {
       type: String,
-      default: '600px'
+      default: 'auto'
     },
     height: {
       type: String,
-      default: '400px'
+      default: 'auto'
+    },
+    resize: {
+      type: Boolean,
+      default: false
     }
   },
   mounted () {
@@ -34,6 +38,11 @@ export default {
   watch: {
     option: function () {
       this.setOption()
+    },
+    resize: function () {
+      setTimeout(() => {
+        this.echartsInstance.resize()
+      }, 250)
     }
   },
   methods: {
